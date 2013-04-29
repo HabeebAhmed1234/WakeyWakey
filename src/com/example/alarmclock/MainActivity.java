@@ -3,6 +3,7 @@ package com.example.alarmclock;
 import android.os.Bundle;
 import android.app.Activity;
 import android.speech.tts.TextToSpeech;
+import android.speech.tts.TextToSpeech.OnInitListener;
 import android.util.Log;
 import android.view.Menu;
 import java.util.Calendar;
@@ -22,7 +23,8 @@ import android.widget.ToggleButton;
 import com.example.alarmclock.MyTextToSpeech;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements TextToSpeech.OnInitListener {
+	
 	private TimePicker timePicker1;
  
 	private int hour;
@@ -35,7 +37,7 @@ public class MainActivity extends Activity {
 		
 		timePicker1 = (TimePicker) findViewById(R.id.timePicker1);
 		
-		MyTextToSpeech speaker = new MyTextToSpeech();
+		MyTextToSpeech speaker = new MyTextToSpeech(this);
 		speaker.say("Wake up!");
 		
 		//setCurrentTimeOnView();
@@ -96,5 +98,10 @@ public class MainActivity extends Activity {
 		   return String.valueOf(c);
 		else
 		   return "0" + String.valueOf(c);
+	}
+
+	@Override
+	public void onInit(int status) {
+		
 	}
 }
