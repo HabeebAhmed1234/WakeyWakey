@@ -12,8 +12,12 @@ public class AlarmReceiver extends BroadcastReceiver implements TextToSpeech.OnI
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		Toast.makeText(context,  "Alarm has gone off", Toast.LENGTH_LONG).show();
-		MyTextToSpeech speaker = new MyTextToSpeech(context);
-		speaker.say("Wake up!");
+		
+		 //start activity
+        Intent i = new Intent();
+        i.setClassName("com.example.alarmclock", "com.example.alarmclock.AlarmHandler");
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(i);
 	}
 
 	@Override
