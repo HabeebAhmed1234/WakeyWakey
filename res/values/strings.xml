@@ -11,5 +11,8 @@
     <string name="title_activity_text_contacts_alert">TextContactsAlertActivity</string>
     <string name="title_activity_music_alert">MusicAlertActivity</string>
     <string name="title_activity_video_news_alert">VideoNewsAlertActivity</string>
+    <string name="app_id">182428671914236</string>
+    <string name="app_secret">050b4d0ef9b78c307cc888e105893760</string>
+    <string name="app_key_hash">uYAvr0PX3KjY9QUYsurZ+OMcnkY=</string>
 
 </resources>

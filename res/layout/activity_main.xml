@@ -1,5 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_name"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -40,27 +41,11 @@
 	</RelativeLayout>
 
 	<RadioButton
-	    android:id="@+id/radioButton1"
+	    android:id="@+id/radioButton3"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:layout_alignLeft="@+id/timePicker"
 	    android:layout_centerVertical="true"
-	    android:text="RadioButton" />
-
-	<RadioButton
-	    android:id="@+id/radioButton2"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_alignBottom="@+id/radioButton1"
-	    android:layout_alignLeft="@+id/radioButton1"
-	    android:text="Facebook" />
-
-	<RadioButton
-	    android:id="@+id/radioButton3"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_alignLeft="@+id/radioButton1"
-	    android:layout_below="@+id/radioButton1"
 	    android:text="Text Contacts" />
 
 	<RadioButton
@@ -78,5 +63,13 @@
 	    android:layout_alignLeft="@+id/radioButton4"
 	    android:layout_below="@+id/radioButton4"
 	    android:text="Video News Feed" />
+
+	<RadioButton
+	    android:id="@+id/radioButton2"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignLeft="@+id/radioButton5"
+	    android:layout_below="@+id/radioButton5"
+	    android:text="Facebook" />
 
 </RelativeLayout>

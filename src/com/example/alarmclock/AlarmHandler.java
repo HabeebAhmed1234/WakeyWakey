@@ -10,6 +10,8 @@ public class AlarmHandler extends Activity {
 	private Preferences prefs;
 	void wakeUpUser()
 	{
+		// what is the desired behaviour when no option is selected? is this even a use case?
+		// what will currently happen when no option is selected?
 		Intent intent = new Intent(this, AlarmHandler.class);
 		
 	    if(prefs.getfacebook())intent = new Intent(this, FacebookAlertActivity.class);
@@ -24,9 +26,13 @@ public class AlarmHandler extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_alarm_handler);
-		PreferencesHandler=new PreferencesHandler(this);
-		prefs=PreferencesHandler.getSettings();
-		wakeUpUser();
+		
+		Intent intent = new Intent(this, FacebookAlertActivity.class);
+		startActivity(intent);
+		
+		//PreferencesHandler=new PreferencesHandler(this);
+		//prefs=PreferencesHandler.getSettings();
+		//wakeUpUser();
 	}
 
 	@Override
