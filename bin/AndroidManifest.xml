@@ -32,6 +32,22 @@
             android:name="com.example.alarmclock.AlarmHandler"
             android:label="@string/title_activity_alarm_handler" >
         </activity>
+        <activity
+            android:name="com.example.alarmclock.FacebookAlertActivity"
+            android:label="@string/title_activity_facebook_alert" >
+        </activity>
+        <activity
+            android:name="com.example.alarmclock.TextContactsAlertActivity"
+            android:label="@string/title_activity_text_contacts_alert" >
+        </activity>
+        <activity
+            android:name="com.example.alarmclock.MusicAlertActivity"
+            android:label="@string/title_activity_music_alert" >
+        </activity>
+        <activity
+            android:name="com.example.alarmclock.VideoNewsAlertActivity"
+            android:label="@string/title_activity_video_news_alert" >
+        </activity>
     </application>
 
 </manifest>

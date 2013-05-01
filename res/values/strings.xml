@@ -7,5 +7,9 @@
     <string name="hello_chikiding">Hello Chikiding!</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_alarm_handler">AlarmHandler</string>
+    <string name="title_activity_facebook_alert">FacebookAlertActivity</string>
+    <string name="title_activity_text_contacts_alert">TextContactsAlertActivity</string>
+    <string name="title_activity_music_alert">MusicAlertActivity</string>
+    <string name="title_activity_video_news_alert">VideoNewsAlertActivity</string>
 
 </resources>

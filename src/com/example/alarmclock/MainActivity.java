@@ -22,7 +22,7 @@ import android.widget.TimePicker;
 import android.widget.ToggleButton;
 import com.example.alarmclock.MyTextToSpeech;
 
-
+//add a options selector
 public class MainActivity extends Activity implements TextToSpeech.OnInitListener {
 	
 	private TimePicker timePicker1;
