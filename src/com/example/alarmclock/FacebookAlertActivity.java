@@ -11,8 +11,14 @@ import android.widget.TextView;
 import android.content.Intent;
 import java.util.*;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class FacebookAlertActivity extends Activity {
 
+    public ArrayList<fbPost> newsFeed = new ArrayList<fbPost>();
+	
 	// Activity code to flag an incoming activity result is due 
 	// to a new permissions request
 	private static final int REAUTH_ACTIVITY_CODE = 100;
@@ -27,7 +33,7 @@ public class FacebookAlertActivity extends Activity {
 	private static final List<String> PERMISSIONS = Arrays.asList("read_stream");
 	
     private static final String FQL_QUERY = "SELECT message, comments, " +
-    "source_id, actor_id FROM stream WHERE filter_key IN (SELECT filter_key FROM " +
+    "source_id, actor_id, attachment FROM stream WHERE filter_key IN (SELECT filter_key FROM " +
     "stream_filter WHERE uid=me() AND type='newsfeed')";
 	
 	@Override
@@ -66,18 +72,85 @@ public class FacebookAlertActivity extends Activity {
         
         // get permissions to read user's facebook feed
         requestReadPermissions(session);
-        
+                
         Request request = new Request(session,
             "/fql",                         
             params,                         
             HttpMethod.GET,                 
             new Request.Callback(){         
                 public void onCompleted(Response response) {
-                	response.getClass();
+                	//response.getClass();
+                	GraphObject feed = response.getGraphObject();
+                	
+                	if (feed != null){
+                		JSONObject jsonObject = feed.getInnerJSONObject();
+                		JSONArray arr;
+                		
+						try {
+							arr = jsonObject.getJSONArray("data");
+						
+					        String s = Integer.toString(newsFeed.size());
+					        Log.d("fbPost", s);
+					        
+							for (int i = 0; i < arr.length(); i++) {
+					            JSONObject object = (JSONObject) arr.get(i);
+					            newsFeed.add(translateJSONToPost(object));
+					            Log.d("TAG", "message = "+object.get("message"));
+					         }
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+                	}
+                	
                     Log.i("TAG", "Result: " + response.toString());
-                }                  
+                }                
         }); 
-        Request.executeBatchAsync(request); 
+        
+        Request.executeBatchAsync(request);
+        
+        String s = Integer.toString(newsFeed.size());
+        
+        Log.d("fbPost", s);
+        for (int i=0; i<newsFeed.size(); i++){
+        	newsFeed.get(i).print();
+        }
+	}
+	
+	private fbPost translateJSONToPost(JSONObject object) {
+		fbPost post;
+		JSONObject attach;
+		
+		// before processing the update as a regular status update,
+		// try to read it in as a Youtube link or a regular link
+		try {
+			attach = object.getJSONObject("attachment");
+			JSONArray media = attach.getJSONArray("media");
+			Log.d("2TAG", media.toString());
+			if (media.toString().equals("[]")){
+				//Log.d("2TAG", "i failed you (media)");
+				post = new linkPost(attach.getString("description"));
+				return post;
+			}
+			post = new videoLinkPost(attach.getString("description"), attach.getString("href"));
+			return post;
+			//linkPost thing = (linkPost) post;
+			//Log.d("2TAG", "message: " + post.message + " URL: " + thing.linkURL );
+		} catch (JSONException e) {
+			// Means we were NOT able to retrieve an attachment from the post (indicating it
+			// is a regular status update)!
+			//Log.d("2TAG", "i failed you");
+			e.printStackTrace();
+		}
+		
+		// now that we know its not a link, then we can treat it as a regular post
+		try {
+			post = new statusPost(object.getString("message"));
+			return post;
+		} catch (JSONException e) {
+			Log.d("2TAG", "this type of post is not supported by our processing engine yet.");
+			return null;
+		}		
 	}
 
 	private void requestReadPermissions(Session session) {
