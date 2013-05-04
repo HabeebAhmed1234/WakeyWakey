@@ -10,6 +10,8 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:text="facebook" />
+        android:text="facebook" 
+        android:onClick="onClick"
+        android:clickable="true"/>
 
 </RelativeLayout>
