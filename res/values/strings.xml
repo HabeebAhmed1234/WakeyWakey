@@ -14,5 +14,19 @@
     <string name="app_id">182428671914236</string>
     <string name="app_secret">050b4d0ef9b78c307cc888e105893760</string>
     <string name="app_key_hash">uYAvr0PX3KjY9QUYsurZ+OMcnkY=</string>
-
+    <string name="title_activity_contacts_editor">ContactsEditor</string>
+	<string name="accountSpinnerLabel">Account</string>
+    <string name="addContactButtonLabel">Add Contact</string>
+    <string name="addContactTitle">Add Contact</string>
+    <string name="allAccounts">All Accounts</string>
+    <string name="contactCreationFailure">Contact creation failed, check logs.</string>
+    <string name="contactEmailLabel">Contact Email</string>
+    <string name="contactNameLabel">Contact Name</string>
+    <string name="contactPhoneLabel">Contact Phone</string>
+    <string name="save">Save</string>
+    <string name="selectAccountLabel">Select</string>
+    <string name="selectLabel">Select label</string>
+    <string name="showInvisible">Show Invisible Contacts (Only)</string>
+    <string name="targetAccountLabel">Target Account</string>
+    <string name="undefinedTypeLabel">(Undefined)</string>
 </resources>

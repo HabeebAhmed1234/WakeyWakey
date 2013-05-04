@@ -39,37 +39,53 @@
 			android:layout_centerVertical="true"/>
 		
 	</RelativeLayout>
+	
+	<RadioGroup
+	        android:id="@+id/optionsgroup"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/timePicker"> 
+	        
+		<RadioButton
+		    android:id="@+id/radioButton3"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_alignLeft="@+id/timePicker"
+		    android:layout_centerVertical="true"
+		    android:text="Text Contacts" 
+            android:checked="true"/>
+	
+		<RadioButton
+		    android:id="@+id/radioButton4"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_alignLeft="@+id/radioButton3"
+		    android:layout_below="@+id/radioButton3"
+		    android:text="Music" />
+	
+		<RadioButton
+		    android:id="@+id/radioButton5"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_alignLeft="@+id/radioButton4"
+		    android:layout_below="@+id/radioButton4"
+		    android:text="Video News Feed" />
+	
+		<RadioButton
+		    android:id="@+id/radioButton2"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_alignLeft="@+id/radioButton5"
+		    android:layout_below="@+id/radioButton5"
+		    android:text="Facebook" />
+		</RadioGroup>
 
-	<RadioButton
-	    android:id="@+id/radioButton3"
+	<Button
+	    android:id="@+id/editContactsToText"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_alignLeft="@+id/timePicker"
-	    android:layout_centerVertical="true"
-	    android:text="Text Contacts" />
-
-	<RadioButton
-	    android:id="@+id/radioButton4"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_alignLeft="@+id/radioButton3"
-	    android:layout_below="@+id/radioButton3"
-	    android:text="Music" />
-
-	<RadioButton
-	    android:id="@+id/radioButton5"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_alignLeft="@+id/radioButton4"
-	    android:layout_below="@+id/radioButton4"
-	    android:text="Video News Feed" />
-
-	<RadioButton
-	    android:id="@+id/radioButton2"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_alignLeft="@+id/radioButton5"
-	    android:layout_below="@+id/radioButton5"
-	    android:text="Facebook" />
-
-</RelativeLayout>
+	    android:layout_alignLeft="@+id/optionsgroup"
+	    android:layout_below="@+id/optionsgroup"
+	    android:text="Edit Which Contacts To Text" />
+	
+	</RelativeLayout>
