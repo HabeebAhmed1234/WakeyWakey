@@ -1,5 +1,6 @@
 package com.example.alarmclock;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -27,8 +28,11 @@ public class AlarmHandler extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_alarm_handler);
 		
-		Intent intent = new Intent(this, FacebookAlertActivity.class);
+		Intent intent = new Intent(this, Sample.class);
 		startActivity(intent);
+		
+        Intent lVideoIntent = new Intent(null, Uri.parse("ytv://tzgFuUu0oxg"), AlarmHandler.this, OpenYouTubePlayerActivity.class);
+        startActivity(lVideoIntent);
 		
 		//PreferencesHandler=new PreferencesHandler(this);
 		//prefs=PreferencesHandler.getSettings();

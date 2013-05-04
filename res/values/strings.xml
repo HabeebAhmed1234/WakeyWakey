@@ -14,5 +14,11 @@
     <string name="app_id">182428671914236</string>
     <string name="app_secret">050b4d0ef9b78c307cc888e105893760</string>
     <string name="app_key_hash">uYAvr0PX3KjY9QUYsurZ+OMcnkY=</string>
-
+    <string name="title_activity_shake_to_wake">ShakeToWakeActivity</string>
+    <string name="title_activity_intro_video">IntroVideoActivity</string>
+    <string name="app_name">OpenYouTubeActivity</string>
+    <string name="youtubeIdText">YouTube Video ID</string>
+    <string name="viewVideoButton">View Using OpenYouTubeActivity!</string>
+    <string name="defaultYoutubeVideoId">tzgFuUu0oxg</string>
+    <string name="youtubevideoid">YouTube Video ID</string>
 </resources>

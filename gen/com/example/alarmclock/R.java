@@ -214,7 +214,7 @@ containing a value of this type.
         public static final int ic_launcher=0x7f02001f;
     }
     public static final class id {
-        public static final int action_settings=0x7f040023;
+        public static final int action_settings=0x7f040029;
         public static final int app_name=0x7f040004;
         public static final int com_facebook_login_activity_progress_bar=0x7f04000f;
         public static final int com_facebook_picker_activity_circle=0x7f04000e;
@@ -237,7 +237,10 @@ containing a value of this type.
         public static final int com_facebook_usersettingsfragment_profile_name=0x7f040020;
         public static final int large=0x7f040002;
         public static final int lblTime=0x7f040006;
-        public static final int menu_settings=0x7f040022;
+        public static final int linearLayout1=0x7f040027;
+        public static final int linearLayout2=0x7f040022;
+        public static final int linearLayout3=0x7f040025;
+        public static final int menu_settings=0x7f040028;
         public static final int normal=0x7f040001;
         public static final int picker_subtitle=0x7f04001e;
         public static final int radioButton2=0x7f04000c;
@@ -249,28 +252,34 @@ containing a value of this type.
         public static final int timePicker=0x7f040005;
         public static final int timePicker1=0x7f040007;
         public static final int togglebutton=0x7f040008;
+        public static final int viewVideoButton=0x7f040026;
         public static final int welcome=0x7f040003;
+        public static final int youtubeIdLabel=0x7f040023;
+        public static final int youtubeIdText=0x7f040024;
     }
     public static final class layout {
         public static final int activity_alarm_handler=0x7f030000;
         public static final int activity_facebook_alert=0x7f030001;
-        public static final int activity_main=0x7f030002;
-        public static final int activity_music_alert=0x7f030003;
-        public static final int activity_text_contacts_alert=0x7f030004;
-        public static final int activity_video_news_alert=0x7f030005;
-        public static final int com_facebook_friendpickerfragment=0x7f030006;
-        public static final int com_facebook_login_activity_layout=0x7f030007;
-        public static final int com_facebook_picker_activity_circle_row=0x7f030008;
-        public static final int com_facebook_picker_checkbox=0x7f030009;
-        public static final int com_facebook_picker_image=0x7f03000a;
-        public static final int com_facebook_picker_list_row=0x7f03000b;
-        public static final int com_facebook_picker_list_section_header=0x7f03000c;
-        public static final int com_facebook_picker_search_box=0x7f03000d;
-        public static final int com_facebook_picker_title_bar=0x7f03000e;
-        public static final int com_facebook_picker_title_bar_stub=0x7f03000f;
-        public static final int com_facebook_placepickerfragment=0x7f030010;
-        public static final int com_facebook_placepickerfragment_list_row=0x7f030011;
-        public static final int com_facebook_usersettingsfragment=0x7f030012;
+        public static final int activity_intro_video=0x7f030002;
+        public static final int activity_main=0x7f030003;
+        public static final int activity_music_alert=0x7f030004;
+        public static final int activity_shake_to_wake=0x7f030005;
+        public static final int activity_text_contacts_alert=0x7f030006;
+        public static final int activity_video_news_alert=0x7f030007;
+        public static final int com_facebook_friendpickerfragment=0x7f030008;
+        public static final int com_facebook_login_activity_layout=0x7f030009;
+        public static final int com_facebook_picker_activity_circle_row=0x7f03000a;
+        public static final int com_facebook_picker_checkbox=0x7f03000b;
+        public static final int com_facebook_picker_image=0x7f03000c;
+        public static final int com_facebook_picker_list_row=0x7f03000d;
+        public static final int com_facebook_picker_list_section_header=0x7f03000e;
+        public static final int com_facebook_picker_search_box=0x7f03000f;
+        public static final int com_facebook_picker_title_bar=0x7f030010;
+        public static final int com_facebook_picker_title_bar_stub=0x7f030011;
+        public static final int com_facebook_placepickerfragment=0x7f030012;
+        public static final int com_facebook_placepickerfragment_list_row=0x7f030013;
+        public static final int com_facebook_usersettingsfragment=0x7f030014;
+        public static final int sample=0x7f030015;
     }
     public static final class menu {
         public static final int activity_alarm_handler=0x7f090000;
@@ -278,7 +287,9 @@ containing a value of this type.
         public static final int activity_music_alert=0x7f090002;
         public static final int activity_text_contacts_alert=0x7f090003;
         public static final int activity_video_news_alert=0x7f090004;
-        public static final int main=0x7f090005;
+        public static final int intro_video=0x7f090005;
+        public static final int main=0x7f090006;
+        public static final int shake_to_wake=0x7f090007;
     }
     public static final class string {
         public static final int action_settings=0x7f05001a;
@@ -311,14 +322,20 @@ containing a value of this type.
         public static final int com_facebook_usersettingsfragment_log_in_button=0x7f050008;
         public static final int com_facebook_usersettingsfragment_logged_in=0x7f050009;
         public static final int com_facebook_usersettingsfragment_not_logged_in=0x7f05000a;
+        public static final int defaultYoutubeVideoId=0x7f05002a;
         public static final int hello_chikiding=0x7f05001c;
         public static final int hello_world=0x7f05001b;
         public static final int menu_settings=0x7f05001d;
         public static final int title_activity_alarm_handler=0x7f05001e;
         public static final int title_activity_facebook_alert=0x7f05001f;
+        public static final int title_activity_intro_video=0x7f050027;
         public static final int title_activity_music_alert=0x7f050021;
+        public static final int title_activity_shake_to_wake=0x7f050026;
         public static final int title_activity_text_contacts_alert=0x7f050020;
         public static final int title_activity_video_news_alert=0x7f050022;
+        public static final int viewVideoButton=0x7f050029;
+        public static final int youtubeIdText=0x7f050028;
+        public static final int youtubevideoid=0x7f05002b;
     }
     public static final class style {
         /** 
