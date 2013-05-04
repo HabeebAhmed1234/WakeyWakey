@@ -1,5 +1,7 @@
 package com.example.alarmclock;
 
+import java.util.ArrayList;
+
 import android.content.Context;
 
 public class Preferences {
@@ -7,6 +9,7 @@ public class Preferences {
 	private boolean textcontacts=false;
 	private boolean videonews=false;
 	private boolean music=false;
+	private ArrayList<Contact> contactList = new ArrayList<Contact>();
 	
 	void setfacebook(boolean setting)
 	{
@@ -28,6 +31,11 @@ public class Preferences {
 		music=setting;
 	}
 	
+	void addContactToList(Contact contact)
+	{
+		contactList.add(contact);
+	}
+	
 	boolean getfacebook()
 	{
 		return facebook;
@@ -46,6 +54,11 @@ public class Preferences {
 	boolean getmusic()
 	{
 		return music;
+	}
+	
+	ArrayList <Contact> getContactList()
+	{
+		return contactList;
 	}
 		
 }

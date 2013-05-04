@@ -1,7 +1,10 @@
 package com.example.alarmclock;
 
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 public class PreferencesHandler {
 
@@ -11,14 +14,17 @@ public class PreferencesHandler {
 	public String VIDEONEWS_KEY="videonewsison";
 	public String TEXTCONTACTS_KEY="textcontactsison";
 	public String MUSIC_KEY="musicison";
+	public String CONTACTS_AMMOUNT_KEY="CONTACTS_AMMOUNT";
+	private SharedPreferences settings ;
+	
 	PreferencesHandler(Context con)
 	{
 		context=con;
+		settings = context.getSharedPreferences(PREFS_NAME, 0);
 	}
 	
 	private void set(String settingname, String settingvalue)
 	{
-        SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putString(settingname, settingvalue);
         editor.commit();
@@ -26,7 +32,6 @@ public class PreferencesHandler {
 	
 	private String get(String key)
 	{
-		SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, 0);
         return settings.getString(key, "NULL");
 	}
 	
@@ -60,6 +65,20 @@ public class PreferencesHandler {
 		}else
 		{
 			set(TEXTCONTACTS_KEY,"false");
+		}
+	}
+	
+	void setTextContactsList(ArrayList<Contact> contacts)
+	{
+		//shows the number of contacts in total
+		this.set(CONTACTS_AMMOUNT_KEY,Integer.toString(contacts.size()));
+		
+		Log.d("debuggings","set contacts ammount " + Integer.toString(contacts.size()));
+		
+		for(int i=0;i<contacts.size();i++)
+		{
+			this.set("CONTACT_NUMBER_"+i,contacts.get(i).getNumber());
+			this.set("CONTACT_NAME_"+i,contacts.get(i).getName());
 		}
 	}
 	
@@ -106,6 +125,20 @@ public class PreferencesHandler {
 			prefs.setmusic(false);
 		}
 		
+		String ammountOfContacts=get(CONTACTS_AMMOUNT_KEY);
+		if(ammountOfContacts.compareTo("NULL")==0)
+		{
+			return prefs;
+		}else
+		{
+			for(int i = 0; i<Integer.parseInt(ammountOfContacts);i++)
+			{
+				Contact cont = new Contact(get("CONTACT_NUMBER_"+i),get("CONTACT_NAME_"+i));
+				cont.select();
+				prefs.addContactToList(cont);
+			}
+		}
+		Log.d("debuggings","get contacts ammount " + Integer.toString(prefs.getContactList().size()));
 		return prefs;
 	}
 }

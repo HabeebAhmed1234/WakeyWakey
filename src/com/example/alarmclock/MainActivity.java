@@ -17,18 +17,28 @@ import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.ToggleButton;
 import com.example.alarmclock.MyTextToSpeech;
 
 //add a options selector
-public class MainActivity extends Activity implements TextToSpeech.OnInitListener {
+public class MainActivity extends Activity implements TextToSpeech.OnInitListener,OnClickListener {
 	
 	private TimePicker timePicker1;
  
 	private int hour;
 	private int minute;
+	
+	private RadioGroup radioGroup;
+	private RadioButton radioButton;
+	
+	private PreferencesHandler prefsHandler;
+	private Preferences prefs;
+	
+	private Button ContactsManagerButton;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -40,6 +50,10 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 		MyTextToSpeech speaker = new MyTextToSpeech(this);
 		speaker.say("Wake up!");
 		
+		prefsHandler=new PreferencesHandler(this);
+		
+		ContactsManagerButton = (Button) findViewById(R.id.editContactsToText);
+		ContactsManagerButton.setOnClickListener(this);
 		//setCurrentTimeOnView();
 		//addListenerOnButton();
         //check for successful instantiation
@@ -73,8 +87,52 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 	    } else {
 	        // Disable vibrate
 	    }
+	    
+	    handleRadioButton();
 	}
 	
+	private void handleRadioButton()
+	{
+		radioGroup = (RadioGroup) findViewById(R.id.optionsgroup);
+		// get selected radio button from radioGroup
+		int selectedId = radioGroup.getCheckedRadioButtonId();
+
+		// find the radiobutton by returned id
+	    radioButton = (RadioButton) findViewById(selectedId);
+		
+	    String selectedoption=(String) radioButton.getText();
+
+    	Log.d("debuggings",selectedoption);
+    	
+		if(selectedoption.compareTo("Text Contacts")==0) 
+		{
+			prefsHandler.setTextContactsOption(true);
+			prefsHandler.setMusicOption(false);
+			prefsHandler.setFacebookOption(false);
+			prefsHandler.setVideoNewsOption(false);
+		}
+		if(selectedoption.compareTo("Video News Feed")==0) 
+		{
+			prefsHandler.setTextContactsOption(false);
+			prefsHandler.setMusicOption(false);
+			prefsHandler.setFacebookOption(false);
+			prefsHandler.setVideoNewsOption(true);
+		}
+		if(selectedoption.compareTo("Music")==0) 
+		{
+			prefsHandler.setTextContactsOption(false);
+			prefsHandler.setMusicOption(true);
+			prefsHandler.setFacebookOption(false);
+			prefsHandler.setVideoNewsOption(false);
+		}
+		if(selectedoption.compareTo("Facebook")==0) 
+		{
+			prefsHandler.setTextContactsOption(false);
+			prefsHandler.setMusicOption(false);
+			prefsHandler.setFacebookOption(true);
+			prefsHandler.setVideoNewsOption(false);
+		}
+	}
 	private TimePickerDialog.OnTimeSetListener timePickerListener = 
             new TimePickerDialog.OnTimeSetListener() {
 		public void onTimeSet(TimePicker view, int selectedHour,
@@ -102,6 +160,17 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 
 	@Override
 	public void onInit(int status) {
+		
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		if(v.getId()==R.id.editContactsToText)
+		{
+			Intent intent = new Intent(this, ContactManager.class);
+			startActivity(intent);	
+		}
 		
 	}
 }
