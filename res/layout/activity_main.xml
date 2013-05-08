@@ -88,4 +88,12 @@
 	    android:layout_below="@+id/optionsgroup"
 	    android:text="Edit Which Contacts To Text" />
 	
+	<Button
+	    android:id="@+id/editMusic"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignLeft="@+id/optionsgroup"
+	    android:layout_below="@+id/editContactsToText"
+	    android:text="Edit Which Music To Play" />
+	
 	</RelativeLayout>

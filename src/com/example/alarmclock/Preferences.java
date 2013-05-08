@@ -10,6 +10,7 @@ public class Preferences {
 	private boolean videonews=false;
 	private boolean music=false;
 	private ArrayList<Contact> contactList = new ArrayList<Contact>();
+	private ArrayList<Music>   musicList   = new ArrayList<Music>();
 	
 	void setfacebook(boolean setting)
 	{
@@ -36,6 +37,11 @@ public class Preferences {
 		contactList.add(contact);
 	}
 	
+	void addMusicToList(Music music)
+	{
+		musicList.add(music);
+	}
+	
 	boolean getfacebook()
 	{
 		return facebook;
@@ -60,5 +66,10 @@ public class Preferences {
 	{
 		return contactList;
 	}
-		
+	
+	ArrayList <Music> getMusicList()
+	{
+		return musicList;
+	}
+		 
 }

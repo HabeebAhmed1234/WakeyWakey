@@ -16,7 +16,7 @@ public class AlarmHandler extends Activity {
 		// what is the desired behaviour when no option is selected? is this even a use case?
 		// what will currently happen when no option is selected?
 		//MusicAlertActivity is default
-		Intent intent = new Intent(this, TextContactsAlertActivity.class);
+		Intent intent = new Intent(this, MusicAlertActivity.class);
 		
 		Log.d("debuggings", "Alarmhandler Oncreate");
 		

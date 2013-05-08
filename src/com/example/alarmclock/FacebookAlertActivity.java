@@ -244,12 +244,12 @@ public class FacebookAlertActivity extends Activity {
 	}
 
 	private void requestReadPermissions(Session session) {
-	    if (session != null) {
+	    /*if (session != null) {
 	        Session.NewPermissionsRequest newPermissionsRequest = 
 	            new Session.NewPermissionsRequest(this, PERMISSIONS).
 	                setRequestCode(REAUTH_ACTIVITY_CODE);
 	        session.requestNewPublishPermissions(newPermissionsRequest);
-	    }
+	    }*/
 	}
 	
 	// to allow for non-asynchronous calls to Facebook batch handling methods

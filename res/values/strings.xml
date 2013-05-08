@@ -15,7 +15,7 @@
     <string name="app_secret">050b4d0ef9b78c307cc888e105893760</string>
     <string name="app_key_hash">uYAvr0PX3KjY9QUYsurZ+OMcnkY=</string>
     <string name="title_activity_contacts_editor">ContactsEditor</string>
-	<string name="accountSpinnerLabel">Account</string>
+    <string name="accountSpinnerLabel">Account</string>
     <string name="addContactButtonLabel">Add Contact</string>
     <string name="addContactTitle">Add Contact</string>
     <string name="allAccounts">All Accounts</string>
@@ -29,4 +29,6 @@
     <string name="showInvisible">Show Invisible Contacts (Only)</string>
     <string name="targetAccountLabel">Target Account</string>
     <string name="undefinedTypeLabel">(Undefined)</string>
+    <string name="title_activity_music_manager">MusicManagerActivity</string>
+
 </resources>

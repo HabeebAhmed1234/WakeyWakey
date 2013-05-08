@@ -15,6 +15,7 @@ public class PreferencesHandler {
 	public String TEXTCONTACTS_KEY="textcontactsison";
 	public String MUSIC_KEY="musicison";
 	public String CONTACTS_AMMOUNT_KEY="CONTACTS_AMMOUNT";
+	public String MUSICS_AMMOUNT_KEY="MUSICS_AMMOUNT";
 	private SharedPreferences settings ;
 	
 	PreferencesHandler(Context con)
@@ -73,7 +74,7 @@ public class PreferencesHandler {
 		//shows the number of contacts in total
 		this.set(CONTACTS_AMMOUNT_KEY,Integer.toString(contacts.size()));
 		
-		Log.d("debuggings","set contacts ammount " + Integer.toString(contacts.size()));
+		//Log.d("debuggings","set contacts ammount " + Integer.toString(contacts.size()));
 		
 		for(int i=0;i<contacts.size();i++)
 		{
@@ -90,6 +91,19 @@ public class PreferencesHandler {
 		}else
 		{
 			set(MUSIC_KEY,"false");
+		}
+	}
+	
+	void setMusicList(ArrayList<Music> selectedMusic) {
+		//shows the number of contacts in total
+		this.set(MUSICS_AMMOUNT_KEY,Integer.toString(selectedMusic.size()));
+		
+		//Log.d("debuggings","set musics ammount " + Integer.toString(selectedMusic.size()));
+		
+		for(int i=0;i<selectedMusic.size();i++)
+		{
+			this.set("MUSIC_NUMBER_"+i,selectedMusic.get(i).getPath());
+			this.set("MUSIC_NAME_"+i,selectedMusic.get(i).getName());
 		}
 	}
 	
@@ -125,6 +139,7 @@ public class PreferencesHandler {
 			prefs.setmusic(false);
 		}
 		
+		//add in contacts
 		String ammountOfContacts=get(CONTACTS_AMMOUNT_KEY);
 		if(ammountOfContacts.compareTo("NULL")==0)
 		{
@@ -138,7 +153,23 @@ public class PreferencesHandler {
 				prefs.addContactToList(cont);
 			}
 		}
-		Log.d("debuggings","get contacts ammount " + Integer.toString(prefs.getContactList().size()));
+		//Log.d("debuggings","get contacts ammount " + Integer.toString(prefs.getContactList().size()));
+		
+		//add in music
+		String ammountOfMusic=get(MUSICS_AMMOUNT_KEY);
+		if(ammountOfMusic.compareTo("NULL")==0)
+		{
+			return prefs;
+		}else
+		{
+			for(int i = 0; i<Integer.parseInt(ammountOfMusic);i++)
+			{
+				Music mus = new Music(get("MUSIC_NUMBER_"+i),get("MUSIC_NAME_"+i));
+				mus.select();
+				prefs.addMusicToList(mus);
+			}
+		}
+		//Log.d("debuggings","get musics ammount " + Integer.toString(prefs.getMusicList().size()));
 		return prefs;
 	}
 }

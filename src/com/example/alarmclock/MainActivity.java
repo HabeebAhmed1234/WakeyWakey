@@ -39,6 +39,7 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 	private Preferences prefs;
 	
 	private Button ContactsManagerButton;
+	private Button MusicManagerButton;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,9 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 		
 		ContactsManagerButton = (Button) findViewById(R.id.editContactsToText);
 		ContactsManagerButton.setOnClickListener(this);
+		
+		MusicManagerButton = (Button) findViewById(R.id.editMusic);
+		MusicManagerButton.setOnClickListener(this);
 		//setCurrentTimeOnView();
 		//addListenerOnButton();
         //check for successful instantiation
@@ -67,6 +71,9 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 	}
 	
 	public void onToggleClicked(View view) {
+	    //handle radio buttons first
+	    handleRadioButton();
+	    
 	    // Is the toggle on?
 	    boolean on = ((ToggleButton) view).isChecked();
 	    
@@ -87,8 +94,6 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 	    } else {
 	        // Disable vibrate
 	    }
-	    
-	    handleRadioButton();
 	}
 	
 	private void handleRadioButton()
@@ -166,9 +171,17 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
+
+		Log.d("debuggings","buttonClicked");
 		if(v.getId()==R.id.editContactsToText)
 		{
 			Intent intent = new Intent(this, ContactManager.class);
+			startActivity(intent);	
+		}
+		if(v.getId()==R.id.editMusic)
+		{
+			Log.d("debuggings","editMusicClicked");
+			Intent intent = new Intent(this, MusicManagerActivity.class);
 			startActivity(intent);	
 		}
 		
