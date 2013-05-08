@@ -16,9 +16,9 @@ public class AlarmHandler extends Activity {
 		// what is the desired behaviour when no option is selected? is this even a use case?
 		// what will currently happen when no option is selected?
 		//MusicAlertActivity is default
-		Intent intent = new Intent(this, MusicAlertActivity.class);
+		Intent intent = new Intent(this, ShakeToWakeActivity.class);
 		
-		Log.d("debuggings", "Alarmhandler Oncreate");
+		/*Log.d("debuggings", "Alarmhandler Oncreate");
 		
 	    if(prefs.getfacebook())
 	    {
@@ -45,7 +45,7 @@ public class AlarmHandler extends Activity {
 			Log.d("debuggings","VideoNewsAlertActivity after");
 		}
 		
-		Log.d("debuggings","startActivity before");
+		Log.d("debuggings","startActivity before");*/
 	    startActivity(intent);	
 	    Log.d("debuggings","startActivity after");
 	}

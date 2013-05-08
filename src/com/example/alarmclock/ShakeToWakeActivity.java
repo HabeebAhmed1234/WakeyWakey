@@ -31,9 +31,10 @@ public class ShakeToWakeActivity extends Activity {
 	      float delta = mAccelCurrent - mAccelLast;
 	      mAccel = mAccel * 0.9f + delta; // perform low-cut filter
 	      
-	    	if (mAccel >= 2) {
-	    	}
-	    	else Log.d("accel", "stagnant");
+      	 if (mAccel >= 2) {
+          Log.d("accel", "accel");
+         }
+         else Log.d("accel", "stagnant");
 	    }
 
 	    public void onAccuracyChanged(Sensor sensor, int accuracy) {
@@ -65,9 +66,9 @@ public class ShakeToWakeActivity extends Activity {
 	    mAccelCurrent = SensorManager.GRAVITY_EARTH;
 	    mAccelLast = SensorManager.GRAVITY_EARTH;
 	    
-		final String YOUTUBE_PLAYLIST_ID = "M2IpET_ydUg";
-		Intent intent = new Intent(this, Sample.class);
-		startActivity(intent);
+		//final String YOUTUBE_PLAYLIST_ID = "M2IpET_ydUg";
+		//Intent intent = new Intent(this, Sample.class);
+		//startActivity(intent);
 	}
 
 	@Override
