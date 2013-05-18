@@ -1,7 +1,5 @@
 package com.example.alarmclock;
 
-import com.keyes.youtube.OpenYouTubePlayerActivity;
-
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
