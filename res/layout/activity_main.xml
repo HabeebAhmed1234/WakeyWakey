@@ -1,99 +1,413 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/app_name"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity" >
-
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tableLayout1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_marginTop="20sp" >
+    
+<TableRow
+        android:id="@+id/tableRow1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dip" >
+        
+    <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/Alarm"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#B0C4DE"
+            android:padding="5sp"
+            android:layout_marginLeft="10sp"
+            android:layout_marginRight="10sp" >
+            
+			<TextView
+                android:id="@+id/time"
+                android:layout_width="fill_parent"
+            	android:textSize="30sp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:text="1:00 AM" />
+			
+			<LinearLayout
+			    android:orientation="horizontal"
+			    android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+			    >
+	            <ImageView
+	                android:id="@+id/facebook"
+	                android:src="@drawable/facebook_icon"
+	                android:layout_width="30dp"
+	                android:layout_height="30dp"
+	                android:layout_margin="1sp"/>
+	
+	            <ImageView
+	                android:id="@+id/music"
+	                android:layout_width="30dp"
+	                android:layout_height="30dp"
+	                android:src="@drawable/text_contacts"
+	                android:layout_margin="1sp"/>
+	
+	            <ImageView
+	                android:id="@+id/text_contacts"
+	                android:layout_width="30dp"
+	                android:layout_height="30dp"
+	                android:src="@drawable/music_icon"
+	                android:layout_margin="1sp"/>
+			</LinearLayout>
+	</LinearLayout>
+	
 	<RelativeLayout
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:orientation="vertical"
-	    android:id="@+id/timePicker" >
-	 
-	    <TextView
-	        android:id="@+id/lblTime"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="Set Alarm Time"
-	        android:textAppearance="?android:attr/textAppearanceLarge" />
-	  
-	    <TimePicker
-	        android:id="@+id/timePicker1"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_below="@+id/lblTime" />
-	    
-		<ToggleButton
-			android:id="@+id/togglebutton"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:onClick="onToggleClicked"
-			android:textOff="Alarm off"
-			android:textOn="Alarm on"
-			android:layout_toRightOf="@+id/timePicker1"
-			android:layout_centerVertical="true"/>
-		
-	</RelativeLayout>
-	
-	<RadioGroup
-	        android:id="@+id/optionsgroup"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_below="@+id/timePicker"> 
-	        
-		<RadioButton
-		    android:id="@+id/radioButton3"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:layout_alignLeft="@+id/timePicker"
-		    android:layout_centerVertical="true"
-		    android:text="Text Contacts" 
-            android:checked="true"/>
-	
-		<RadioButton
-		    android:id="@+id/radioButton4"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:layout_alignLeft="@+id/radioButton3"
-		    android:layout_below="@+id/radioButton3"
-		    android:text="Music" />
-	
-		<RadioButton
-		    android:id="@+id/radioButton5"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:layout_alignLeft="@+id/radioButton4"
-		    android:layout_below="@+id/radioButton4"
-		    android:text="Video News Feed" />
-	
-		<RadioButton
-		    android:id="@+id/radioButton2"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:layout_alignLeft="@+id/radioButton5"
-		    android:layout_below="@+id/radioButton5"
-		    android:text="Facebook" />
-		</RadioGroup>
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/Alarm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#B0C4DE"
+            android:padding="5sp"
+            android:layout_marginLeft="10sp"
+            android:layout_marginRight="10sp" >
 
-	<Button
-	    android:id="@+id/editContactsToText"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_alignLeft="@+id/optionsgroup"
-	    android:layout_below="@+id/optionsgroup"
-	    android:text="Edit Which Contacts To Text" />
-	
-	<Button
-	    android:id="@+id/editMusic"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_alignLeft="@+id/optionsgroup"
-	    android:layout_below="@+id/editContactsToText"
-	    android:text="Edit Which Music To Play" />
-	
-	</RelativeLayout>
+            <ImageView
+                android:id="@+id/facebook"
+                android:src="@drawable/facebook_icon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignTop="@+id/music"
+                android:layout_toRightOf="@+id/music" 
+                android:layout_margin="1sp"/>
+
+            <ImageView
+                android:id="@+id/music"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/text_contacts"
+                android:layout_alignTop="@+id/text_contacts"
+                android:layout_toRightOf="@+id/text_contacts" 
+                android:layout_margin="1sp"/>
+
+            <ImageView
+                android:id="@+id/text_contacts"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/music_icon"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/time" 
+                android:layout_margin="1sp"/>
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="fill_parent"
+            	android:textSize="30sp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:text="1:00 AM" />
+        </RelativeLayout>
+    </TableRow>
+    <TableRow
+        android:id="@+id/tableRow1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dip" >
+        
+    <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/Alarm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#B0C4DE"
+            android:padding="5sp"
+            android:layout_marginLeft="10sp"
+            android:layout_marginRight="10sp" >
+
+            <ImageView
+                android:id="@+id/facebook"
+                android:src="@drawable/facebook_icon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignTop="@+id/music"
+                android:layout_toRightOf="@+id/music" 
+                android:layout_margin="1sp"/>
+
+            <ImageView
+                android:id="@+id/music"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/text_contacts"
+                android:layout_alignTop="@+id/text_contacts"
+                android:layout_toRightOf="@+id/text_contacts" 
+                android:layout_margin="1sp"/>
+
+            <ImageView
+                android:id="@+id/text_contacts"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/music_icon"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/time" 
+                android:layout_margin="1sp"/>
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="fill_parent"
+            	android:textSize="30sp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:text="1:00 AM" />
+        </RelativeLayout>
+<RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/Alarm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#B0C4DE"
+            android:padding="5sp"
+            android:layout_marginLeft="10sp"
+            android:layout_marginRight="10sp" >
+
+            <ImageView
+                android:id="@+id/facebook"
+                android:src="@drawable/facebook_icon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignTop="@+id/music"
+                android:layout_toRightOf="@+id/music" 
+                android:layout_margin="1sp"/>
+
+            <ImageView
+                android:id="@+id/music"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/text_contacts"
+                android:layout_alignTop="@+id/text_contacts"
+                android:layout_toRightOf="@+id/text_contacts" 
+                android:layout_margin="1sp"/>
+
+            <ImageView
+                android:id="@+id/text_contacts"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/music_icon"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/time" 
+                android:layout_margin="1sp"/>
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="fill_parent"
+            	android:textSize="30sp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:text="1:00 AM" />
+        </RelativeLayout>
+    </TableRow><TableRow
+        android:id="@+id/tableRow1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dip" >
+        
+    <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/Alarm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#B0C4DE"
+            android:padding="5sp"
+            android:layout_marginLeft="10sp"
+            android:layout_marginRight="10sp" >
+
+            <ImageView
+                android:id="@+id/facebook"
+                android:src="@drawable/facebook_icon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignTop="@+id/music"
+                android:layout_toRightOf="@+id/music" 
+                android:layout_margin="1sp"/>
+
+            <ImageView
+                android:id="@+id/music"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/text_contacts"
+                android:layout_alignTop="@+id/text_contacts"
+                android:layout_toRightOf="@+id/text_contacts" 
+                android:layout_margin="1sp"/>
+
+            <ImageView
+                android:id="@+id/text_contacts"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/music_icon"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/time" 
+                android:layout_margin="1sp"/>
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="fill_parent"
+            	android:textSize="30sp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:text="1:00 AM" />
+        </RelativeLayout>
+<RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/Alarm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#B0C4DE"
+            android:padding="5sp"
+            android:layout_marginLeft="10sp"
+            android:layout_marginRight="10sp" >
+
+            <ImageView
+                android:id="@+id/facebook"
+                android:src="@drawable/facebook_icon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignTop="@+id/music"
+                android:layout_toRightOf="@+id/music" 
+                android:layout_margin="1sp"/>
+
+            <ImageView
+                android:id="@+id/music"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/text_contacts"
+                android:layout_alignTop="@+id/text_contacts"
+                android:layout_toRightOf="@+id/text_contacts" 
+                android:layout_margin="1sp"/>
+
+            <ImageView
+                android:id="@+id/text_contacts"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/music_icon"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/time" 
+                android:layout_margin="1sp"/>
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="fill_parent"
+            	android:textSize="30sp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:text="1:00 AM" />
+        </RelativeLayout>
+    </TableRow><TableRow
+        android:id="@+id/tableRow1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dip" >
+        
+    <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/Alarm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#B0C4DE"
+            android:padding="5sp"
+            android:layout_marginLeft="10sp"
+            android:layout_marginRight="10sp" >
+
+            <ImageView
+                android:id="@+id/facebook"
+                android:src="@drawable/facebook_icon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignTop="@+id/music"
+                android:layout_toRightOf="@+id/music" 
+                android:layout_margin="1sp"/>
+
+            <ImageView
+                android:id="@+id/music"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/text_contacts"
+                android:layout_alignTop="@+id/text_contacts"
+                android:layout_toRightOf="@+id/text_contacts" 
+                android:layout_margin="1sp"/>
+
+            <ImageView
+                android:id="@+id/text_contacts"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/music_icon"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/time" 
+                android:layout_margin="1sp"/>
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="fill_parent"
+            	android:textSize="30sp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:text="1:00 AM" />
+        </RelativeLayout>
+<RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/Alarm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#B0C4DE"
+            android:padding="5sp"
+            android:layout_marginLeft="10sp"
+            android:layout_marginRight="10sp" >
+
+            <ImageView
+                android:id="@+id/facebook"
+                android:src="@drawable/facebook_icon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignTop="@+id/music"
+                android:layout_toRightOf="@+id/music" 
+                android:layout_margin="1sp"/>
+
+            <ImageView
+                android:id="@+id/music"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/text_contacts"
+                android:layout_alignTop="@+id/text_contacts"
+                android:layout_toRightOf="@+id/text_contacts" 
+                android:layout_margin="1sp"/>
+
+            <ImageView
+                android:id="@+id/text_contacts"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/music_icon"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/time" 
+                android:layout_margin="1sp"/>
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="fill_parent"
+            	android:textSize="30sp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:text="1:00 AM" />
+        </RelativeLayout>
+    </TableRow>
+
+</TableLayout>

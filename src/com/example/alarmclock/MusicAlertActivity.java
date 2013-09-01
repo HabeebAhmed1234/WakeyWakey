@@ -12,6 +12,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
+import android.widget.Toast;
 
 public class MusicAlertActivity extends Activity {
 	PreferencesHandler prefsHandler;
@@ -21,6 +22,8 @@ public class MusicAlertActivity extends Activity {
 	
 	ArrayList <Music> musicList;
 	
+	private int selectedAlarm;
+	
 	private int playIndex;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +31,16 @@ public class MusicAlertActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_music_alert);
 		
+		this.selectedAlarm=getSelectedAlarm();
+		
 		prefsHandler = new PreferencesHandler(this);
 		prefs = prefsHandler.getSettings();
-		musicList = prefs.getMusicList();
+		if(selectedAlarm!=-1)
+		{
+			musicList = prefs.getAlarms().get(selectedAlarm).getMusicList();
+		}else{
+			Toast.makeText(getBaseContext(),"ERROR! NO ALARM NUMBER WAS PASSED IN!",Toast.LENGTH_SHORT).show();
+		}
 		playIndex=0;
 		
 		if(musicList.size()>0)
@@ -81,5 +91,18 @@ public class MusicAlertActivity extends Activity {
 		getMenuInflater().inflate(R.menu.activity_music_alert, menu);
 		return true;
 	}
+	
+	private int getSelectedAlarm()
+    {
+    	Intent in= getIntent();
+        Bundle b = in.getExtras();
+        if(b!=null)
+        {
+            return Integer.parseInt((String) b.get(Alarm.ALARM_NAME));
+        }else
+        {
+        	return -1;
+        }
+    }
 
 }

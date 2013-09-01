@@ -5,7 +5,10 @@ import android.app.Activity;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -14,11 +17,18 @@ import android.app.Dialog;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.ToggleButton;
@@ -27,41 +37,21 @@ import com.example.alarmclock.MyTextToSpeech;
 //add a options selector
 public class MainActivity extends Activity implements TextToSpeech.OnInitListener,OnClickListener {
 	
-	private TimePicker timePicker1;
- 
-	private int hour;
-	private int minute;
-	
-	private RadioGroup radioGroup;
-	private RadioButton radioButton;
-	
-	private PreferencesHandler prefsHandler;
-	private Preferences prefs;
-	
-	private Button ContactsManagerButton;
-	private Button MusicManagerButton;
+	private ArrayList<Alarm> alarms;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		timePicker1 = (TimePicker) findViewById(R.id.timePicker1);
+		PreferencesHandler prefsHandler = new PreferencesHandler(this);
+		Preferences prefs = prefsHandler.getSettings();
 		
-		MyTextToSpeech speaker = new MyTextToSpeech(this);
-		speaker.say("Wake up!");
+		this.alarms=prefs.getAlarms();
 		
-		prefsHandler=new PreferencesHandler(this);
-		
-		ContactsManagerButton = (Button) findViewById(R.id.editContactsToText);
-		ContactsManagerButton.setOnClickListener(this);
-		
-		MusicManagerButton = (Button) findViewById(R.id.editMusic);
-		MusicManagerButton.setOnClickListener(this);
-		//setCurrentTimeOnView();
-		//addListenerOnButton();
-        //check for successful instantiation
+		createAlarmsViews();
 	}
+	
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -70,120 +60,102 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 		return true;
 	}
 	
-	public void onToggleClicked(View view) {
-	    //handle radio buttons first
-	    handleRadioButton();
-	    
-	    // Is the toggle on?
-	    boolean on = ((ToggleButton) view).isChecked();
-	    
-	    if (on) {
-	    	
-	        Calendar cal = Calendar.getInstance();
-	        cal.set(Calendar.MINUTE, timePicker1.getCurrentMinute());
-	        cal.set(Calendar.HOUR_OF_DAY, timePicker1.getCurrentHour());
-	        cal.set(Calendar.SECOND, 0);
-	        cal.set(Calendar.MILLISECOND, 0);
-	        
-	        Intent intent = new Intent(getApplicationContext(), AlarmReceiver.class);
-	        PendingIntent sender = PendingIntent.getBroadcast(this, 192837, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-	        
-	        // Get the AlarmManager service
-	        AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
-	        am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), sender);
-	    } else {
-	        // Disable vibrate
-	    }
+	private void createAlarmsViews()
+	{
+		TableLayout mainTable = new TableLayout(this);
+		LayoutParams mainTableParams = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
+		mainTableParams.setMargins(0, 20, 0, 0);
+		mainTable.setLayoutParams(mainTableParams);
+		
+		for(int i = 0; i<this.alarms.size(); i+=2)
+		{
+			Alarm currentAlarm = alarms.get(i);
+			
+			TableRow tableRow = new TableRow(this);
+			LayoutParams tableRowParams = new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+			tableRow.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));  
+			tableRow.setPadding(5, 5, 5, 5);
+			
+			tableRow.addView(createAlarmView(alarms.get(i)));
+			tableRow.addView(createAlarmView(alarms.get(i+1)));
+			
+			mainTable.addView(tableRow);
+		}
+		
+		this.setContentView(mainTable);
 	}
 	
-	private void handleRadioButton()
+	private LinearLayout createAlarmView(Alarm alarm)
 	{
-		radioGroup = (RadioGroup) findViewById(R.id.optionsgroup);
-		// get selected radio button from radioGroup
-		int selectedId = radioGroup.getCheckedRadioButtonId();
-
-		// find the radiobutton by returned id
-	    radioButton = (RadioButton) findViewById(selectedId);
+		LinearLayout linearLayout = new LinearLayout(this);
+		linearLayout.setBackgroundColor(Color.BLUE);
+		linearLayout.setPadding(5, 5, 5, 5);
+		LayoutParams linearLayoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+		linearLayoutParams.weight=1;
+		linearLayoutParams.setMargins(10, 0, 10, 0);
+		linearLayout.setOrientation(LinearLayout.VERTICAL);
+		linearLayout.setLayoutParams(linearLayoutParams);
 		
-	    String selectedoption=(String) radioButton.getText();
-
-    	Log.d("debuggings",selectedoption);
-    	
-		if(selectedoption.compareTo("Text Contacts")==0) 
-		{
-			prefsHandler.setTextContactsOption(true);
-			prefsHandler.setMusicOption(false);
-			prefsHandler.setFacebookOption(false);
-			prefsHandler.setVideoNewsOption(false);
-		}
-		if(selectedoption.compareTo("Video News Feed")==0) 
-		{
-			prefsHandler.setTextContactsOption(false);
-			prefsHandler.setMusicOption(false);
-			prefsHandler.setFacebookOption(false);
-			prefsHandler.setVideoNewsOption(true);
-		}
-		if(selectedoption.compareTo("Music")==0) 
-		{
-			prefsHandler.setTextContactsOption(false);
-			prefsHandler.setMusicOption(true);
-			prefsHandler.setFacebookOption(false);
-			prefsHandler.setVideoNewsOption(false);
-		}
-		if(selectedoption.compareTo("Facebook")==0) 
-		{
-			prefsHandler.setTextContactsOption(false);
-			prefsHandler.setMusicOption(false);
-			prefsHandler.setFacebookOption(true);
-			prefsHandler.setVideoNewsOption(false);
-		}
+		linearLayout.addView(getTimeView(alarm));
+		linearLayout.addView(getSettingImages(alarm));
+		
+		return linearLayout;
 	}
-	private TimePickerDialog.OnTimeSetListener timePickerListener = 
-            new TimePickerDialog.OnTimeSetListener() {
-		public void onTimeSet(TimePicker view, int selectedHour,
-				int selectedMinute) {
-			hour = selectedHour;
-			minute = selectedMinute;
- 
-			// set current time into textview
-			//tvDisplayTime.setText(new StringBuilder().append(pad(hour))
-			//		.append(":").append(pad(minute)));
- 
-			// set current time into timepicker
-			timePicker1.setCurrentHour(hour);
-			timePicker1.setCurrentMinute(minute);
- 
-		}
-	};
- 
-	private static String pad(int c) {
-		if (c >= 10)
-		   return String.valueOf(c);
-		else
-		   return "0" + String.valueOf(c);
+	
+	private TextView getTimeView(Alarm alarm)
+	{ 
+		TextView timeView = new TextView(this);
+		LayoutParams timeLayoutParams = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT);
+		timeView.setTextSize(TypedValue.COMPLEX_UNIT_SP,30);
+		timeView.setText(alarm.getTime());
+		
+		return timeView;
+	}
+	
+	private LinearLayout getSettingImages(Alarm alarm)
+	{
+		LinearLayout settingsLinearLayout = new LinearLayout(this);
+		settingsLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
+		LayoutParams settingsLayoutParams = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT); 
+		
+		ImageView facebookImageView = new ImageView(this);
+		facebookImageView.setId(1);
+		facebookImageView.setBackgroundResource(R.drawable.facebook_icon);
+		LayoutParams facebookLayoutParams = new LayoutParams(30,30);
+		facebookLayoutParams.setMargins(1, 1, 1, 1);
+		facebookImageView.setLayoutParams(facebookLayoutParams);
+		
+		ImageView musicImageView = new ImageView(this);
+		musicImageView.setId(2);
+		musicImageView.setBackgroundResource(R.drawable.music_icon);
+		LayoutParams musicLayoutParams = new LayoutParams(30,30);
+		musicLayoutParams.setMargins(1, 1, 1, 1);
+		musicImageView.setLayoutParams(musicLayoutParams);
+		
+		ImageView textContactsImageView = new ImageView(this);
+		textContactsImageView.setId(3);
+		textContactsImageView.setBackgroundResource(R.drawable.text_contacts);
+		LayoutParams textContactsLayoutParams = new LayoutParams(30,30);
+		textContactsLayoutParams.setMargins(1, 1, 1, 1);
+		textContactsImageView.setLayoutParams(textContactsLayoutParams);
+		
+		settingsLinearLayout.addView(facebookImageView);
+		settingsLinearLayout.addView(musicImageView);
+		settingsLinearLayout.addView(textContactsImageView);
+		
+		return settingsLinearLayout;
 	}
 
 	@Override
-	public void onInit(int status) {
-		
-	}
-
-	@Override
-	public void onClick(View v) {
+	public void onInit(int arg0) {
 		// TODO Auto-generated method stub
+		
+	}
 
-		Log.d("debuggings","buttonClicked");
-		if(v.getId()==R.id.editContactsToText)
-		{
-			Intent intent = new Intent(this, ContactManager.class);
-			startActivity(intent);	
-		}
-		if(v.getId()==R.id.editMusic)
-		{
-			Log.d("debuggings","editMusicClicked");
-			Intent intent = new Intent(this, MusicManagerActivity.class);
-			startActivity(intent);	
-		}
+
+	@Override
+	public void onClick(View arg0) {
+		// TODO Auto-generated method stub
 		
 	}
 }

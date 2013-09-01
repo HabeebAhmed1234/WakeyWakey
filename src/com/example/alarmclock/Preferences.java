@@ -5,71 +5,16 @@ import java.util.ArrayList;
 import android.content.Context;
 
 public class Preferences {
-	private boolean facebook=false;
-	private boolean textcontacts=false;
-	private boolean videonews=false;
-	private boolean music=false;
-	private ArrayList<Contact> contactList = new ArrayList<Contact>();
-	private ArrayList<Music>   musicList   = new ArrayList<Music>();
 	
-	void setfacebook(boolean setting)
+	private ArrayList<Alarm>   alarms   = new ArrayList<Alarm>();
+	
+	void setAlarms(ArrayList<Alarm> alarms)
 	{
-		facebook=setting;
+		this.alarms=alarms;
 	}
 	
-	void settextcontacts(boolean setting)
+	ArrayList<Alarm> getAlarms()
 	{
-		textcontacts=setting;
+		return this.alarms;
 	}
-	
-	void setvideonews(boolean setting)
-	{
-		videonews=setting;
-	}
-	
-	void setmusic(boolean setting)
-	{
-		music=setting;
-	}
-	
-	void addContactToList(Contact contact)
-	{
-		contactList.add(contact);
-	}
-	
-	void addMusicToList(Music music)
-	{
-		musicList.add(music);
-	}
-	
-	boolean getfacebook()
-	{
-		return facebook;
-	}
-	
-	boolean gettextcontacts()
-	{
-		return textcontacts;
-	}
-	
-	boolean getvideonews()
-	{
-		return videonews;
-	}
-	
-	boolean getmusic()
-	{
-		return music;
-	}
-	
-	ArrayList <Contact> getContactList()
-	{
-		return contactList;
-	}
-	
-	ArrayList <Music> getMusicList()
-	{
-		return musicList;
-	}
-		 
 }

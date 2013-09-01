@@ -2,26 +2,20 @@ package com.example.alarmclock;
 
 import java.util.ArrayList;
 
-
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.provider.ContactsContract.PhoneLookup;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
+
+
 
 //limitation
 //if a contact has more than one number this software will take the first number available which is not necessarily a mobile number
@@ -36,6 +30,8 @@ public final class ContactManager extends Activity
     ContactsListAdapter contactsListAdapter;
     ArrayList<Contact> contacts = new ArrayList<Contact>();
     ArrayList<Contact> selectedContacts = new ArrayList <Contact>();
+    private int selectedAlarm;
+    private ArrayList<Alarm> alarms;
     
     @Override
     public void onDestroy ()
@@ -50,7 +46,8 @@ public final class ContactManager extends Activity
     			selectedContacts.add(contacts.get(i));
     		}
     	}
-        prefsHandler.setTextContactsList(selectedContacts);
+    	alarms.get(selectedAlarm).setTextContactsList(selectedContacts);
+        prefsHandler.setAlarms(alarms);
     }
     
     @Override
@@ -60,9 +57,18 @@ public final class ContactManager extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.contact_manager);
         
+        selectedAlarm=getSelectedAlarm();
+        
         prefsHandler = new PreferencesHandler(this);
         prefs = prefsHandler.getSettings();
-        selectedContacts=prefs.getContactList();
+        alarms=prefs.getAlarms();
+        
+        if(selectedAlarm!=-1)
+        {
+        	selectedContacts=alarms.get(selectedAlarm).getContactsList();
+        }else{
+        	Toast.makeText(getBaseContext(),"ERROR! NO ALARM NUMBER WAS PASSED IN!",Toast.LENGTH_SHORT).show();
+        }
         
         ListView lvContactsContent = (ListView) findViewById(R.id.contactList);
 		
@@ -147,5 +153,18 @@ public final class ContactManager extends Activity
     		}
     	}
     	return filtered;
+    }
+    
+    private int getSelectedAlarm()
+    {
+    	Intent in= getIntent();
+        Bundle b = in.getExtras();
+        if(b!=null)
+        {
+            return Integer.parseInt((String) b.get(Alarm.ALARM_NAME));
+        }else
+        {
+        	return -1;
+        }
     }
 }

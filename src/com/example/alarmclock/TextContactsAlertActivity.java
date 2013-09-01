@@ -16,10 +16,16 @@ public class TextContactsAlertActivity extends Activity {
 
 	PreferencesHandler prefsHandler;
 	Preferences prefs;
+	
+	private int selectedAlarm;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_text_contacts_alert);
+		
+		selectedAlarm=getSelectedAlarm();
+		if(selectedAlarm==-1)Toast.makeText(getBaseContext(),"ERROR! NO ALARM NUMBER WAS PASSED IN!",Toast.LENGTH_SHORT).show();
 		
 		prefsHandler = new PreferencesHandler(this);
 		prefs = prefsHandler.getSettings();
@@ -40,7 +46,7 @@ public class TextContactsAlertActivity extends Activity {
 	}
 
 	void textAllContacts() {
-		ArrayList<Contact> contacts = prefs.getContactList();
+		ArrayList<Contact> contacts = prefs.getAlarms().get(selectedAlarm).getContactsList();
 	    Log.d("msg","textAllContacts");
 		
 		for(int i = 0; i<contacts.size();i++)
@@ -70,6 +76,18 @@ public class TextContactsAlertActivity extends Activity {
 		}
 	}
 	
+	 private int getSelectedAlarm()
+	    {
+	    	Intent in= getIntent();
+	        Bundle b = in.getExtras();
+	        if(b!=null)
+	        {
+	            return Integer.parseInt((String) b.get(Alarm.ALARM_NAME));
+	        }else
+	        {
+	        	return -1;
+	        }
+	    }
 	
 
 }

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.app.Activity;
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.database.Cursor;
 import android.util.Log;
 import android.view.Menu;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MusicManagerActivity extends Activity {
 
@@ -24,6 +26,8 @@ public class MusicManagerActivity extends Activity {
     MusicListAdapter musicListAdapter;
     ArrayList<Music> music = new ArrayList<Music>();
     ArrayList<Music> selectedMusic = new ArrayList <Music>();
+    private int selectedAlarm;
+    private ArrayList<Alarm> alarms;
     
     @Override
     public void onDestroy ()
@@ -38,7 +42,8 @@ public class MusicManagerActivity extends Activity {
     			selectedMusic.add(music.get(i));
     		}
     	}
-        prefsHandler.setMusicList(selectedMusic); 
+    	alarms.get(selectedAlarm).setMusicList(selectedMusic);
+        prefsHandler.setAlarms(alarms); 
     }
     
     @Override
@@ -47,10 +52,21 @@ public class MusicManagerActivity extends Activity {
         Log.v(TAG, "Activity State: onCreate()");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music_manager);
+
+        selectedAlarm=getSelectedAlarm();
         
         prefsHandler = new PreferencesHandler(this);
         prefs = prefsHandler.getSettings();
-        selectedMusic=prefs.getMusicList();
+        
+        alarms=prefs.getAlarms();
+        
+        if(selectedAlarm!=-1)
+        {	
+        	selectedMusic=alarms.get(selectedAlarm).getMusicList();
+        }else{
+        	Toast.makeText(getBaseContext(),"ERROR! NO ALARM NUMBER WAS PASSED IN!",Toast.LENGTH_SHORT).show();
+        }
+        
         
         ListView lvMusicssContent = (ListView) findViewById(R.id.musicList);
 		
@@ -132,6 +148,19 @@ public class MusicManagerActivity extends Activity {
     		}
     	}
     	return filtered;
+    }
+    
+    private int getSelectedAlarm()
+    {
+    	Intent in= getIntent();
+        Bundle b = in.getExtras();
+        if(b!=null)
+        {
+            return Integer.parseInt((String) b.get(Alarm.ALARM_NAME));
+        }else
+        {
+        	return -1;
+        }
     }
 
 }
