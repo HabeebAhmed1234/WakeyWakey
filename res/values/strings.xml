@@ -30,11 +30,13 @@
     <string name="targetAccountLabel">Target Account</string>
     <string name="undefinedTypeLabel">(Undefined)</string>
     <string name="title_activity_music_manager">MusicManagerActivity</string>
-	<string name="title_activity_shake_to_wake">ShakeToWakeActivity</string>
+    <string name="title_activity_shake_to_wake">ShakeToWakeActivity</string>
     <string name="title_activity_intro_video">IntroVideoActivity</string>
     <string name="app_name">OpenYouTubeActivity</string>
     <string name="youtubeIdText">YouTube Video ID</string>
     <string name="viewVideoButton">View Using OpenYouTubeActivity!</string>
     <string name="defaultYoutubeVideoId">tzgFuUu0oxg</string>
     <string name="youtubevideoid">YouTube Video ID</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+
 </resources>
