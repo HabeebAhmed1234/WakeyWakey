@@ -1,15 +1,23 @@
 package com.example.alarmclock;
 
 import android.os.Bundle;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.Menu;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 
 import android.app.AlarmManager;
@@ -18,8 +26,10 @@ import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -38,20 +48,47 @@ import com.example.alarmclock.MyTextToSpeech;
 public class MainActivity extends Activity implements TextToSpeech.OnInitListener,OnClickListener {
 	
 	private ArrayList<Alarm> alarms;
-
+	private AlarmManager am;
+	public static final int ALARM_ADDER_ID = -100;
+	public static final String ALARM_ID = "ALARM_ID";
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		//setContentView(R.layout.activity_main);
 		
 		PreferencesHandler prefsHandler = new PreferencesHandler(this);
 		Preferences prefs = prefsHandler.getSettings();
 		
-		this.alarms=prefs.getAlarms();
+		alarms = new ArrayList();
 		
-		createAlarmsViews();
+		//this.alarms=prefs.getAlarms();
+		this.alarms = getFakeAlarms();
+
+		try {
+			createAlarmsViews();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+
+        am = (AlarmManager) getSystemService(ALARM_SERVICE);
 	}
 	
+	ArrayList <Alarm> getFakeAlarms()
+	{
+		for (int i =0; i <10;i++)
+		{
+			int id = getNewID();
+			Alarm alrm = new Alarm(20,10,id);
+			alrm.disableAlarm();
+			alrm.setFacebookOption(true);
+			alrm.setMusicOption(false);
+			alrm.setTextContactsOption(false);
+			alarms.add(alrm);
+		}
+		return alarms;
+	}
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -60,14 +97,98 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 		return true;
 	}
 	
-	private void createAlarmsViews()
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		Log.d("debugger",v.getId()+" was clicked");
+		
+		int ID = v.getId();
+		
+		//check if alarm adder was clicked Alarm adder id is -100
+		if(ID == ALARM_ADDER_ID)
+		{
+			Alarm newAlarm = new Alarm(0, 0, getNewID());
+			alarms.add(newAlarm);
+			
+			PreferencesHandler prefsHandler = new PreferencesHandler(this);
+			prefsHandler.setAlarms(alarms);
+			
+			startSettingsActivity(newAlarm);
+		}
+		
+		if(!(matchToAlarmIds(ID))) return;
+		
+		Alarm clickedAlarm = getAlarmByID(ID);
+		
+		clickedAlarm = this.toggleAlarm(clickedAlarm, false);
+		
+		float startAlpha = 1f;
+		float endAlpha = 0.5f;
+		
+		if(clickedAlarm.enabled())
+		{
+			startAlpha = 0.5f;
+			endAlpha = 1f;
+		}
+		else{
+			startAlpha = 1f;
+			endAlpha = 0.5f;
+		}
+		
+		AlphaAnimation alpha = new AlphaAnimation(startAlpha, endAlpha);
+		alpha.setDuration(500); 
+		alpha.setFillAfter(true); 
+		v.startAnimation(alpha);
+	}
+	
+	void startSettingsActivity(Alarm alarm)
+	{
+		Intent i = new Intent(this, SettingsActivity.class);
+		i.putExtra(ALARM_ID, alarm.getID());
+		this.startActivity(i);
+	}
+	
+	private int getNewID()
+	{
+		int max = 0;
+		for(int i = 0 ; i < alarms.size() ; i++)
+		{
+			if(alarms.get(i).getID()>max)max = alarms.get(i).getID();
+		}
+		max+=1;
+		return max;
+	}
+	
+	private boolean matchToAlarmIds(int id)
+	{
+		for (int i=0; i<alarms.size();i++)
+		{
+			if(alarms.get(i).getID()==id) return true;
+		}
+		return false;
+	}
+	
+	private Alarm getAlarmByID(int id)
+	{
+		for (int i=0; i<alarms.size();i++)
+		{
+			if(alarms.get(i).getID()==id) return alarms.get(i);
+		}
+		return null;
+	}
+	
+	private void createAlarmsViews() throws ParseException
 	{
 		TableLayout mainTable = new TableLayout(this);
 		LayoutParams mainTableParams = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
 		mainTableParams.setMargins(0, 20, 0, 0);
 		mainTable.setLayoutParams(mainTableParams);
 		
-		for(int i = 0; i<this.alarms.size(); i+=2)
+		//add in the alarm adder tile
+		Alarm alarmAdder = new Alarm(0,0,this.ALARM_ADDER_ID);
+		alarms.add(alarmAdder);
+		
+		for(int i = 0; i<alarms.size();i+=2)
 		{
 			Alarm currentAlarm = alarms.get(i);
 			
@@ -77,37 +198,105 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 			tableRow.setPadding(5, 5, 5, 5);
 			
 			tableRow.addView(createAlarmView(alarms.get(i)));
-			tableRow.addView(createAlarmView(alarms.get(i+1)));
+			
+			if((i+1)<alarms.size()) tableRow.addView(createAlarmView(alarms.get(i+1)));
 			
 			mainTable.addView(tableRow);
 		}
 		
+		alarms.remove(alarms.size()-1);
+		
 		this.setContentView(mainTable);
 	}
 	
-	private LinearLayout createAlarmView(Alarm alarm)
+	private LinearLayout createAlarmView(Alarm alarm) throws ParseException
 	{
 		LinearLayout linearLayout = new LinearLayout(this);
-		linearLayout.setBackgroundColor(Color.BLUE);
+		linearLayout.setBackgroundColor(this.getResources().getColor(R.color.Blue));
+		
+		if(!(alarm.getID()==this.ALARM_ADDER_ID))
+		{
+			float startAlpha = 1f;
+			float endAlpha = 0.5f;
+			
+			if(alarm.enabled())
+			{
+				startAlpha = 0.5f;
+				endAlpha = 1f;
+			}
+			else{
+				startAlpha = 1f;
+				endAlpha = 0.5f;
+			}
+			
+			AlphaAnimation alpha = new AlphaAnimation(startAlpha, endAlpha);
+			alpha.setDuration(500); 
+			alpha.setFillAfter(true); 
+			linearLayout.startAnimation(alpha);
+		}
+		
 		linearLayout.setPadding(5, 5, 5, 5);
-		LayoutParams linearLayoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+		LayoutParams linearLayoutParams = new LayoutParams((getScreenWidth() - 40)/2,LayoutParams.WRAP_CONTENT);
 		linearLayoutParams.weight=1;
 		linearLayoutParams.setMargins(10, 0, 10, 0);
 		linearLayout.setOrientation(LinearLayout.VERTICAL);
 		linearLayout.setLayoutParams(linearLayoutParams);
 		
-		linearLayout.addView(getTimeView(alarm));
-		linearLayout.addView(getSettingImages(alarm));
+		if(!(alarm.getID()==this.ALARM_ADDER_ID))
+		{
+			linearLayout.addView(getTimeView(alarm));
+			linearLayout.addView(getSettingImages(alarm));
+		}
+		
+		if((alarm.getID()==this.ALARM_ADDER_ID))
+		{
+			ImageView plusSign = new ImageView(this);
+			plusSign.setImageDrawable(this.getResources().getDrawable(R.drawable.plus));
+			linearLayout.setGravity(Gravity.CENTER_HORIZONTAL);
+			linearLayout.setGravity(Gravity.CENTER_VERTICAL);
+			linearLayout.addView(plusSign);
+		}
+		
+		linearLayout.setId(alarm.getID());
+		linearLayout.setClickable(true);
+		linearLayout.setOnClickListener(this);
 		
 		return linearLayout;
 	}
 	
-	private TextView getTimeView(Alarm alarm)
+	@SuppressLint("NewApi") private int getScreenWidth()
+	{
+		int width = 0;
+		
+		Display display = getWindowManager().getDefaultDisplay();
+		Point size = new Point();
+		
+		int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+		if (currentapiVersion >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1){
+		    //Do something for API 17 only (4.2)
+			display.getRealSize(size);
+			width = size.x;
+		}
+		else if (currentapiVersion >= android.os.Build.VERSION_CODES.HONEYCOMB_MR2){
+		    // Do something for API 13 and above , but below API 17 (API 17 will trigger the above block
+		    //getSize()
+			display.getSize(size);
+			width = size.x;
+		} else{
+		    // do something for phones running an SDK before Android 3.2 (API 13)
+		    //getWidth(), getHeight()
+			width=display.getWidth();
+		}
+		
+		return width;
+	}
+	
+	private TextView getTimeView(Alarm alarm) throws ParseException
 	{ 
 		TextView timeView = new TextView(this);
 		LayoutParams timeLayoutParams = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT);
 		timeView.setTextSize(TypedValue.COMPLEX_UNIT_SP,30);
-		timeView.setText(alarm.getTime());
+		timeView.setText(militaryToTwelveHour(alarm.getHour(),alarm.getMinute()));
 		
 		return timeView;
 	}
@@ -124,6 +313,7 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 		LayoutParams facebookLayoutParams = new LayoutParams(30,30);
 		facebookLayoutParams.setMargins(1, 1, 1, 1);
 		facebookImageView.setLayoutParams(facebookLayoutParams);
+		if(!alarm.getFacebookOption())facebookImageView.getBackground().setAlpha(50);
 		
 		ImageView musicImageView = new ImageView(this);
 		musicImageView.setId(2);
@@ -131,6 +321,7 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 		LayoutParams musicLayoutParams = new LayoutParams(30,30);
 		musicLayoutParams.setMargins(1, 1, 1, 1);
 		musicImageView.setLayoutParams(musicLayoutParams);
+		if(!alarm.getMusicOption())musicImageView.getBackground().setAlpha(50);
 		
 		ImageView textContactsImageView = new ImageView(this);
 		textContactsImageView.setId(3);
@@ -138,12 +329,39 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 		LayoutParams textContactsLayoutParams = new LayoutParams(30,30);
 		textContactsLayoutParams.setMargins(1, 1, 1, 1);
 		textContactsImageView.setLayoutParams(textContactsLayoutParams);
-		
+		if(!alarm.getTextContactsOption())textContactsImageView.getBackground().setAlpha(50);
+			
 		settingsLinearLayout.addView(facebookImageView);
 		settingsLinearLayout.addView(musicImageView);
 		settingsLinearLayout.addView(textContactsImageView);
 		
 		return settingsLinearLayout;
+	}
+	
+	String militaryToTwelveHour(int hour, int minute) throws ParseException
+	{
+		String _24HourTime;
+		
+		if(hour>=10)
+		{
+			_24HourTime = Integer.toString(hour)+":"+Integer.toString(minute);
+		}
+		else
+		{
+			_24HourTime = "0"+Integer.toString(hour)+":"+Integer.toString(minute);
+		}
+		
+        SimpleDateFormat _24HourSDF = new SimpleDateFormat("HH:mm");
+        SimpleDateFormat _12HourSDF = new SimpleDateFormat("hh:mm a");
+        Date _24HourDt = _24HourSDF.parse(_24HourTime);
+        
+        String outTime = _12HourSDF.format(_24HourDt);
+        if(outTime.charAt(0)=='0')
+        {
+        	outTime = outTime.substring(1);
+        }
+        
+        return outTime;
 	}
 
 	@Override
@@ -151,11 +369,76 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 		// TODO Auto-generated method stub
 		
 	}
-
-
-	@Override
-	public void onClick(View arg0) {
-		// TODO Auto-generated method stub
+	
+	private void setAlarm(int hour, int minute, int id)
+	{
+		Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.MINUTE, minute);
+        cal.set(Calendar.HOUR_OF_DAY, hour);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        
+        Intent intent = new Intent(getApplicationContext(), AlarmReceiver.class);
+        PendingIntent sender = PendingIntent.getBroadcast(this, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        
+        am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), sender);
+	}
+	
+	private Alarm toggleAlarm(Alarm alarm, boolean forceDelete)
+	{
+		if(!forceDelete)
+		{
+			for(int i = 0;i<alarms.size();i++)
+			{
+				if(alarms.get(i).getID()==alarm.getID())
+				{
+					if(alarms.get(i).enabled())
+					{
+						alarms.get(i).disableAlarm();
+					}else
+					{
+						alarms.get(i).enableAlarm();
+					}
+					return alarms.get(i);
+				}
+			}
+		}else
+		{
+	        Intent intent = new Intent(getApplicationContext(), AlarmReceiver.class);
+			PendingIntent displayIntent = PendingIntent.getBroadcast(this, alarm.getID(), intent, PendingIntent.FLAG_NO_CREATE);
 		
+			if(displayIntent != null) {
+				am.cancel(displayIntent);
+				displayIntent.cancel();  
+			}
+
+			removeAlarmFromList(alarm);
+			
+			PreferencesHandler prefsHandler = new PreferencesHandler(this);
+			prefsHandler.setAlarms(alarms);
+			
+			alarm = null;
+		}
+		
+		return alarm;
+	}
+	
+	private void deleteAlarm(Alarm alarm)
+	{
+		toggleAlarm(alarm, true);
+	}
+	
+	private ArrayList <Alarm> removeAlarmFromList(Alarm alarm)
+	{
+		ArrayList <Alarm> newlist = new ArrayList();
+		
+		for (int i =0 ; i<alarms.size();i++)
+		{
+			if(!(alarms.get(i).getID()==alarm.getID()))
+			{
+				newlist.add(alarms.get(i));
+			}
+		}
+		return newlist;
 	}
 }

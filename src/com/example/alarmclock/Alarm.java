@@ -4,30 +4,72 @@ import java.util.ArrayList;
 
 public class Alarm {
 	
-	private String time;
+	private int hour;
+	private int minute;
 	private boolean facebookOption;
 	private boolean videoNewsOption;
 	private boolean textContactsOption;
 	private boolean musicOption;
+	private boolean isAlarmOn;
+	private int ID;
+	
 	public static final String ALARM_NAME="AlarmName";
 	
 	private ArrayList<Contact> textContactsList;
 	private ArrayList<Music> musicList;
 	
-	void Alarm(String id)
+	Alarm(int hour, int minute, int id)
 	{
 		this.textContactsList = new ArrayList<Contact>();
 		this.musicList = new ArrayList<Music>();
+		this.hour = hour;
+		this.minute = minute;
+		this.ID = id;
+		this.facebookOption=false;
+		this.videoNewsOption=false;
+		this.textContactsOption=false;
+		this.musicOption=false;
 	}
 	
-	public void setTime(String time)
+	public void setID(int id)
 	{
-		this.time=time;
+		this.ID = id;
 	}
 	
-	public String getTime()
+	public int getID()
 	{
-		return this.time;
+		return this.ID;
+	}
+	
+	public void setTime(int hour,int minute)
+	{
+		this.hour=hour;
+		this.minute = minute;
+	}
+	
+	public void enableAlarm()
+	{
+		isAlarmOn = true;
+	}
+	
+	public boolean enabled()
+	{
+		return isAlarmOn;
+	}
+	
+	public void disableAlarm()
+	{
+		isAlarmOn = false;
+	}
+	
+	public int getHour()
+	{
+		return this.hour;
+	}
+	
+	public int getMinute()
+	{
+		return this.minute;
 	}
 	
 	public void setFacebookOption(boolean setting)
@@ -114,3 +156,4 @@ public class Alarm {
 		this.musicList.add(music);
 	}
 }
+

@@ -18,7 +18,9 @@ public class PreferencesHandler {
 	public String CONTACTS_AMMOUNT_KEY="CONTACTS_AMMOUNT";
 	public String MUSICS_AMMOUNT_KEY="MUSICS_AMMOUNT";
 	public String ALARMS_AMMOUNT_KEY="ALARMS_AMMOUNT";
-	public String TIME_KEY="TIME";
+	public String TIME_HOUR_KEY="TIME_HOUR";
+	public String TIME_MINUTE_KEY = "TIME_MINUTE";
+	public String ALARM_ID_KEY = "ALARM_ID";
 	
 	private SharedPreferences settings ;
 	
@@ -102,8 +104,6 @@ public class PreferencesHandler {
 		//shows the number of contacts in total
 		this.set(MUSICS_AMMOUNT_KEY+AlarmNumber,Integer.toString(selectedMusic.size()));
 		
-		//Log.d("debuggings","set musics ammount " + Integer.toString(selectedMusic.size()));
-		
 		for(int i=0;i<selectedMusic.size();i++)
 		{
 			this.set("MUSIC_NUMBER_"+i+"_"+AlarmNumber,selectedMusic.get(i).getPath());
@@ -111,9 +111,15 @@ public class PreferencesHandler {
 		}
 	}
 	
-	private void setAlarmTime(String time, int AlarmNumber)
+	private void setAlarmTime(int hour,int minute, int AlarmNumber)
 	{
-		this.set(this.TIME_KEY+AlarmNumber,time);
+		this.set(this.TIME_HOUR_KEY+AlarmNumber,Integer.toString(hour));
+		this.set(this.TIME_MINUTE_KEY+AlarmNumber,Integer.toString(minute));
+	}
+	
+	private void setAlarmID(int id,int AlarmNumber)
+	{
+		this.set(this.ALARM_ID_KEY+AlarmNumber,Integer.toString(id));
 	}
 	
 	public void setAlarms(ArrayList<Alarm> alarms)
@@ -122,13 +128,14 @@ public class PreferencesHandler {
 		
 		for(int i=0;i<alarms.size();i++)
 		{
-			this.setAlarmTime(alarms.get(i).getTime(), i);
+			this.setAlarmTime(alarms.get(i).getHour(),alarms.get(i).getMinute(), i);
 			this.setFacebookOption(alarms.get(i).getFacebookOption(), i);
 			this.setMusicOption(alarms.get(i).getMusicOption(), i);
 			this.setTextContactsOption(alarms.get(i).getTextContactsOption(), i);
 			this.setVideoNewsOption(alarms.get(i).getVideoNewsOption(), i);
 			this.setMusicList(alarms.get(i).getMusicList(), i);
 			this.setTextContactsList(alarms.get(i).getContactsList(), i);
+			this.setAlarmID(alarms.get(i).getID(),i);
 		}
 	}
 	
@@ -141,7 +148,7 @@ public class PreferencesHandler {
 		{
 			for(int i = 0 ; i < Integer.parseInt(get(this.ALARMS_AMMOUNT_KEY)) ; i++)
 			{
-				Alarm newAlarm = new Alarm();
+				Alarm newAlarm = new Alarm(0,0,0);
 				
 				if(get(this.FACEBOOK_KEY+i)=="true")
 				{
@@ -169,6 +176,29 @@ public class PreferencesHandler {
 					newAlarm.setMusicOption(true);
 				}else{
 					newAlarm.setMusicOption(false);
+				}
+				
+				//add in time
+				String hour = get(TIME_HOUR_KEY+i);
+				String minute = get(TIME_HOUR_KEY+i);
+				
+				if(!(hour.compareTo("NULL")==0)&&!(minute.compareTo("NULL")==0))
+				{
+					newAlarm.setTime(Integer.parseInt(hour), Integer.parseInt(minute));
+				}
+				else
+				{
+					newAlarm.setTime(0,0);
+				}
+				
+				//add in ID
+				String id = this.get(this.ALARM_ID_KEY+i);
+				if(!(id.compareTo("NULL")==0))
+				{
+					newAlarm.setID(Integer.parseInt(id));
+				}else
+				{
+					newAlarm.setID(0);
 				}
 				
 				//add in contacts
@@ -206,3 +236,4 @@ public class PreferencesHandler {
 		return prefs;
 	}
 }
+
