@@ -40,7 +40,7 @@
                      android:textSize="@dimen/activity_medium_text" />
 
                  <EditText
-                     android:id="@+id/EditText01"
+                     android:id="@+id/AlarmNameEditText"
                      android:layout_width="match_parent"
                      android:layout_height="wrap_content"
                      android:layout_weight="1"
@@ -64,7 +64,7 @@
                      android:textSize="@dimen/activity_medium_text" />
 
                  <TimePicker
-                     android:id="@+id/TimePicker01"
+                     android:id="@+id/AlarmTime"
                      android:layout_width="wrap_content"
                      android:layout_height="wrap_content"
                      android:layout_below="@+id/TextView02" />
@@ -180,7 +180,7 @@
                   android:textSize="@dimen/activity_medium_text" />
 
               <TextView
-                  android:id="@+id/contacts"
+                  android:id="@+id/contactsTextView"
                   android:layout_width="wrap_content"
                   android:layout_height="40dp"
                   android:layout_below="@+id/contactText"

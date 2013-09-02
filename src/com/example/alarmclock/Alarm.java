@@ -12,6 +12,7 @@ public class Alarm {
 	private boolean musicOption;
 	private boolean isAlarmOn;
 	private int ID;
+	private String name;
 	
 	public static final String ALARM_NAME="AlarmName";
 	
@@ -29,6 +30,16 @@ public class Alarm {
 		this.videoNewsOption=false;
 		this.textContactsOption=false;
 		this.musicOption=false;
+	}
+	
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+	
+	public String getName()
+	{
+		return name;
 	}
 	
 	public void setID(int id)

@@ -54,14 +54,13 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//setContentView(R.layout.activity_main);
 		
 		PreferencesHandler prefsHandler = new PreferencesHandler(this);
 		Preferences prefs = prefsHandler.getSettings();
 		
 		alarms = new ArrayList();
 		
-		//this.alarms=prefs.getAlarms();
+		this.alarms=prefs.getAlarms();
 		//this.alarms = getFakeAlarms();
 
 		try {
@@ -144,8 +143,10 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 	void startSettingsActivity(Alarm alarm)
 	{
 		Intent i = new Intent(this, SettingsActivity.class);
-		i.putExtra(ALARM_ID, alarm.getID());
+		Log.d ("AlarmClock","created new alarm of id "+alarm.getID());
+		i.putExtra(ALARM_ID, Integer.toString(alarm.getID()));
 		this.startActivity(i);
+		finish();
 	}
 	
 	private int getNewID()

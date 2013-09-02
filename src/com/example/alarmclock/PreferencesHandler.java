@@ -21,6 +21,7 @@ public class PreferencesHandler {
 	public String TIME_HOUR_KEY="TIME_HOUR";
 	public String TIME_MINUTE_KEY = "TIME_MINUTE";
 	public String ALARM_ID_KEY = "ALARM_ID";
+	public String ALARM_NAME_KEY = "ALARM_NAME";
 	
 	private SharedPreferences settings ;
 	
@@ -122,6 +123,11 @@ public class PreferencesHandler {
 		this.set(this.ALARM_ID_KEY+AlarmNumber,Integer.toString(id));
 	}
 	
+	private void setAlarmName(String name, int AlarmNumber)
+	{
+		this.set(this.ALARM_NAME_KEY+AlarmNumber,name);
+	}
+	
 	public void setAlarms(ArrayList<Alarm> alarms)
 	{
 		this.set(ALARMS_AMMOUNT_KEY,Integer.toString(alarms.size()));
@@ -136,6 +142,7 @@ public class PreferencesHandler {
 			this.setMusicList(alarms.get(i).getMusicList(), i);
 			this.setTextContactsList(alarms.get(i).getContactsList(), i);
 			this.setAlarmID(alarms.get(i).getID(),i);
+			this.setAlarmName(alarms.get(i).getName(),i);
 		}
 	}
 	
@@ -198,6 +205,16 @@ public class PreferencesHandler {
 				}else
 				{
 					newAlarm.setID(0);
+				}
+				
+				//add in name
+				String name = this.get(this.ALARM_NAME_KEY+i);
+				if(!(name.compareTo("NULL")==0))
+				{
+					newAlarm.setName(name);
+				}else
+				{
+					newAlarm.setName("No Name");
 				}
 				
 				//add in contacts

@@ -51,9 +51,17 @@ public class Contact {
 	{
 		if(isSelected())
 		{
+			for(int i = 0 ; i<GlobalStaticVariables.selectedContacts.size();i++)
+			{
+				if(GlobalStaticVariables.selectedContacts.get(i).getName() == this.name)
+				{
+					GlobalStaticVariables.selectedContacts.remove(i);
+				}
+			}
 			this.unselect();
 		}else
 		{
+			GlobalStaticVariables.selectedContacts.add(this);
 			this.select();
 		}
 	}

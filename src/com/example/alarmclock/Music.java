@@ -51,9 +51,17 @@ public class Music {
 	{
 		if(isSelected())
 		{
+			for(int i = 0 ; i<GlobalStaticVariables.selectedMusic.size();i++)
+			{
+				if(GlobalStaticVariables.selectedMusic.get(i).getName() == this.name)
+				{
+					GlobalStaticVariables.selectedMusic.remove(i);
+				}
+			}
 			this.unselect();
 		}else
 		{
+			GlobalStaticVariables.selectedMusic.add(this);
 			this.select();
 		}
 	}
