@@ -8,7 +8,7 @@ public class Preferences {
 	
 	private ArrayList<Alarm>   alarms   = new ArrayList<Alarm>();
 	
-	void setAlarms(ArrayList<Alarm> alarms)
+	Preferences(ArrayList<Alarm> alarms)
 	{
 		this.alarms=alarms;
 	}

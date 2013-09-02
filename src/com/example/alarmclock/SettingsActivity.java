@@ -39,7 +39,8 @@ public class SettingsActivity extends Activity {
 	Button musicButton;
 	static final int CONTACT_PICKER_RESULT = 1001;
 	
-	//private ArrayList<Alarm> alarms = new ArrayList<>
+	private ArrayList<Alarm> alarms = new ArrayList<Alarm>();
+	private Alarm alarm;
 	
 	// set up responses to the toggle buttons
 	public void setupToggleButtons(){
@@ -200,9 +201,19 @@ public class SettingsActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
+		//get the extra information from the invoking intent
+		
 		// populate alarm arraylist
 		PreferencesHandler prefsHandler =  new PreferencesHandler(this);
-		//this.AlprefsHandler.getSettings().getAlarms();
+		alarms = prefsHandler.getSettings().getAlarms();
+		
+		for(int i = 0 ; i <alarms.size() ; i++)
+		{
+			//if(alarms.get(i)==selectedAlarmID)
+			//{
+				
+			//}
+		}
 		
 		// initialize form components
 		initializeComponents();

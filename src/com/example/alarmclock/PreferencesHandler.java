@@ -141,7 +141,6 @@ public class PreferencesHandler {
 	
 	Preferences getSettings()
 	{
-		Preferences prefs=new Preferences();
 		ArrayList <Alarm> alarms = new ArrayList<Alarm>();
 		
 		if(!(get(this.ALARMS_AMMOUNT_KEY).compareTo("NULL")==0))
@@ -231,7 +230,7 @@ public class PreferencesHandler {
 			}
 		}
 		
-		prefs.setAlarms(alarms);
+		Preferences prefs=new Preferences(alarms);
 		//Log.d("debuggings","get musics ammount " + Integer.toString(prefs.getMusicList().size()));
 		return prefs;
 	}

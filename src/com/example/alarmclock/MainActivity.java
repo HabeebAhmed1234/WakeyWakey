@@ -379,8 +379,8 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
         cal.set(Calendar.MILLISECOND, 0);
         
         Intent intent = new Intent(getApplicationContext(), AlarmReceiver.class);
+        intent.putExtra(ALARM_ID, Integer.toString(id));
         PendingIntent sender = PendingIntent.getBroadcast(this, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        
         am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), sender);
 	}
 	

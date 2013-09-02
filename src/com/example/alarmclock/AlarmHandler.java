@@ -1,5 +1,7 @@
 package com.example.alarmclock;
 
+import java.util.ArrayList;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -10,6 +12,8 @@ public class AlarmHandler extends Activity {
 	
 	private PreferencesHandler PreferencesHandler;
 	private Preferences prefs;
+	
+	private Alarm alarm;
 	
 	void wakeUpUser()
 	{
@@ -55,11 +59,21 @@ public class AlarmHandler extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_alarm_handler);
 		
-		//Intent intent = new Intent(this, FacebookAlertActivity.class);
-		//startActivity(intent);
+		int alarmID = Integer.parseInt(getIntent().getExtras().getString(MainActivity.ALARM_ID));
 		
 		PreferencesHandler=new PreferencesHandler(this);
 		prefs=PreferencesHandler.getSettings();
+		
+		ArrayList<Alarm> alarms = prefs.getAlarms();
+		
+		for(int i =0 ;i<alarms.size();i++)
+		{
+			if(alarms.get(i).getID()==alarmID)
+			{
+				this.alarm = alarms.get(i);
+			}
+		}
+		
 		wakeUpUser();
 	}
 
