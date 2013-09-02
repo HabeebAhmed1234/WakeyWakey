@@ -62,7 +62,7 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 		alarms = new ArrayList();
 		
 		//this.alarms=prefs.getAlarms();
-		this.alarms = getFakeAlarms();
+		//this.alarms = getFakeAlarms();
 
 		try {
 			createAlarmsViews();

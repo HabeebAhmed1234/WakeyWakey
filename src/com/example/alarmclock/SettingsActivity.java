@@ -39,6 +39,8 @@ public class SettingsActivity extends Activity {
 	Button musicButton;
 	static final int CONTACT_PICKER_RESULT = 1001;
 	
+	//private ArrayList<Alarm> alarms = new ArrayList<>
+	
 	// set up responses to the toggle buttons
 	public void setupToggleButtons(){
 		toggle_textContacts.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -198,7 +200,10 @@ public class SettingsActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
-
+		// populate alarm arraylist
+		PreferencesHandler prefsHandler =  new PreferencesHandler(this);
+		//this.AlprefsHandler.getSettings().getAlarms();
+		
 		// initialize form components
 		initializeComponents();
 		
