@@ -17,6 +17,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -34,6 +35,9 @@ public class SettingsActivity extends Activity {
 
 	ToggleButton toggle_textContacts;
 	ToggleButton toggle_FBRadio;
+	ToggleButton toggle_ShakeToWake;
+	ToggleButton toggle_AlarmEnabled;
+	
 	RelativeLayout textContactsSmallFrame;
 	LinearLayout fbRadioSmallFrame;
 	EditText alarmNameEditText;
@@ -86,7 +90,6 @@ public class SettingsActivity extends Activity {
 	
 	private void setupSaveButton(){
 		saveButton = (Button) findViewById(R.id.saveButton);
-		saveButton.getBackground().setColorFilter(0xFFFF0000, PorterDuff.Mode.DARKEN);
 		saveButton.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -107,11 +110,25 @@ public class SettingsActivity extends Activity {
 	
 	private void populateAlarmWithFormData()
 	{
+		Log.d("AlarmClock","alarm Values");
+		Log.d("AlarmClock","FB radio "+toggle_FBRadio.isChecked());
+		Log.d("AlarmClock","music "+!toggle_FBRadio.isChecked());
+		Log.d("AlarmClock","Time "+AlarmTime.getCurrentHour()+":"+AlarmTime.getCurrentMinute());
+		Log.d("AlarmClock","Name "+alarmNameEditText.getText().toString());
+		
 		alarm.setFacebookOption(toggle_FBRadio.isChecked());
 		alarm.setMusicOption(!toggle_FBRadio.isChecked());
 		alarm.setTime(AlarmTime.getCurrentHour(),AlarmTime.getCurrentMinute());
 		alarm.setVideoNewsOption(false);
+		alarm.setShakeToWakeOption(toggle_ShakeToWake.isChecked());
 		alarm.setName(alarmNameEditText.getText().toString());
+		if(toggle_AlarmEnabled.isChecked())
+		{
+			alarm.enableAlarm();
+		}else
+		{
+			alarm.disableAlarm();
+		}
 		
 		if(!toggle_FBRadio.isChecked())
 		{
@@ -130,18 +147,37 @@ public class SettingsActivity extends Activity {
 	
 	private void initializeComponents(){
 		toggle_textContacts = (ToggleButton) findViewById(R.id.toggle_textContacts);
+		toggle_textContacts.setChecked(alarm.getTextContactsOption());
 		toggle_FBRadio = (ToggleButton) findViewById(R.id.fbRadioToggle);
+		toggle_FBRadio.setChecked(alarm.getFacebookOption());
+		toggle_ShakeToWake = (ToggleButton) findViewById(R.id.shakeToWakeToggleButton);
+		toggle_ShakeToWake.setChecked(alarm.getShakeToWakeOption());
+		toggle_AlarmEnabled = (ToggleButton) findViewById(R.id.AlarmEnabled);
+		toggle_AlarmEnabled.setChecked(alarm.enabled());
 		textContactsSmallFrame = (RelativeLayout) findViewById(R.id.textContactsSmallFrameBottom);
 		fbRadioSmallFrame = (LinearLayout) findViewById(R.id.FBRadioSmallFrame);
+        if (!alarm.getFacebookOption()) {
+            LinearLayout.LayoutParams layout_params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            fbRadioSmallFrame.setLayoutParams(layout_params);
+        } else {
+        	LinearLayout.LayoutParams layout_params = new LinearLayout.LayoutParams(0, 0);
+            fbRadioSmallFrame.setLayoutParams(layout_params);
+        }
 		addContacts = (Button) findViewById(R.id.addContacts);
 		musicButton = (Button) findViewById(R.id.changeMusic);
 		AlarmTime =  (TimePicker) findViewById(R.id.AlarmTime);
+		AlarmTime.setCurrentHour(alarm.getHour());
+		AlarmTime.setCurrentMinute(alarm.getMinute());
 		contactsTextView = (TextView) findViewById(R.id.contactsTextView);
+		contactsTextView.setText(alarm.getContactsListAsString());
 		musicTextView = (TextView) findViewById(R.id.Tune);
+		musicTextView.setText(alarm.getMusicListAsString());
 		alarmNameEditText = (EditText)findViewById(R.id.AlarmNameEditText);
+		alarmNameEditText.setText(alarm.getName());
 		// start out without showing the extra settings initially
     	LinearLayout.LayoutParams layout_desc = new LinearLayout.LayoutParams(0, 0);
         textContactsSmallFrame.setLayoutParams(layout_desc);
+        
 	}
 	
 	private void setupAddContactsButton(){
@@ -258,6 +294,7 @@ public class SettingsActivity extends Activity {
 		{
 			if(alarms.get(i).getID() == alarm.getID())
 			{
+				Log.d("AlarmClock","Alarm of id: "+alarms.get(i).getID()+" saved");
 				alarms.set(i, alarm);	
 			}
 		}
@@ -281,6 +318,15 @@ public class SettingsActivity extends Activity {
 	    } else {
 	        // Disable vibrate
 	    }
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+	    if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+	        Log.d(this.getClass().getName(), "back button pressed");
+	        this.startMainMenuActivity();
+	    }
+	    return super.onKeyDown(keyCode, event);
 	}
 	
 }

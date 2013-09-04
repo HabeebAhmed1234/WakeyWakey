@@ -22,6 +22,8 @@ public class PreferencesHandler {
 	public String TIME_MINUTE_KEY = "TIME_MINUTE";
 	public String ALARM_ID_KEY = "ALARM_ID";
 	public String ALARM_NAME_KEY = "ALARM_NAME";
+	public String SHAKETOWAKE_KEY = "SHAKETOWAKE";
+	public String ALARM_ENABLED_KEY = "ALARM_ENABLED";
 	
 	private SharedPreferences settings ;
 	
@@ -101,6 +103,28 @@ public class PreferencesHandler {
 		}
 	}
 	
+	private void setShakeToWakeOption(boolean setting,int AlarmNumber)
+	{
+		if(setting)
+		{
+			set(SHAKETOWAKE_KEY+AlarmNumber,"true");
+		}else
+		{
+			set(SHAKETOWAKE_KEY+AlarmNumber,"false");
+		}
+	}
+	
+	private void setAlarmEnabled(boolean setting,int AlarmNumber)
+	{
+		if(setting)
+		{
+			set(ALARM_ENABLED_KEY+AlarmNumber,"true");
+		}else
+		{
+			set(ALARM_ENABLED_KEY+AlarmNumber,"false");
+		}
+	}
+	
 	private void setMusicList(ArrayList<Music> selectedMusic,int AlarmNumber) {
 		//shows the number of contacts in total
 		this.set(MUSICS_AMMOUNT_KEY+AlarmNumber,Integer.toString(selectedMusic.size()));
@@ -139,10 +163,12 @@ public class PreferencesHandler {
 			this.setMusicOption(alarms.get(i).getMusicOption(), i);
 			this.setTextContactsOption(alarms.get(i).getTextContactsOption(), i);
 			this.setVideoNewsOption(alarms.get(i).getVideoNewsOption(), i);
+			this.setShakeToWakeOption(alarms.get(i).getShakeToWakeOption(), i);
 			this.setMusicList(alarms.get(i).getMusicList(), i);
 			this.setTextContactsList(alarms.get(i).getContactsList(), i);
 			this.setAlarmID(alarms.get(i).getID(),i);
 			this.setAlarmName(alarms.get(i).getName(),i);
+			this.setAlarmEnabled(alarms.get(i).enabled(), i);
 		}
 	}
 	
@@ -182,6 +208,20 @@ public class PreferencesHandler {
 					newAlarm.setMusicOption(true);
 				}else{
 					newAlarm.setMusicOption(false);
+				}
+				
+				if(get(this.SHAKETOWAKE_KEY+i)=="true")
+				{
+					newAlarm.setShakeToWakeOption(true);
+				}else{
+					newAlarm.setShakeToWakeOption(false);
+				}
+				
+				if(get(this.ALARM_ENABLED_KEY+i)=="true")
+				{
+					newAlarm.enableAlarm();
+				}else{
+					newAlarm.disableAlarm();
 				}
 				
 				//add in time

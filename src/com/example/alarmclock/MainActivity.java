@@ -11,6 +11,8 @@ import android.util.TypedValue;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View.OnLongClickListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -45,12 +47,14 @@ import android.widget.ToggleButton;
 import com.example.alarmclock.MyTextToSpeech;
 
 //add a options selector
-public class MainActivity extends Activity implements TextToSpeech.OnInitListener,OnClickListener {
+public class MainActivity extends Activity implements TextToSpeech.OnInitListener,OnClickListener, OnLongClickListener {
 	
 	private ArrayList<Alarm> alarms;
 	private AlarmManager am;
 	public static final int ALARM_ADDER_ID = -100;
 	public static final String ALARM_ID = "ALARM_ID";
+	private int longClickedAlarmId;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -61,7 +65,6 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 		alarms = new ArrayList();
 		
 		this.alarms=prefs.getAlarms();
-		//this.alarms = getFakeAlarms();
 
 		try {
 			createAlarmsViews();
@@ -94,6 +97,24 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    
+		int selectionID = item.getItemId();
+		
+		if(selectionID == R.id.delete)
+		{
+			deleteAlarm(this.getAlarmByID(longClickedAlarmId));
+		}
+		
+		if(selectionID == R.id.edit)
+		{
+			this.startSettingsActivity(this.getAlarmByID(longClickedAlarmId));
+		}
+		
+	    return true;
 	}
 	
 	@Override
@@ -138,6 +159,18 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 		alpha.setDuration(500); 
 		alpha.setFillAfter(true); 
 		v.startAnimation(alpha);
+	}
+	
+	@Override
+	public boolean onLongClick(View v) {
+		if(!(matchToAlarmIds(v.getId()))) return false;
+		
+		Log.d("debugger",v.getId()+" was long clicked");
+		
+		this.longClickedAlarmId = v.getId();
+		this.openOptionsMenu();
+		
+		return false;
 	}
 	
 	void startSettingsActivity(Alarm alarm)
@@ -245,6 +278,7 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 		
 		if(!(alarm.getID()==this.ALARM_ADDER_ID))
 		{
+			linearLayout.addView(getNameView(alarm));
 			linearLayout.addView(getTimeView(alarm));
 			linearLayout.addView(getSettingImages(alarm));
 		}
@@ -261,6 +295,8 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 		linearLayout.setId(alarm.getID());
 		linearLayout.setClickable(true);
 		linearLayout.setOnClickListener(this);
+		
+		linearLayout.setOnLongClickListener(this);
 		
 		return linearLayout;
 	}
@@ -302,6 +338,16 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 		return timeView;
 	}
 	
+	private TextView getNameView(Alarm alarm)
+	{
+		TextView timeView = new TextView(this);
+		LayoutParams timeLayoutParams = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT);
+		timeView.setTextSize(TypedValue.COMPLEX_UNIT_SP,15);
+		timeView.setText(alarm.getName());
+		
+		return timeView;
+	}
+	
 	private LinearLayout getSettingImages(Alarm alarm)
 	{
 		LinearLayout settingsLinearLayout = new LinearLayout(this);
@@ -331,10 +377,19 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 		textContactsLayoutParams.setMargins(1, 1, 1, 1);
 		textContactsImageView.setLayoutParams(textContactsLayoutParams);
 		if(!alarm.getTextContactsOption())textContactsImageView.getBackground().setAlpha(50);
+		
+		ImageView shakeToWakeImageView = new ImageView(this);
+		shakeToWakeImageView.setId(4);
+		shakeToWakeImageView.setBackgroundResource(R.drawable.shake_to_wake_icon);
+		LayoutParams shakeToWakeImageViewParams = new LayoutParams(30,30);
+		shakeToWakeImageViewParams.setMargins(1, 1, 1, 1);
+		shakeToWakeImageView.setLayoutParams(shakeToWakeImageViewParams);
+		if(!alarm.getShakeToWakeOption())shakeToWakeImageView.getBackground().setAlpha(50);
 			
 		settingsLinearLayout.addView(facebookImageView);
 		settingsLinearLayout.addView(musicImageView);
 		settingsLinearLayout.addView(textContactsImageView);
+		settingsLinearLayout.addView(shakeToWakeImageView);
 		
 		return settingsLinearLayout;
 	}
@@ -395,11 +450,17 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 				{
 					if(alarms.get(i).enabled())
 					{
+						deActivateAlarm(alarms.get(i));
 						alarms.get(i).disableAlarm();
 					}else
 					{
+						setAlarm(alarms.get(i).getHour(),alarms.get(i).getMinute(),alarms.get(i).getID());
 						alarms.get(i).enableAlarm();
 					}
+					
+					PreferencesHandler prefsHandler = new PreferencesHandler(this);
+					prefsHandler.setAlarms(alarms);
+					
 					return alarms.get(i);
 				}
 			}
@@ -419,9 +480,22 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 			prefsHandler.setAlarms(alarms);
 			
 			alarm = null;
+			
+			redrawScreen();
 		}
 		
 		return alarm;
+	}
+	
+	private void deActivateAlarm(Alarm alarm)
+	{
+		Intent intent = new Intent(getApplicationContext(), AlarmReceiver.class);
+		PendingIntent displayIntent = PendingIntent.getBroadcast(this, alarm.getID(), intent, PendingIntent.FLAG_NO_CREATE);
+	
+		if(displayIntent != null) {
+			am.cancel(displayIntent);
+			displayIntent.cancel();  
+		}
 	}
 	
 	private void deleteAlarm(Alarm alarm)
@@ -429,17 +503,25 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 		toggleAlarm(alarm, true);
 	}
 	
-	private ArrayList <Alarm> removeAlarmFromList(Alarm alarm)
+	private void redrawScreen()
 	{
-		ArrayList <Alarm> newlist = new ArrayList();
+		try {
+			createAlarmsViews();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private void removeAlarmFromList(Alarm alarm)
+	{
 		
 		for (int i =0 ; i<alarms.size();i++)
 		{
-			if(!(alarms.get(i).getID()==alarm.getID()))
+			if(alarms.get(i).getID()==alarm.getID())
 			{
-				newlist.add(alarms.get(i));
+				alarms.remove(i);
 			}
 		}
-		return newlist;
 	}
 }

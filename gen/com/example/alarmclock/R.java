@@ -170,10 +170,12 @@ public final class R {
         public static final int ic_launcher=0x7f020002;
         public static final int music_icon=0x7f020003;
         public static final int plus=0x7f020004;
-        public static final int text_contacts=0x7f020005;
+        public static final int shake_to_wake_icon=0x7f020005;
+        public static final int text_contacts=0x7f020006;
     }
     public static final class id {
         public static final int Alarm=0x7f090006;
+        public static final int AlarmEnabled=0x7f090011;
         public static final int AlarmNameEditText=0x7f09000d;
         public static final int AlarmTime=0x7f090010;
         public static final int FBRadioSmallFrame=0x7f090020;
@@ -184,7 +186,6 @@ public final class R {
         public static final int TextView04=0x7f09001e;
         public static final int TextView06=0x7f090017;
         public static final int TimePicker01=0x7f090012;
-        public static final int ToggleButton01=0x7f090011;
         public static final int Tune=0x7f090023;
         public static final int TuneText=0x7f090022;
         public static final int accountIcon=0x7f090000;
@@ -196,6 +197,8 @@ public final class R {
         public static final int contactText=0x7f09001a;
         public static final int contacts=0x7f09001d;
         public static final int contactsTextView=0x7f09001b;
+        public static final int delete=0x7f090032;
+        public static final int edit=0x7f090033;
         public static final int facebook=0x7f090008;
         public static final int fbRadioToggle=0x7f09001f;
         public static final int firstAccountLine=0x7f090002;
@@ -207,6 +210,7 @@ public final class R {
         public static final int musicList=0x7f09000b;
         public static final int saveButton=0x7f090025;
         public static final int secondAccountLine=0x7f090001;
+        public static final int shakeToWakeToggleButton=0x7f090014;
         public static final int tableLayout1=0x7f090004;
         public static final int tableRow1=0x7f090005;
         public static final int textContactsFrame=0x7f090015;
@@ -216,7 +220,6 @@ public final class R {
         public static final int text_contacts=0x7f09000a;
         public static final int time=0x7f090007;
         public static final int toggle_textContacts=0x7f090018;
-        public static final int togglebutton=0x7f090014;
         public static final int tvLAYOUTEVENTSName=0x7f090028;
         public static final int tvLAYOUTMUSICName=0x7f090029;
         public static final int viewVideoButton=0x7f09002e;

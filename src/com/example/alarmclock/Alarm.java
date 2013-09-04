@@ -9,6 +9,7 @@ public class Alarm {
 	private boolean facebookOption;
 	private boolean videoNewsOption;
 	private boolean textContactsOption;
+	private boolean shakeToWakeOption;
 	private boolean musicOption;
 	private boolean isAlarmOn;
 	private int ID;
@@ -30,6 +31,7 @@ public class Alarm {
 		this.videoNewsOption=false;
 		this.textContactsOption=false;
 		this.musicOption=false;
+		this.shakeToWakeOption=false;
 	}
 	
 	public void setName(String name)
@@ -156,6 +158,15 @@ public class Alarm {
 		return this.musicList;
 	}
 	
+	public void setShakeToWakeOption(boolean option)
+	{
+		shakeToWakeOption = option;
+	}
+	
+	public boolean getShakeToWakeOption()
+	{
+		return shakeToWakeOption;
+	}
 
 	void addContactToList(Contact contact)
 	{
@@ -165,6 +176,34 @@ public class Alarm {
 	void addMusicToList(Music music)
 	{
 		this.musicList.add(music);
+	}
+	
+	String getMusicListAsString()
+	{
+		if(!(musicList.size()>0))return "";
+		
+		String musicListString = musicList.get(0).getName();
+		
+		for(int i = 1 ; i < musicList.size() ; i++)
+		{
+			musicListString+=", "+musicList.get(i).getName();
+		}
+		
+		return musicListString;
+	}
+	
+	String getContactsListAsString()
+	{
+		if(!(textContactsList.size()>0))return "";
+		
+		String contactListString = textContactsList.get(0).getName();
+		
+		for(int i = 1 ; i < textContactsList.size() ; i++)
+		{
+			contactListString+=", "+textContactsList.get(i).getName();
+		}
+		
+		return contactListString;
 	}
 }
 
