@@ -5,23 +5,28 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.net.Uri;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
+import android.widget.LinearLayout;
+import com.example.alarmclock.IntValueStore.IntValueStoreListener;
 
-public class ShakeToWakeActivity {
+public class ShakeToWakeActivity implements IntValueStoreListener, PercentageUpdater {
 	  private SensorManager mSensorManager;
 	  private float mAccel; // acceleration apart from gravity
 	  private float mAccelCurrent; // current acceleration including gravity
 	  private float mAccelLast; // last acceleration including gravity
 	  private Context context;
-	  private int barfill;
+	  private static float percentageBarfill;
+	  private AlarmHandlerInterface alhi; 
+	  private IntValueStore stagnantCount;
 	  
-	  
- private final SensorEventListener mSensorListener = new SensorEventListener() {
+	  private final SensorEventListener mSensorListener = new SensorEventListener() {
 
 	    public void onSensorChanged(SensorEvent se) {
 	      float x = se.values[0];
@@ -34,12 +39,19 @@ public class ShakeToWakeActivity {
 	      
 	      	 if (mAccel >= 2) {
 	          Log.d("accel", "accel");
-	          barfill+=1;
+	          if (percentageBarfill >= 1){
+	        	  alhi.hideShakeToWakeScreen();
+	        	  alhi.stopAlarm();
+	          }
+	          if (!(percentageBarfill >= 1)) percentageBarfill+=0.05;
+	          stagnantCount.setValue(0);
+	          alhi.showShakeToWakeScreen();
 	         }
 	         else 
 	         {
+        		 stagnantCount.setValue(stagnantCount.getValue() + 1);
 	        	 Log.d("accel", "stagnant");
-	        	 barfill-=1;
+	        	 Log.d("accel", Integer.toString(stagnantCount.getValue()));
 	         }
 	    }
 
@@ -48,7 +60,7 @@ public class ShakeToWakeActivity {
 	    }
 	  };
 	 
-	ShakeToWakeActivity (Context context)
+	ShakeToWakeActivity (Context context, AlarmHandlerInterface alhi)
 	{
 		this.context=context;
 		/* do this in onCreate */
@@ -57,14 +69,20 @@ public class ShakeToWakeActivity {
 	    mAccel = 0.00f;
 	    mAccelCurrent = SensorManager.GRAVITY_EARTH;
 	    mAccelLast = SensorManager.GRAVITY_EARTH;
-	    barfill=0;
+	    percentageBarfill=0;
+	    this.alhi = alhi;
+	    stagnantCount = new IntValueStore(0);
+	    stagnantCount.setListener(this);
 	}
 	
-	int getBarFill()
-	{
-		return this.barfill;
+	@Override
+	public void onValueChanged(int newValue) {
+		alhi.hideShakeToWakeScreen();
 	}
 	
-	
+	@Override
+	public float getPercentage() {
+		return percentageBarfill;		
+	}
 
 }
