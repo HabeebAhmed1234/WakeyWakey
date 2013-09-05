@@ -59,6 +59,8 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+		if(GlobalStaticVariables.TURN_OFF_APP) finish();
+		
 		PreferencesHandler prefsHandler = new PreferencesHandler(this);
 		Preferences prefs = prefsHandler.getSettings();
 		
@@ -72,24 +74,8 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 
         am = (AlarmManager) getSystemService(ALARM_SERVICE);
-	}
-	
-	ArrayList <Alarm> getFakeAlarms()
-	{
-		for (int i =0; i <10;i++)
-		{
-			int id = getNewID();
-			Alarm alrm = new Alarm(20,10,id);
-			alrm.disableAlarm();
-			alrm.setFacebookOption(true);
-			alrm.setMusicOption(false);
-			alrm.setTextContactsOption(false);
-			alarms.add(alrm);
-		}
-		return alarms;
 	}
 	
 	@Override
@@ -466,13 +452,7 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 			}
 		}else
 		{
-	        Intent intent = new Intent(getApplicationContext(), AlarmReceiver.class);
-			PendingIntent displayIntent = PendingIntent.getBroadcast(this, alarm.getID(), intent, PendingIntent.FLAG_NO_CREATE);
-		
-			if(displayIntent != null) {
-				am.cancel(displayIntent);
-				displayIntent.cancel();  
-			}
+			deActivateAlarm(alarm);
 
 			removeAlarmFromList(alarm);
 			
@@ -522,6 +502,28 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 			{
 				alarms.remove(i);
 			}
+		}
+	}
+	
+	@Override
+	public void onPause()
+	{
+		super.onPause();
+		if(GlobalStaticVariables.TURN_OFF_APP) 
+		{
+			GlobalStaticVariables.TURN_OFF_APP =false;
+			finish();
+		}
+	}
+	
+	@Override
+	public void onResume()
+	{
+		super.onResume();
+		if(GlobalStaticVariables.TURN_OFF_APP) 
+		{
+			GlobalStaticVariables.TURN_OFF_APP=false;
+			finish();
 		}
 	}
 }

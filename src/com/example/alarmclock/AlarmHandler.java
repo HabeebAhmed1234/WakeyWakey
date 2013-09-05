@@ -198,6 +198,9 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 		}
 		
 		offText.setText("oh hi there");
+		
+		GlobalStaticVariables.TURN_OFF_APP = true;
+		finish();
 	}
 	
 	public void performSnoozeActivity(final View v) {

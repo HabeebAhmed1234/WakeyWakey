@@ -69,4 +69,6 @@ public class MusicAlertActivity {
 	{
 		return player.isPlaying();
 	}
+	
+
 }

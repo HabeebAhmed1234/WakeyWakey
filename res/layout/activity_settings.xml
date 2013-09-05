@@ -74,10 +74,10 @@
                      android:layout_width="wrap_content"
                      android:layout_height="wrap_content"
                      android:layout_centerVertical="true"
-                     android:layout_toRightOf="@+id/TimePicker01"
+                     android:layout_toRightOf="@+id/AlarmTime"
                      android:onClick="onToggleClicked"
-                     android:textOff="Alarm off"
-                     android:textOn="Alarm on" />
+                     android:textOff="off"
+                     android:textOn="on" />
              </RelativeLayout>
          </LinearLayout>
 
@@ -196,7 +196,7 @@
                   android:layout_height="wrap_content"
                   android:layout_alignParentBottom="true"
                   android:layout_alignParentLeft="false"
-                  android:layout_below="@+id/contacts"
+                  android:layout_below="@+id/contactsTextView"
                   android:layout_centerHorizontal="true"
                   android:text="Add More Contacts"
                   android:textSize="@dimen/activity_medium_text" />

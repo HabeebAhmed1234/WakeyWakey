@@ -1,6 +1,6 @@
 package com.example.alarmclock;
 
-import android.os.AsyncTask;
+/*import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.app.Activity;
@@ -22,11 +22,11 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
+import org.json.JSONObject;*/
 
 public class FacebookAlertActivity {
 
-    public ArrayList<fbPost> newsFeed = new ArrayList<fbPost>();
+    /*public ArrayList<fbPost> newsFeed = new ArrayList<fbPost>();
         
         // Activity code to flag an incoming activity result is due 
         // to a new permissions request
@@ -271,7 +271,7 @@ public class FacebookAlertActivity {
         	//}
         }
         
-        /*@Override
+        @Override
         public void onActivityResult(int requestCode, int resultCode, Intent data) {
           super.onActivityResult(requestCode, resultCode, data);
           Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
