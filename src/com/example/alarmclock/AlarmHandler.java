@@ -54,7 +54,7 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 		
 		//Intent intent = new Intent(this, FacebookAlertActivity.class);
 		//startActivity(intent);
-		int selectedAlarmID = Integer.parseInt(getIntent().getExtras().getString(MainActivity.ALARM_ID));
+		int selectedAlarmID = Integer.parseInt(getIntent().getExtras().getString(AlarmFactory.ALARM_ID));
 		prefsHandler=new PreferencesHandler(this);
 		prefs=prefsHandler.getSettings();
 		ArrayList <Alarm> allAlarms = prefs.getAlarms();
@@ -199,8 +199,8 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 		
 		offText.setText("oh hi there");
 		
-		GlobalStaticVariables.TURN_OFF_APP = true;
-		finish();
+		//GlobalStaticVariables.TURN_OFF_APP = true;
+		//finish();
 	}
 	
 	public void performSnoozeActivity(final View v) {

@@ -139,6 +139,7 @@ public class PreferencesHandler {
 	private void setAlarmTime(int hour,int minute, int AlarmNumber)
 	{
 		this.set(this.TIME_HOUR_KEY+AlarmNumber,Integer.toString(hour));
+		Log.d("AlarmClock","PreferenceHandler: time is "+hour+":"+minute);
 		this.set(this.TIME_MINUTE_KEY+AlarmNumber,Integer.toString(minute));
 	}
 	
@@ -226,7 +227,7 @@ public class PreferencesHandler {
 				
 				//add in time
 				String hour = get(TIME_HOUR_KEY+i);
-				String minute = get(TIME_HOUR_KEY+i);
+				String minute = get(TIME_MINUTE_KEY+i);
 				
 				if(!(hour.compareTo("NULL")==0)&&!(minute.compareTo("NULL")==0))
 				{

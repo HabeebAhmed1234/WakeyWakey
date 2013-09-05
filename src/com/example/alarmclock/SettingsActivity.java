@@ -56,6 +56,7 @@ public class SettingsActivity extends Activity {
 	private ArrayList<Alarm> alarms = new ArrayList<Alarm>();
 	private Alarm alarm;
 	
+	private AlarmFactory alarmFactory;
 	// set up responses to the toggle buttons
 	public void setupToggleButtons(){
 		toggle_textContacts.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -219,7 +220,9 @@ public class SettingsActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
 		//get the extra information from the invoking intent
-		int selectedAlarmID = Integer.parseInt(getIntent().getExtras().getString(MainActivity.ALARM_ID));
+		int selectedAlarmID = Integer.parseInt(getIntent().getExtras().getString(AlarmFactory.ALARM_ID));
+		
+		alarmFactory = new AlarmFactory(this);
 		
 		// populate alarm arraylist
 		prefsHandler =  new PreferencesHandler(this);
@@ -294,8 +297,9 @@ public class SettingsActivity extends Activity {
 		{
 			if(alarms.get(i).getID() == alarm.getID())
 			{
-				Log.d("AlarmClock","Alarm of id: "+alarms.get(i).getID()+" saved");
+				Log.d("AlarmClock","Alarm of id: "+alarms.get(i).getID()+" saved for time "+alarm.getHour()+":"+alarm.getMinute());
 				alarms.set(i, alarm);	
+				if(alarm.enabled())alarmFactory.refreshAlarm(alarm);
 			}
 		}
 		prefsHandler.setAlarms(alarms);

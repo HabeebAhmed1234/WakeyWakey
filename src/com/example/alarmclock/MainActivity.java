@@ -50,16 +50,15 @@ import com.example.alarmclock.MyTextToSpeech;
 public class MainActivity extends Activity implements TextToSpeech.OnInitListener,OnClickListener, OnLongClickListener {
 	
 	private ArrayList<Alarm> alarms;
-	private AlarmManager am;
 	public static final int ALARM_ADDER_ID = -100;
-	public static final String ALARM_ID = "ALARM_ID";
 	private int longClickedAlarmId;
+	private AlarmFactory alarmFactory;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		if(GlobalStaticVariables.TURN_OFF_APP) finish();
+		alarmFactory = new AlarmFactory(this);
 		
 		PreferencesHandler prefsHandler = new PreferencesHandler(this);
 		Preferences prefs = prefsHandler.getSettings();
@@ -67,15 +66,13 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 		alarms = new ArrayList();
 		
 		this.alarms=prefs.getAlarms();
-
+		Log.d("AlarmClock","Alarm minute "+alarms.get(0).getMinute());
 		try {
 			createAlarmsViews();
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-        am = (AlarmManager) getSystemService(ALARM_SERVICE);
 	}
 	
 	@Override
@@ -163,7 +160,7 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 	{
 		Intent i = new Intent(this, SettingsActivity.class);
 		Log.d ("AlarmClock","created new alarm of id "+alarm.getID());
-		i.putExtra(ALARM_ID, Integer.toString(alarm.getID()));
+		i.putExtra(AlarmFactory.ALARM_ID, Integer.toString(alarm.getID()));
 		this.startActivity(i);
 		finish();
 	}
@@ -319,6 +316,7 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 		TextView timeView = new TextView(this);
 		LayoutParams timeLayoutParams = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT);
 		timeView.setTextSize(TypedValue.COMPLEX_UNIT_SP,30);
+		Log.d("AlarmClock","Time text view of time "+alarm.getHour()+":"+alarm.getMinute());
 		timeView.setText(militaryToTwelveHour(alarm.getHour(),alarm.getMinute()));
 		
 		return timeView;
@@ -412,19 +410,7 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 		
 	}
 	
-	private void setAlarm(int hour, int minute, int id)
-	{
-		Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.MINUTE, minute);
-        cal.set(Calendar.HOUR_OF_DAY, hour);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-        
-        Intent intent = new Intent(getApplicationContext(), AlarmReceiver.class);
-        intent.putExtra(ALARM_ID, Integer.toString(id));
-        PendingIntent sender = PendingIntent.getBroadcast(this, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), sender);
-	}
+
 	
 	private Alarm toggleAlarm(Alarm alarm, boolean forceDelete)
 	{
@@ -436,11 +422,11 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 				{
 					if(alarms.get(i).enabled())
 					{
-						deActivateAlarm(alarms.get(i));
+						alarmFactory.cancelAlarm(alarms.get(i));
 						alarms.get(i).disableAlarm();
 					}else
 					{
-						setAlarm(alarms.get(i).getHour(),alarms.get(i).getMinute(),alarms.get(i).getID());
+						alarmFactory.setAlarm(alarms.get(i));
 						alarms.get(i).enableAlarm();
 					}
 					
@@ -452,7 +438,7 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 			}
 		}else
 		{
-			deActivateAlarm(alarm);
+			alarmFactory.cancelAlarm(alarm);
 
 			removeAlarmFromList(alarm);
 			
@@ -465,17 +451,6 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 		}
 		
 		return alarm;
-	}
-	
-	private void deActivateAlarm(Alarm alarm)
-	{
-		Intent intent = new Intent(getApplicationContext(), AlarmReceiver.class);
-		PendingIntent displayIntent = PendingIntent.getBroadcast(this, alarm.getID(), intent, PendingIntent.FLAG_NO_CREATE);
-	
-		if(displayIntent != null) {
-			am.cancel(displayIntent);
-			displayIntent.cancel();  
-		}
 	}
 	
 	private void deleteAlarm(Alarm alarm)
@@ -509,21 +484,21 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 	public void onPause()
 	{
 		super.onPause();
-		if(GlobalStaticVariables.TURN_OFF_APP) 
+		/*if(GlobalStaticVariables.TURN_OFF_APP) 
 		{
 			GlobalStaticVariables.TURN_OFF_APP =false;
-			finish();
-		}
+			//finish();
+		}*/
 	}
 	
 	@Override
 	public void onResume()
 	{
 		super.onResume();
-		if(GlobalStaticVariables.TURN_OFF_APP) 
+		/*if(GlobalStaticVariables.TURN_OFF_APP) 
 		{
 			GlobalStaticVariables.TURN_OFF_APP=false;
-			finish();
-		}
+			//finish();
+		}*/
 	}
 }

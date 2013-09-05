@@ -1,6 +1,7 @@
 package com.example.alarmclock;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import android.app.Activity;
 import android.content.ContentResolver;
@@ -56,6 +57,8 @@ public final class ContactManagerActivity extends Activity
         ListView lvContactsContent = (ListView) findViewById(R.id.contactList);
 		
         contacts=getContacts();
+        
+        Collections.sort(contacts, new CompareClass());
         
         contactsListAdapter = new ContactsListAdapter(this, contacts);
 		lvContactsContent.setAdapter(contactsListAdapter);

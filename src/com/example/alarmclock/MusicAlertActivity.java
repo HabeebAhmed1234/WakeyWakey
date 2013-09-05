@@ -35,6 +35,7 @@ public class MusicAlertActivity {
 			{
 				play(musicList.get(0).getPath());
 			}else{
+				//play default alarm
 				Toast.makeText(this.context, "Please set a ringtone!", Toast.LENGTH_LONG).show();
 			}
 	}
