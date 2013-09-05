@@ -1,5 +1,7 @@
 package com.example.alarmclock;
 
+import java.util.ArrayList;
+
 import android.os.Bundle;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -31,7 +33,7 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	
 	private PreferencesHandler prefsHandler;
 	private Preferences prefs;
-	private int selectedAlarm;
+	private Alarm selectedAlarm;
 	
 	public ShakeToWakeActivity shaker;
 	private TextContactsAlertActivity texter;
@@ -42,57 +44,27 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	private boolean textContacts;
 	private boolean shakeToWake;
 	
-	void wakeUpUser()
-	{
-		// what is the desired behaviour when no option is selected? is this even a use case?
-		// what will currently happen when no option is selected?
-		//MusicAlertActivity is default
-		Intent intent = new Intent(this, ShakeToWakeActivity.class);
-		
-		/*Log.d("debuggings", "Alarmhandler Oncreate");
-		
-	    if(prefs.getfacebook())
-	    {
-	    	Log.d("debuggings","FacebookAlertActivity before");
-	    	intent = new Intent(this, FacebookAlertActivity.class);
-			Log.d("debuggings", "FacebookAlertActivity after");
-	    }
-		if(prefs.gettextcontacts())
-		{
-	    	Log.d("debuggings","TextContactsAlertActivity before");
-			intent = new Intent(this, TextContactsAlertActivity.class);
-			Log.d("debuggings","TextContactsAlertActivity after");
-		}
-		if(prefs.getmusic())
-		{
-			Log.d("debuggings","MusicAlertActivity before");
-			intent = new Intent(this, MusicAlertActivity.class);
-			Log.d("debuggings","MusicAlertActivity after");
-		}
-		if(prefs.getvideonews())
-		{
-			Log.d("debuggings","VideoNewsAlertActivity before");
-			intent = new Intent(this, VideoNewsAlertActivity.class);
-			Log.d("debuggings","VideoNewsAlertActivity after");
-		}
-		
-		Log.d("debuggings","startActivity before");*/
-	    startActivity(intent);	
-	    Log.d("debuggings","startActivity after");
-	}
+	private boolean playerAlreadyStarted = false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_alarm_handler);
-		fbProfile = new FacebookAlertActivity(this, this);
+		//fbProfile = new FacebookAlertActivity(this, this);
 		
 		//Intent intent = new Intent(this, FacebookAlertActivity.class);
 		//startActivity(intent);
-		
-		//prefsHandler=new PreferencesHandler(this);
-		//prefs=PreferencesHandler.getSettings();
-		//wakeUpUser();
+		int selectedAlarmID = Integer.parseInt(getIntent().getExtras().getString(MainActivity.ALARM_ID));
+		prefsHandler=new PreferencesHandler(this);
+		prefs=prefsHandler.getSettings();
+		ArrayList <Alarm> allAlarms = prefs.getAlarms();
+		for(int i =0 ;i<allAlarms.size();i++)
+		{
+			if(allAlarms.get(i).getID()==selectedAlarmID)
+			{
+				selectedAlarm = allAlarms.get(i);
+			}
+		}
 	}
 
 	private void initializeFormComponents(){
@@ -108,13 +80,13 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	    getAlarmSettings();
 	    setupScreen();
 	    
-	    if (facebookRadio) fbPost.setText(fbProfile.getStory());
+	    //if (facebookRadio) fbPost.setText(fbProfile.getStory());
 	}
 	
 	private void getAlarmSettings(){
-		facebookRadio = true;
-		shakeToWake = false;
-		textContacts = true;
+		facebookRadio = selectedAlarm.getFacebookOption();
+		shakeToWake = selectedAlarm.getShakeToWakeOption();
+		textContacts = selectedAlarm.getTextContactsOption();
 	}
 	
 	private void setupScreen(){
@@ -140,9 +112,10 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 			addShakeToWakeScreen();
 		}
 		
-		if (!facebookRadio) {
-			//player = new MusicAlertActivity(prefsHandler, prefs, selectedAlarm);
-			//player.play(prefs.)
+		if (!facebookRadio&&!playerAlreadyStarted) {
+			player = new MusicAlertActivity(this, selectedAlarm);
+			player.start();
+			playerAlreadyStarted = true;
 		}
 		else {
 			player = null;
@@ -219,6 +192,11 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	}
 	
 	public void performStopActivity(final View v) {
+		if(!facebookRadio)
+		{
+			if(player.isPlaying())player.stop();
+		}
+		
 		offText.setText("oh hi there");
 	}
 	

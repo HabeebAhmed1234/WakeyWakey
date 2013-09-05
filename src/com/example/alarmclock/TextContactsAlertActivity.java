@@ -16,16 +16,16 @@ public class TextContactsAlertActivity {
 
 	PreferencesHandler prefsHandler;
 	Preferences prefs;
-	private int selectedAlarm;
+	private Alarm selectedAlarm;
 	
-	TextContactsAlertActivity(PreferencesHandler prefsHandler, Preferences prefs, int selectedAlarm){
+	TextContactsAlertActivity(PreferencesHandler prefsHandler, Preferences prefs, Alarm selectedAlarm){
 		this.prefsHandler = prefsHandler;
 		this.prefs = prefs;
 		this.selectedAlarm = selectedAlarm;
 	}
 	
 	void textAllContacts() {
-		ArrayList<Contact> contacts = prefs.getAlarms().get(selectedAlarm).getContactsList();
+		ArrayList<Contact> contacts = selectedAlarm.getContactsList();
 	    Log.d("msg","textAllContacts");
 		
 		for(int i = 0; i<contacts.size();i++)

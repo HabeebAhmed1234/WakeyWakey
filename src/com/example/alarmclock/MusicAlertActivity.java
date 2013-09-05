@@ -2,19 +2,16 @@ package com.example.alarmclock;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
+import android.content.Context;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.Environment;
-import android.app.Activity;
-import android.content.Intent;
 import android.util.Log;
-import android.view.Menu;
 import android.widget.Toast;
 
-public class MusicAlertActivity extends Activity {
+public class MusicAlertActivity {
+
+	Context context;
+	
 	PreferencesHandler prefsHandler;
 	Preferences prefs;
 	
@@ -22,52 +19,27 @@ public class MusicAlertActivity extends Activity {
 	
 	ArrayList <Music> musicList;
 	
-	private int selectedAlarm;
-	
-	private int playIndex;
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		Log.d("music","music Alert Activity Started");
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_music_alert);
+	MusicAlertActivity (Context context, Alarm alarm)
+	{
+		this.context=context;
 		
-		this.selectedAlarm=getSelectedAlarm();
-		
-		prefsHandler = new PreferencesHandler(this);
+		prefsHandler = new PreferencesHandler(context);
 		prefs = prefsHandler.getSettings();
-		if(selectedAlarm!=-1)
-		{
-			musicList = prefs.getAlarms().get(selectedAlarm).getMusicList();
-		}else{
-			Toast.makeText(getBaseContext(),"ERROR! NO ALARM NUMBER WAS PASSED IN!",Toast.LENGTH_SHORT).show();
-		}
-		playIndex=0;
-		
-		if(musicList.size()>0)
-		{	
-			player = new MediaPlayer();
-			play(musicList.get(playIndex).getPath());
-			playIndex+=1;
-			
-			player.setOnCompletionListener((new OnCompletionListener(){
-			    // @Override
-			    public void onCompletion(MediaPlayer arg0) {
-			    // File has ended, play the next one.
-			    	if(playIndex<musicList.size())
-			    	{
-				    	play(musicList.get(playIndex).getPath());
-				    	playIndex+=1; //increment the index to get the next audiofile
-			    	}else
-			    	{
-			    		player.reset();
-			    		player.stop();
-			    	}   	
-			    }
-			}));
-		}
+		musicList = alarm.getMusicList();
 	}
 	
-	void play(String file)
+	public void start()
+	{
+			player = new MediaPlayer();
+			if(!(musicList==null || musicList.size()==0))
+			{
+				play(musicList.get(0).getPath());
+			}else{
+				Toast.makeText(this.context, "Please set a ringtone!", Toast.LENGTH_LONG).show();
+			}
+	}
+		
+	private void play(String file)
 	{
 		player.stop();
 	  	player.reset();
@@ -85,24 +57,16 @@ public class MusicAlertActivity extends Activity {
         }
 	}
 	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.activity_music_alert, menu);
-		return true;
+	public void stop()
+	{
+		if(player.isPlaying())
+		{
+			player.stop();
+		}
 	}
 	
-	private int getSelectedAlarm()
-    {
-    	Intent in= getIntent();
-        Bundle b = in.getExtras();
-        if(b!=null)
-        {
-            return Integer.parseInt((String) b.get(Alarm.ALARM_NAME));
-        }else
-        {
-        	return -1;
-        }
-    }
-
+	public boolean isPlaying()
+	{
+		return player.isPlaying();
+	}
 }
