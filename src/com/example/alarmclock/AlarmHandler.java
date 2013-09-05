@@ -1,7 +1,5 @@
 package com.example.alarmclock;
 
-import java.util.ArrayList;
-
 import android.os.Bundle;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -43,8 +41,6 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	private boolean facebookRadio;
 	private boolean textContacts;
 	private boolean shakeToWake;
-	
-	private Alarm alarm;
 	
 	void wakeUpUser()
 	{
@@ -91,7 +87,8 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 		setContentView(R.layout.activity_alarm_handler);
 		fbProfile = new FacebookAlertActivity(this, this);
 		
-		int alarmID = Integer.parseInt(getIntent().getExtras().getString(MainActivity.ALARM_ID));
+		//Intent intent = new Intent(this, FacebookAlertActivity.class);
+		//startActivity(intent);
 		
 		//prefsHandler=new PreferencesHandler(this);
 		//prefs=PreferencesHandler.getSettings();
@@ -170,20 +167,6 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 		
 		offButtonParams.height = newHeight;
 		snoozeButtonParams.height = newHeight;
-		PreferencesHandler=new PreferencesHandler(this);
-		prefs=PreferencesHandler.getSettings();
-		
-		ArrayList<Alarm> alarms = prefs.getAlarms();
-		
-		for(int i =0 ;i<alarms.size();i++)
-		{
-			if(alarms.get(i).getID()==alarmID)
-			{
-				this.alarm = alarms.get(i);
-			}
-		}
-		
-		wakeUpUser();
 	}
 
 	private void addShakeToWakeScreen(){

@@ -1,14 +1,128 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:id="@+id/screen"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/LightGrey"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".AlarmHandler" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="@string/hello_world" />
+         <LinearLayout
+             android:id="@+id/off"
+             android:layout_width="fill_parent"
+             android:layout_height="100dp"
+             android:layout_gravity="center"
+             android:layout_marginBottom="8dp"
+             android:background="@color/White"
+             android:clickable="true"
+             android:orientation="vertical"
+             android:paddingBottom="@dimen/activity_vertical_margin"
+             android:paddingLeft="@dimen/activity_horizontal_margin"
+             android:paddingRight="@dimen/activity_horizontal_margin"
+             android:paddingTop="@dimen/activity_vertical_margin"
+             android:onClick="performStopActivity" >
 
-</RelativeLayout>
+             <TextView
+                 android:id="@+id/stopText"
+                 android:layout_width="fill_parent"
+                 android:layout_height="fill_parent"
+                 android:layout_gravity="center"
+                 android:gravity="center"
+                 android:text="STOP"
+                 android:textColor="@color/snoozeColor"
+                 android:textSize="25sp" />
+
+   		 </LinearLayout>
+   		 
+         <RelativeLayout
+             android:id="@+id/fbFrame"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:background="@color/fbBlue"
+             android:orientation="vertical" >
+
+             <ImageView
+                 android:id="@+id/fbLogoImage"
+                 android:layout_width="50dp"
+                 android:layout_height="50dp"
+                 android:layout_marginLeft="@dimen/activity_frame_margin"
+                 android:layout_marginTop="@dimen/activity_frame_margin"
+                 android:adjustViewBounds="true"
+                 android:scaleType="fitXY"
+                 android:src="@drawable/fblogo" />
+
+             <RelativeLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="50dp"
+                 android:layout_marginTop="@dimen/activity_frame_margin"
+                 android:layout_toRightOf="@+id/fbLogoImage" >
+
+                 <TextView
+                     android:id="@+id/textView1"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_centerHorizontal="true"
+                     android:layout_centerVertical="true"
+                     android:text="Facebook Radio"
+                     android:textColor="@color/White"
+                     android:textSize="20sp" />
+
+             </RelativeLayout>
+
+             <FrameLayout
+                 android:layout_width="fill_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_below="@id/fbLogoImage"
+                 android:padding="@dimen/activity_frame_margin" >
+
+                 <FrameLayout
+                     android:layout_width="match_parent"
+                     android:layout_height="match_parent"
+                     android:background="@color/White"
+                     android:padding="@dimen/activity_frame_margin" >
+
+                     <TextView
+                         android:id="@+id/fbPost"
+                         android:layout_width="match_parent"
+                         android:layout_height="100dp"
+                         android:background="@color/White"
+                         android:text="John Doe"
+                         android:textColor="@color/snoozeColor" />
+
+                 </FrameLayout>
+
+             </FrameLayout>
+
+   		 </RelativeLayout>
+
+         <LinearLayout
+             android:id="@+id/snoozeTxt"
+             android:layout_width="match_parent"
+             android:layout_height="100dp"
+             android:layout_marginTop="8dp"
+             android:background="@color/snoozeColor"
+             android:clickable="true"
+             android:orientation="vertical"
+             android:paddingBottom="@dimen/activity_vertical_margin"
+             android:paddingLeft="@dimen/activity_horizontal_margin"
+             android:paddingRight="@dimen/activity_horizontal_margin"
+             android:paddingTop="@dimen/activity_vertical_margin"
+             android:onClick="performSnoozeActivity" >
+
+             <TextView
+                 android:id="@+id/snoozeText"
+                 android:layout_width="fill_parent"
+                 android:layout_height="fill_parent"
+                 android:layout_gravity="center"
+                 android:gravity="center"
+                 android:text="SNOOZE"
+                 android:textColor="@color/White"
+                 android:textSize="25sp" />
+         </LinearLayout>
+    
+</LinearLayout>

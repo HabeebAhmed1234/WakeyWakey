@@ -140,4 +140,9 @@
  <color name="DarkBlue">#00008B</color>
  <color name="Navy">#000080</color>
  <color name="Black">#000000</color>
+ <color name="fbBlue">#536EA9</color>
+ <color name="stopColor">#99ACD4</color>
+ <color name="snoozeColor">#1B356E</color>
+ <color name="batteryBG">#31393C</color>
+ <color name="batteryJuice">#BFF468</color>
 </resources>

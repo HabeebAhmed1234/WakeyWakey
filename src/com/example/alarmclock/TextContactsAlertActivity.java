@@ -12,39 +12,18 @@ import android.util.Log;
 import android.view.Menu;
 import android.widget.Toast;
 
-public class TextContactsAlertActivity extends Activity {
+public class TextContactsAlertActivity {
 
 	PreferencesHandler prefsHandler;
 	Preferences prefs;
-	
 	private int selectedAlarm;
 	
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_text_contacts_alert);
-		
-		selectedAlarm=getSelectedAlarm();
-		if(selectedAlarm==-1)Toast.makeText(getBaseContext(),"ERROR! NO ALARM NUMBER WAS PASSED IN!",Toast.LENGTH_SHORT).show();
-		
-		prefsHandler = new PreferencesHandler(this);
-		prefs = prefsHandler.getSettings();
-		
-		textAllContacts();
-		
-
-		Intent intent = new Intent(this, MainActivity.class);
-		startActivity(intent);
+	TextContactsAlertActivity(PreferencesHandler prefsHandler, Preferences prefs, int selectedAlarm){
+		this.prefsHandler = prefsHandler;
+		this.prefs = prefs;
+		this.selectedAlarm = selectedAlarm;
 	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.activity_text_contacts_alert, menu);
-		
-		return true;
-	}
-
+	
 	void textAllContacts() {
 		ArrayList<Contact> contacts = prefs.getAlarms().get(selectedAlarm).getContactsList();
 	    Log.d("msg","textAllContacts");
@@ -69,25 +48,5 @@ public class TextContactsAlertActivity extends Activity {
 		    sms.sendTextMessage(number, null, msg, null, null);
 		    Log.d("msg","Sent to" + number);
 		}
-		else
-		{
-			// display message if text fields are empty
-		    Toast.makeText(getBaseContext(),"Could not send message",Toast.LENGTH_SHORT).show();
-		}
 	}
-	
-	 private int getSelectedAlarm()
-	    {
-	    	Intent in= getIntent();
-	        Bundle b = in.getExtras();
-	        if(b!=null)
-	        {
-	            return Integer.parseInt((String) b.get(Alarm.ALARM_NAME));
-	        }else
-	        {
-	        	return -1;
-	        }
-	    }
-	
-
 }
