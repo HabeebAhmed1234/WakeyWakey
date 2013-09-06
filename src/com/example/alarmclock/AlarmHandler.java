@@ -52,7 +52,7 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	
 	private boolean playerAlreadyStarted = false;
 	
-	public static int SNOOZE_TIME_IN_MINUTES = 3;
+	public static int SNOOZE_TIME_IN_MINUTES = 5;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -225,16 +225,16 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 		
 		Calendar rightNow = Calendar.getInstance();
 		
-		int snoozeAlarmInMinutes = rightNow.get(Calendar.HOUR)*60+rightNow.get(Calendar.MINUTE)+SNOOZE_TIME_IN_MINUTES;
+		int snoozeAlarmInMinutes = rightNow.get(Calendar.HOUR_OF_DAY)*60+rightNow.get(Calendar.MINUTE)+SNOOZE_TIME_IN_MINUTES;
 
 		Log.d("AlarmClock","Snooze time minutes is : "+ snoozeAlarmInMinutes);
 		int snoozeHour = (snoozeAlarmInMinutes - snoozeAlarmInMinutes%60)/60 ;
 		int snoozeMinute = snoozeAlarmInMinutes%60;
-		Log.d("AlarmClock","Snooze time is : "+ snoozeHour+":"+snoozeMinute);
 		Alarm snoozeAlarm = selectedAlarm;
 		snoozeAlarm.setTime(snoozeHour, snoozeMinute);
 		AlarmFactory AF = new AlarmFactory(this);
 		AF.setAlarm(snoozeAlarm);
+		Log.d("AlarmClock","Snooze time is : "+ snoozeAlarm.getHour()+":"+snoozeAlarm.getMinute());
 		finish();
 		performStopActivity(null);
 		// do other stuff for snooze later...

@@ -26,10 +26,10 @@ public class AlarmFactory {
         cal.set(Calendar.HOUR_OF_DAY, alarm.getHour());
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MILLISECOND, 0);
-        Log.d("AlarmClock", " Alarm set at "+alarm.getHour()+":"+alarm.getMinute()+" milis:"+cal.getTimeInMillis());
+        Log.d("AlarmClock", " Alarm set at "+cal.get(Calendar.HOUR_OF_DAY)+":"+cal.get(Calendar.MINUTE));
         Intent intent = new Intent(context, AlarmReceiver.class);
         intent.putExtra(ALARM_ID, Integer.toString(alarm.getID()));
-        PendingIntent sender = PendingIntent.getBroadcast(context, alarm.getID(), intent, 0);
+        PendingIntent sender = PendingIntent.getBroadcast(context, 0, intent, 0);
         am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), sender);
 	}
 	
