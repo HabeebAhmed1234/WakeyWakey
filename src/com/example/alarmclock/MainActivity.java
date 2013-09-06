@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
 import android.text.format.DateFormat;
+import android.text.format.Time;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
@@ -66,7 +67,7 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 		alarms = new ArrayList();
 		
 		this.alarms=prefs.getAlarms();
-		Log.d("AlarmClock","Alarm minute "+alarms.get(0).getMinute());
+		
 		try {
 			createAlarmsViews();
 		} catch (ParseException e) {
@@ -110,7 +111,10 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 		//check if alarm adder was clicked Alarm adder id is -100
 		if(ID == ALARM_ADDER_ID)
 		{
-			Alarm newAlarm = new Alarm(0, 0, getNewID());
+			Time now = new Time();
+			now.setToNow();
+			
+			Alarm newAlarm = new Alarm(now.hour, now.minute, getNewID());
 			alarms.add(newAlarm);
 			
 			PreferencesHandler prefsHandler = new PreferencesHandler(this);
@@ -495,10 +499,10 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 	public void onResume()
 	{
 		super.onResume();
-		/*if(GlobalStaticVariables.TURN_OFF_APP) 
+		if(GlobalStaticVariables.TURN_OFF_APP) 
 		{
 			GlobalStaticVariables.TURN_OFF_APP=false;
-			//finish();
-		}*/
+			finish();
+		}
 	}
 }

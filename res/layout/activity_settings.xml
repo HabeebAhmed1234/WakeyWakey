@@ -293,19 +293,28 @@
 
       </LinearLayout>
 
-      <RelativeLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/activity_vertical_margin" >
+      <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+              android:layout_marginTop="@dimen/activity_vertical_margin" >
+          
 
           <Button
               android:id="@+id/saveButton"
-              android:layout_width="match_parent"
+              android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:layout_centerInParent="true"
+              android:layout_weight="1"
               android:text="Save" />
+          
+          <Button
+              android:id="@+id/cancelButton"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:text="Cancel" />
 
-      </RelativeLayout>
+      </LinearLayout>
 
  </LinearLayout>
  </ScrollView>

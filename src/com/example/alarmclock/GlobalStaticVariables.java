@@ -6,7 +6,7 @@ public class GlobalStaticVariables {
 	public static ArrayList <Contact> selectedContacts = new ArrayList<Contact>();
 	public static ArrayList <Music> selectedMusic = new ArrayList<Music>();
 	
-	//public static boolean TURN_OFF_APP = false;
+	public static boolean TURN_OFF_APP = false;
 	
 	public static void resetContacts()
 	{

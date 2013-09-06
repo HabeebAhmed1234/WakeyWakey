@@ -1,13 +1,16 @@
 package com.example.alarmclock;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import android.os.Bundle;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -18,6 +21,7 @@ import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	
@@ -45,6 +49,8 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	private boolean shakeToWake;
 	
 	private boolean playerAlreadyStarted = false;
+	
+	public static int SNOOZE_TIME_IN_MINUTES = 3;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -121,7 +127,7 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 			player = null;
 		}
 		
-		if (textContacts) texter = new TextContactsAlertActivity(prefsHandler, prefs, selectedAlarm);
+		if(textContacts) texter = new TextContactsAlertActivity(prefsHandler, prefs, selectedAlarm);
 		else texter = null;
 	}
 	
@@ -199,15 +205,42 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 		
 		offText.setText("oh hi there");
 		
-		//GlobalStaticVariables.TURN_OFF_APP = true;
-		//finish();
+		GlobalStaticVariables.TURN_OFF_APP = true;
+		finish();
 	}
 	
 	public void performSnoozeActivity(final View v) {
 		if (texter != null) texter.textAllContacts();
+	
 		
+		Calendar rightNow = Calendar.getInstance();
+		
+		int snoozeAlarmInMinutes = rightNow.get(Calendar.HOUR)*60+rightNow.get(Calendar.MINUTE)+SNOOZE_TIME_IN_MINUTES;
+
+		Log.d("AlarmClock","Snooze time minutes is : "+ snoozeAlarmInMinutes);
+		int snoozeHour = (snoozeAlarmInMinutes - snoozeAlarmInMinutes%60)/60 ;
+		int snoozeMinute = snoozeAlarmInMinutes%60;
+		Log.d("AlarmClock","Snooze time is : "+ snoozeHour+":"+snoozeMinute);
+		Alarm snoozeAlarm = selectedAlarm;
+		snoozeAlarm.setTime(snoozeHour, snoozeMinute);
+		AlarmFactory AF = new AlarmFactory(this);
+		AF.setAlarm(snoozeAlarm);
+		finish();
+		performStopActivity(null);
 		// do other stuff for snooze later...
 		// like setting a new alarm all over again, for 5 mins from now with all the same settings as current alarm...
 	}
-
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+	    if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+	        Log.d(this.getClass().getName(), "back button pressed");
+	        performStopActivity(null);
+	    }
+	    if ((keyCode == KeyEvent.KEYCODE_HOME)) {
+	        Log.d(this.getClass().getName(), "home button pressed");
+	        performStopActivity(null);
+	    }
+	    return super.onKeyDown(keyCode, event);
+	}
 }

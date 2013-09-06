@@ -42,6 +42,7 @@ public class SettingsActivity extends Activity {
 	LinearLayout fbRadioSmallFrame;
 	EditText alarmNameEditText;
 	Button saveButton;
+	Button cancelButton;
 	Button addContacts;
 	Button musicButton;
 	
@@ -98,6 +99,17 @@ public class SettingsActivity extends Activity {
 				populateAlarmWithFormData();
 				saveAlarm();
 				Toast.makeText(getApplicationContext(), "Saved Alarm", Toast.LENGTH_LONG).show();
+			}
+		});
+	}
+	
+	private void setupCancelButton(){
+		cancelButton = (Button) findViewById(R.id.cancelButton);
+		cancelButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startMainMenuActivity();
+				Toast.makeText(getApplicationContext(), "Canceled Alarm", Toast.LENGTH_LONG).show();
 			}
 		});
 	}
@@ -241,6 +253,7 @@ public class SettingsActivity extends Activity {
 		
 		setupToggleButtons();
 		setupSaveButton();
+		setupCancelButton();
 		setupAddContactsButton();
 		setupMusicButton();
 	}
@@ -328,6 +341,11 @@ public class SettingsActivity extends Activity {
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 	    if ((keyCode == KeyEvent.KEYCODE_BACK)) {
 	        Log.d(this.getClass().getName(), "back button pressed");
+	        
+	        populateAlarmWithFormData();
+			saveAlarm();
+			Toast.makeText(getApplicationContext(), "Saved Alarm", Toast.LENGTH_LONG).show();
+			
 	        this.startMainMenuActivity();
 	    }
 	    return super.onKeyDown(keyCode, event);
