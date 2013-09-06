@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.View.OnLayoutChangeListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
@@ -57,6 +58,11 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+		 getWindow().addFlags(
+			        WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD|
+			        WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON|
+			        WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+		 
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		
 		setContentView(R.layout.activity_alarm_handler);
