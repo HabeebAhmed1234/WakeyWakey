@@ -28,8 +28,6 @@ public class AlarmFactory {
         cal.set(Calendar.MILLISECOND, 0);
         
         Calendar nowTime = Calendar.getInstance();
-
-        
         
         Intent intent = new Intent(context, AlarmReceiver.class);
         intent.putExtra(ALARM_ID, Integer.toString(alarm.getID()));
@@ -37,14 +35,14 @@ public class AlarmFactory {
         
         long firstTriggerTimeInMillis = cal.getTimeInMillis();
         
-        if(cal.getTimeInMillis()<nowTime.getTimeInMillis())
+        if(firstTriggerTimeInMillis<nowTime.getTimeInMillis())
         {
         	firstTriggerTimeInMillis+=AlarmManager.INTERVAL_DAY;
         }
         
         Log.d("AlarmClock", " Alarm set at "+cal.get(Calendar.HOUR_OF_DAY)+":"+cal.get(Calendar.MINUTE)+ " on The day "+cal.get(Calendar.DAY_OF_YEAR) +"first trigger time is __days from now"+(firstTriggerTimeInMillis-cal.getTimeInMillis())/1000/60/60/24);
         
-        am.setInexactRepeating(AlarmManager.RTC_WAKEUP, firstTriggerTimeInMillis, AlarmManager.INTERVAL_DAY, sender);
+        am.setRepeating(AlarmManager.RTC_WAKEUP, firstTriggerTimeInMillis, AlarmManager.INTERVAL_DAY, sender);
 	}
 	
 	public void cancelAlarm(Alarm alarm)

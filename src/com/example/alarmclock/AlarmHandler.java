@@ -44,7 +44,6 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	public ShakeToWakeActivity shaker;
 	private TextContactsAlertActivity texter;
 	private MusicAlertActivity player;
-	private FacebookAlertActivity fbProfile;
 	
 	private boolean facebookRadio;
 	private boolean textContacts;

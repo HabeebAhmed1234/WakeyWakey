@@ -31,11 +31,16 @@ public class MusicAlertActivity {
 	public void start()
 	{
 			player = new MediaPlayer();
+			player.setLooping(true);
+			
 			if(!(musicList==null || musicList.size()==0))
 			{
 				play(musicList.get(0).getPath());
 			}else{
 				//play default alarm
+				player = MediaPlayer.create(context,R.raw.default_alarm);
+				player.setLooping(true);
+                player.start();
 				Toast.makeText(this.context, "Please set a ringtone!", Toast.LENGTH_LONG).show();
 			}
 	}
