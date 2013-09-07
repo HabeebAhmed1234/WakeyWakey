@@ -80,22 +80,6 @@
                  android:layout_below="@id/NFLogoImage"
                  android:padding="@dimen/activity_frame_margin" >
 
-                 <FrameLayout
-                     android:layout_width="match_parent"
-                     android:layout_height="match_parent"
-                     android:background="@color/White"
-                     android:padding="@dimen/activity_frame_margin" >
-
-                     <TextView
-                         android:id="@+id/nfpost"
-                         android:layout_width="match_parent"
-                         android:layout_height="100dp"
-                         android:background="@color/White"
-                         android:text="John Doe"
-                         android:textColor="@color/snoozeColor" />
-
-                 </FrameLayout>
-
              </FrameLayout>
 
    		 </RelativeLayout>

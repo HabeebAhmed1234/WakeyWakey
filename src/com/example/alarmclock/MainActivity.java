@@ -90,7 +90,8 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    
 		int selectionID = item.getItemId();
-
+		
+		
 		if(selectionID == R.id.delete)
 		{
 			deleteAlarm(this.getAlarmByID(longClickedAlarmId));
@@ -491,11 +492,6 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 	public void onPause()
 	{
 		super.onPause();
-		/*if(GlobalStaticVariables.TURN_OFF_APP) 
-		{
-			GlobalStaticVariables.TURN_OFF_APP =false;
-			//finish();
-		}*/
 	}
 	
 	@Override

@@ -20,7 +20,7 @@ import android.widget.ListView;
 
 public class MessageList {
 	
-	public List<Message> messages;
+	public List<Message> messages = new ArrayList<Message>();
 	
     public MessageList()
     {

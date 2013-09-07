@@ -28,7 +28,7 @@ import android.widget.Toast;
 
 public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	
-	public RelativeLayout fbFrame;
+	public RelativeLayout nfFrame;
 	public LinearLayout screen;
 	public LinearLayout snoozeButton;
 	public LinearLayout offButton;
@@ -36,7 +36,6 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	public TextView offText;
 	public LinearLayout shakeScreen;
 	public CustomImageView battery;
-	public TextView newsFeedText;
 	
 	private PreferencesHandler prefsHandler;
 	private Preferences prefs;
@@ -83,13 +82,12 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	}
 
 	private void initializeFormComponents(){
-		fbFrame = (RelativeLayout) findViewById(R.id.NFFrame);
+		nfFrame = (RelativeLayout) findViewById(R.id.NFFrame);
 		screen = (LinearLayout) findViewById(R.id.screen);
 		offButton = (LinearLayout) findViewById(R.id.off);
 	    snoozeButton = (LinearLayout) findViewById(R.id.snoozeTxt);
 	    offText = (TextView) findViewById(R.id.stopText);
 	    snoozeText = (TextView) findViewById(R.id.snoozeText);
-	    newsFeedText = (TextView) findViewById(R.id.nfpost);
 	       
 	    getAlarmSettings();
 	    setupScreen();
@@ -102,19 +100,19 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	
 	private void getAlarmSettings(){
 		rssNewsFeed = selectedAlarm.getRssNewFeedOption();
-		Log.d("accel", Boolean.toString(rssNewsFeed));
+		Log.d("AlarmClock", Boolean.toString(rssNewsFeed));
 		shakeToWake = selectedAlarm.getShakeToWakeOption();
 		textContacts = selectedAlarm.getTextContactsOption();
 	}
 	
 	private void setupScreen(){
-	    if (!rssNewsFeed) fbFrame.setVisibility(View.GONE); // if rssNewsFeed radio = OFF (else do nothing)
+	    if (!rssNewsFeed) nfFrame.setVisibility(View.GONE); // if rssNewsFeed radio = OFF (else do nothing)
 	    if (shakeToWake){
 	    	offText.setText("STOP button disabled - shake to turn off"); // if shaketowake = ON (else do nothing)
 	    	offButton.setClickable(false);
 	    }
 	    if (textContacts) snoozeText.setText("SNOOZE\nWarning: hitting snooze will text your contacts"); // if textContacts = ON (else do nothing)
-	    Log.v("DEBUG_TAG", Integer.toString(fbFrame.getHeight()));
+	    Log.v("DEBUG_TAG", Integer.toString(nfFrame.getHeight()));
 	}
 	
 	@Override
@@ -149,8 +147,6 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 		List<Message> messages = newsfeed.messages;
 		for (int i=0; i<messages.size(); i++){
 			String finalText = messages.get(i).getTitle() + "\n" + messages.get(i).getDescription();
-			newsFeedText.setText(finalText);
-			speaker.say("testing");
 			speaker.say(finalText);
 		}
 	}
@@ -160,10 +156,10 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 		Log.d("DEBUG_TAG", Integer.toString(spacing));
 		Log.d("DEBUG_TAG", Integer.toString(screen.getHeight()));
 		
-		int fbFrameHeight = fbFrame.getHeight();
-		if (fbFrame.getVisibility() == View.GONE) fbFrameHeight = 0;
+		int nfFrameHeight = nfFrame.getHeight();
+		if (nfFrame.getVisibility() == View.GONE) nfFrameHeight = 0;
 		
-		int newHeight = (screen.getHeight() - fbFrameHeight - spacing) / 2;
+		int newHeight = (screen.getHeight() - nfFrameHeight - spacing) / 2;
 		Log.d("DEBUG_TAG", Integer.toString(newHeight));
 		LayoutParams offButtonParams = offButton.getLayoutParams();
 		LayoutParams snoozeButtonParams = snoozeButton.getLayoutParams();
@@ -225,6 +221,9 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 		if(!rssNewsFeed)
 		{
 			if(player.isPlaying())player.stop();
+		}else
+		{
+			speaker.stop();
 		}
 		
 		offText.setText("oh hi there");
