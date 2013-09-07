@@ -3,8 +3,10 @@ package com.example.alarmclock;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
+import android.util.Log;
 
 public class MyTextToSpeech implements OnInitListener {
 
@@ -16,10 +18,17 @@ public class MyTextToSpeech implements OnInitListener {
     }
     
 	public void say(String text2say){
-	    talker.speak(text2say, TextToSpeech.QUEUE_FLUSH, null);
+		
+		try{
+			talker.speak(text2say, TextToSpeech.QUEUE_FLUSH, null);
+		}
+		catch (Exception e){
+			Log.d("AndroidNews", "failed");
+			throw new RuntimeException(e);
+		}
 	}
 
     public void onInit(int status) {
-            say("Initialized");
+        say("Initialized");
     }
 }

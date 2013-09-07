@@ -54,7 +54,7 @@
                  android:layout_marginTop="@dimen/activity_frame_margin"
                  android:adjustViewBounds="true"
                  android:scaleType="fitXY"
-                 android:src="@drawable/NFlogo" /> 
+                 android:src="@drawable/nflogo" />
 
              <RelativeLayout
                  android:layout_width="match_parent"
@@ -68,7 +68,7 @@
                      android:layout_height="wrap_content"
                      android:layout_centerHorizontal="true"
                      android:layout_centerVertical="true"
-                     android:text="News Feed Radio"
+                     android:text="World News Radio"
                      android:textColor="@color/White"
                      android:textSize="20sp" />
 
@@ -87,7 +87,7 @@
                      android:padding="@dimen/activity_frame_margin" >
 
                      <TextView
-                         android:id="@+id/NFPost"
+                         android:id="@+id/nfpost"
                          android:layout_width="match_parent"
                          android:layout_height="100dp"
                          android:background="@color/White"

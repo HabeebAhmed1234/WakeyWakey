@@ -2,6 +2,7 @@ package com.example.alarmclock;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import android.os.Bundle;
 import android.annotation.SuppressLint;
@@ -27,7 +28,6 @@ import android.widget.Toast;
 
 public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	
-	public TextView fbPost;
 	public RelativeLayout fbFrame;
 	public LinearLayout screen;
 	public LinearLayout snoozeButton;
@@ -36,14 +36,17 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	public TextView offText;
 	public LinearLayout shakeScreen;
 	public CustomImageView battery;
+	public TextView newsFeedText;
 	
 	private PreferencesHandler prefsHandler;
 	private Preferences prefs;
 	private Alarm selectedAlarm;
 	
+	private MessageList newsfeed;
 	public ShakeToWakeActivity shaker;
 	private TextContactsAlertActivity texter;
 	private MusicAlertActivity player;
+	private MyTextToSpeech speaker;
 	
 	private boolean rssNewsFeed;
 	private boolean textContacts;
@@ -80,23 +83,26 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	}
 
 	private void initializeFormComponents(){
-		fbPost = (TextView) findViewById(R.id.fbPost);
-		fbPost.setText("John Doe\nThe quick brown fox jumps over the lazy dog.");
-		fbFrame = (RelativeLayout) findViewById(R.id.fbFrame);
+		fbFrame = (RelativeLayout) findViewById(R.id.NFFrame);
 		screen = (LinearLayout) findViewById(R.id.screen);
 		offButton = (LinearLayout) findViewById(R.id.off);
 	    snoozeButton = (LinearLayout) findViewById(R.id.snoozeTxt);
 	    offText = (TextView) findViewById(R.id.stopText);
 	    snoozeText = (TextView) findViewById(R.id.snoozeText);
+	    newsFeedText = (TextView) findViewById(R.id.nfpost);
 	       
 	    getAlarmSettings();
 	    setupScreen();
 	    
-	    if (rssNewsFeed) /*Start the newsfeed read out here*/;
+	    if (rssNewsFeed) {
+	    	newsfeed = new MessageList();
+	    	speaker = new MyTextToSpeech(getApplicationContext());
+	    }
 	}
 	
 	private void getAlarmSettings(){
 		rssNewsFeed = selectedAlarm.getRssNewFeedOption();
+		Log.d("accel", Boolean.toString(rssNewsFeed));
 		shakeToWake = selectedAlarm.getShakeToWakeOption();
 		textContacts = selectedAlarm.getTextContactsOption();
 	}
@@ -135,6 +141,18 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 		
 		if(textContacts) texter = new TextContactsAlertActivity(prefsHandler, prefs, selectedAlarm);
 		else texter = null;
+		
+		if (rssNewsFeed) startReadingNewsFeed();
+	}
+	
+	public void startReadingNewsFeed(){
+		List<Message> messages = newsfeed.messages;
+		for (int i=0; i<messages.size(); i++){
+			String finalText = messages.get(i).getTitle() + "\n" + messages.get(i).getDescription();
+			newsFeedText.setText(finalText);
+			speaker.say("testing");
+			speaker.say(finalText);
+		}
 	}
 	
 	private void resizeButtons(){
