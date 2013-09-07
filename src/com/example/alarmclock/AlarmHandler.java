@@ -94,7 +94,7 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	    
 	    if (rssNewsFeed) {
 	    	newsfeed = new MessageList();
-	    	speaker = new MyTextToSpeech(getApplicationContext());
+	    	speaker = new MyTextToSpeech(this);
 	    }
 	}
 	
@@ -221,10 +221,9 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 		if(!rssNewsFeed)
 		{
 			if(player.isPlaying())player.stop();
-		}else
-		{
-			speaker.stop();
 		}
+		
+		speaker.stop();
 		
 		offText.setText("oh hi there");
 		

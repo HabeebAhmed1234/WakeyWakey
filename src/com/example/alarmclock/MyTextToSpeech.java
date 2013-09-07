@@ -42,7 +42,10 @@ public class MyTextToSpeech implements OnInitListener {
 	
 	public void stop()
 	{
-		if(talker.isSpeaking()) talker.stop();
+		Log.d("AlarmClock","Turning off tts");
+		talker.speak("Alarm Off", TextToSpeech.QUEUE_FLUSH, null);
+		talker.stop();
+		talker.shutdown();
 	}
 
     public void onInit(int status) {
