@@ -6,7 +6,7 @@ public class Alarm {
 	
 	private int hour;
 	private int minute;
-	private boolean facebookOption;
+	private boolean rssNewsFeedOption;
 	private boolean videoNewsOption;
 	private boolean textContactsOption;
 	private boolean shakeToWakeOption;
@@ -27,7 +27,7 @@ public class Alarm {
 		this.hour = hour;
 		this.minute = minute;
 		this.ID = id;
-		this.facebookOption=false;
+		this.rssNewsFeedOption=false;
 		this.videoNewsOption=false;
 		this.textContactsOption=false;
 		this.musicOption=false;
@@ -85,21 +85,21 @@ public class Alarm {
 		return this.minute;
 	}
 	
-	public void setFacebookOption(boolean setting)
+	public void setRssNewsFeedOption(boolean setting)
 	{
 		if(this.musicOption&&setting)
 		{
 			this.musicOption=false;
-			this.facebookOption=true;
+			this.rssNewsFeedOption=true;
 		}else
 		{
-			this.facebookOption=setting;
+			this.rssNewsFeedOption=setting;
 		}
 	}
 	
-	public boolean getFacebookOption()
+	public boolean getRssNewFeedOption()
 	{
-		return this.facebookOption;
+		return this.rssNewsFeedOption;
 	}
 	
 	public void setVideoNewsOption(boolean setting)
@@ -134,9 +134,9 @@ public class Alarm {
 	
 	public void setMusicOption(boolean setting)
 	{
-		if(this.facebookOption&&setting)
+		if(this.rssNewsFeedOption&&setting)
 		{
-			this.facebookOption=false;
+			this.rssNewsFeedOption=false;
 			this.musicOption=true;
 		}else
 		{

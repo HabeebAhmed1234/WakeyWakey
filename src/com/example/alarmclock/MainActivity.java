@@ -345,13 +345,13 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 		settingsLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
 		LayoutParams settingsLayoutParams = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT); 
 		
-		ImageView facebookImageView = new ImageView(this);
-		facebookImageView.setId(1);
-		facebookImageView.setBackgroundResource(R.drawable.facebook_icon);
-		LayoutParams facebookLayoutParams = new LayoutParams(30,30);
-		facebookLayoutParams.setMargins(1, 1, 1, 1);
-		facebookImageView.setLayoutParams(facebookLayoutParams);
-		if(!alarm.getFacebookOption())facebookImageView.getBackground().setAlpha(50);
+		ImageView rssNewsFeedImageView = new ImageView(this);
+		rssNewsFeedImageView.setId(1);
+		rssNewsFeedImageView.setBackgroundResource(R.drawable.newsfeed_icon);
+		LayoutParams rssNewsFeedLayoutParams = new LayoutParams(30,30);
+		rssNewsFeedLayoutParams.setMargins(1, 1, 1, 1);
+		rssNewsFeedImageView.setLayoutParams(rssNewsFeedLayoutParams);
+		if(!alarm.getRssNewFeedOption())rssNewsFeedImageView.getBackground().setAlpha(50);
 		
 		ImageView musicImageView = new ImageView(this);
 		musicImageView.setId(2);
@@ -377,7 +377,7 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 		shakeToWakeImageView.setLayoutParams(shakeToWakeImageViewParams);
 		if(!alarm.getShakeToWakeOption())shakeToWakeImageView.getBackground().setAlpha(50);
 			
-		settingsLinearLayout.addView(facebookImageView);
+		settingsLinearLayout.addView(rssNewsFeedImageView);
 		settingsLinearLayout.addView(musicImageView);
 		settingsLinearLayout.addView(textContactsImageView);
 		settingsLinearLayout.addView(shakeToWakeImageView);

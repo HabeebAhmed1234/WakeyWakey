@@ -11,7 +11,7 @@ public class PreferencesHandler {
 	private Context context;
 	private static final String PREFS_NAME="CONFIG";
 	
-	public String FACEBOOK_KEY="facebookison";
+	public String NEWSFEED_KEY="newsfeedison";
 	public String VIDEONEWS_KEY="videonewsison";
 	public String TEXTCONTACTS_KEY="textcontactsison";
 	public String MUSIC_KEY="musicison";
@@ -45,14 +45,14 @@ public class PreferencesHandler {
         return settings.getString(key, "NULL");
 	}
 	
-	private void setFacebookOption(boolean setting, int AlarmNumber)
+	private void setRssNewsFeedOption(boolean setting, int AlarmNumber)
 	{
 		if(setting)
 		{
-			set(FACEBOOK_KEY+AlarmNumber,"true");
+			set(NEWSFEED_KEY+AlarmNumber,"true");
 		}else
 		{
-			set(FACEBOOK_KEY+AlarmNumber,"false");
+			set(NEWSFEED_KEY+AlarmNumber,"false");
 		}
 	}
 	
@@ -160,7 +160,7 @@ public class PreferencesHandler {
 		for(int i=0;i<alarms.size();i++)
 		{
 			this.setAlarmTime(alarms.get(i).getHour(),alarms.get(i).getMinute(), i);
-			this.setFacebookOption(alarms.get(i).getFacebookOption(), i);
+			this.setRssNewsFeedOption(alarms.get(i).getRssNewFeedOption(), i);
 			this.setMusicOption(alarms.get(i).getMusicOption(), i);
 			this.setTextContactsOption(alarms.get(i).getTextContactsOption(), i);
 			this.setVideoNewsOption(alarms.get(i).getVideoNewsOption(), i);
@@ -183,11 +183,11 @@ public class PreferencesHandler {
 			{
 				Alarm newAlarm = new Alarm(0,0,0);
 				
-				if(get(this.FACEBOOK_KEY+i)=="true")
+				if(get(this.NEWSFEED_KEY+i)=="true")
 				{
-					newAlarm.setFacebookOption(true);
+					newAlarm.setRssNewsFeedOption(true);
 				}else{
-					newAlarm.setFacebookOption(false);
+					newAlarm.setRssNewsFeedOption(false);
 				}
 				
 				if(get(this.VIDEONEWS_KEY+i)=="true")

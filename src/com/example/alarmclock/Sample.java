@@ -1,9 +1,5 @@
 package com.example.alarmclock;
 
-import com.example.alarmclock.R;
-import com.example.alarmclock.R.id;
-import com.example.alarmclock.R.layout;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -34,8 +30,8 @@ public class Sample extends Activity {
           return;
         }
         
-        Intent lVideoIntent = new Intent(null, Uri.parse("ytv://"+videoId), Sample.this, OpenYouTubePlayerActivity.class);
-        startActivity(lVideoIntent);
+        //Intent lVideoIntent = new Intent(null, Uri.parse("ytv://"+videoId), Sample.this, OpenYouTubePlayerActivity.class);
+        //startActivity(lVideoIntent);
         
       }
     });

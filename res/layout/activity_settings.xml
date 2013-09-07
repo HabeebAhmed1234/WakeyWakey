@@ -226,12 +226,12 @@
                   android:layout_width="166dp"
                   android:layout_height="wrap_content"
                   android:layout_centerVertical="true"
-                  android:text="Facebook Radio"
+                  android:text="News Feed Radio"
                   android:textAppearance="?android:attr/textAppearanceLarge"
                   android:textSize="@dimen/activity_medium_text" />
 
               <ToggleButton
-                  android:id="@+id/fbRadioToggle"
+                  android:id="@+id/NFRadioToggle"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:layout_alignParentRight="true"
@@ -241,7 +241,7 @@
           </RelativeLayout>
 
           <LinearLayout
-              android:id="@+id/FBRadioSmallFrame"
+              android:id="@+id/NFRadioSmallFrame"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical"

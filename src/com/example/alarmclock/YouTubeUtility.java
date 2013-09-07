@@ -46,12 +46,12 @@ public class YouTubeUtility {
 
 		HttpClient lClient = new DefaultHttpClient();
 		
-		HttpGet lGetMethod = new HttpGet(OpenYouTubePlayerActivity.YOUTUBE_PLAYLIST_ATOM_FEED_URL + 
-										 pPlaylistId.getId()+"?v=2&max-results=50&alt=json");
+		//HttpGet lGetMethod = new HttpGet(OpenYouTubePlayerActivity.YOUTUBE_PLAYLIST_ATOM_FEED_URL + 
+		//								 pPlaylistId.getId()+"?v=2&max-results=50&alt=json");
 		
 		HttpResponse lResp = null;
 
-		lResp = lClient.execute(lGetMethod);
+		//lResp = lClient.execute(lGetMethod);
 		
 		ByteArrayOutputStream lBOS = new ByteArrayOutputStream();
 		String lInfoStr = null;
@@ -107,12 +107,12 @@ public class YouTubeUtility {
 		String lUriStr = null;
 		HttpClient lClient = new DefaultHttpClient();
 		
-		HttpGet lGetMethod = new HttpGet(OpenYouTubePlayerActivity.YOUTUBE_VIDEO_INFORMATION_URL + 
-										 pYouTubeVideoId);
+		//HttpGet lGetMethod = new HttpGet(OpenYouTubePlayerActivity.YOUTUBE_VIDEO_INFORMATION_URL + 
+		//								 pYouTubeVideoId);
 		
 		HttpResponse lResp = null;
 
-		lResp = lClient.execute(lGetMethod);
+		//lResp = lClient.execute(lGetMethod);
 			
 		ByteArrayOutputStream lBOS = new ByteArrayOutputStream();
 		String lInfoStr = null;

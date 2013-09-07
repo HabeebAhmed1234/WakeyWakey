@@ -35,12 +35,12 @@ import android.graphics.PorterDuff;
 public class SettingsActivity extends Activity {
 
 	ToggleButton toggle_textContacts;
-	ToggleButton toggle_FBRadio;
+	ToggleButton toggle_NFRadio;
 	ToggleButton toggle_ShakeToWake;
 	ToggleButton toggle_AlarmEnabled;
 	
 	RelativeLayout textContactsSmallFrame;
-	LinearLayout fbRadioSmallFrame;
+	LinearLayout NFRadioSmallFrame;
 	EditText alarmNameEditText;
 	Button saveButton;
 	Button cancelButton;
@@ -75,17 +75,17 @@ public class SettingsActivity extends Activity {
 		    }
 		});
 		
-		toggle_FBRadio.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+		toggle_NFRadio.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 		    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 		        if (!isChecked) {
 		            // The toggle is disabled
 		        	// resize the frame to just show the top button
 		        	LinearLayout.LayoutParams layout_desc = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-		            fbRadioSmallFrame.setLayoutParams(layout_desc);
+		            NFRadioSmallFrame.setLayoutParams(layout_desc);
 		        } else {
 		        	// the toggle is enabled
 		        	LinearLayout.LayoutParams layout_desc = new LinearLayout.LayoutParams(0, 0);
-		            fbRadioSmallFrame.setLayoutParams(layout_desc);
+		            NFRadioSmallFrame.setLayoutParams(layout_desc);
 		        }
 		    }
 		});
@@ -125,13 +125,13 @@ public class SettingsActivity extends Activity {
 	private void populateAlarmWithFormData()
 	{
 		Log.d("AlarmClock","alarm Values");
-		Log.d("AlarmClock","FB radio "+toggle_FBRadio.isChecked());
-		Log.d("AlarmClock","music "+!toggle_FBRadio.isChecked());
+		Log.d("AlarmClock","NF radio "+toggle_NFRadio.isChecked());
+		Log.d("AlarmClock","music "+!toggle_NFRadio.isChecked());
 		Log.d("AlarmClock","Time "+AlarmTime.getCurrentHour()+":"+AlarmTime.getCurrentMinute());
 		Log.d("AlarmClock","Name "+alarmNameEditText.getText().toString());
 		
-		alarm.setFacebookOption(toggle_FBRadio.isChecked());
-		alarm.setMusicOption(!toggle_FBRadio.isChecked());
+		alarm.setRssNewsFeedOption(toggle_NFRadio.isChecked());
+		alarm.setMusicOption(!toggle_NFRadio.isChecked());
 		alarm.setTime(AlarmTime.getCurrentHour(),AlarmTime.getCurrentMinute());
 		alarm.setVideoNewsOption(false);
 		alarm.setShakeToWakeOption(toggle_ShakeToWake.isChecked());
@@ -144,7 +144,7 @@ public class SettingsActivity extends Activity {
 			alarm.disableAlarm();
 		}
 		
-		if(!toggle_FBRadio.isChecked())
+		if(!toggle_NFRadio.isChecked())
 		{
 			alarm.setMusicList(GlobalStaticVariables.selectedMusic);
 		}
@@ -162,20 +162,20 @@ public class SettingsActivity extends Activity {
 	private void initializeComponents(){
 		toggle_textContacts = (ToggleButton) findViewById(R.id.toggle_textContacts);
 		toggle_textContacts.setChecked(alarm.getTextContactsOption());
-		toggle_FBRadio = (ToggleButton) findViewById(R.id.fbRadioToggle);
-		toggle_FBRadio.setChecked(alarm.getFacebookOption());
+		toggle_NFRadio = (ToggleButton) findViewById(R.id.NFRadioToggle);
+		toggle_NFRadio.setChecked(alarm.getRssNewFeedOption());
 		toggle_ShakeToWake = (ToggleButton) findViewById(R.id.shakeToWakeToggleButton);
 		toggle_ShakeToWake.setChecked(alarm.getShakeToWakeOption());
-		toggle_AlarmEnabled = (ToggleButton) findViewById(R.id.AlarmEnabled);
+		toggle_AlarmEnabled = (ToggleButton) findViewById(R.id.AlarmEnabled); 
 		toggle_AlarmEnabled.setChecked(alarm.enabled());
 		textContactsSmallFrame = (RelativeLayout) findViewById(R.id.textContactsSmallFrameBottom);
-		fbRadioSmallFrame = (LinearLayout) findViewById(R.id.FBRadioSmallFrame);
-        if (!alarm.getFacebookOption()) {
+		NFRadioSmallFrame = (LinearLayout) findViewById(R.id.NFRadioSmallFrame);
+        if (!alarm.getRssNewFeedOption()) {
             LinearLayout.LayoutParams layout_params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            fbRadioSmallFrame.setLayoutParams(layout_params);
+            NFRadioSmallFrame.setLayoutParams(layout_params);
         } else {
         	LinearLayout.LayoutParams layout_params = new LinearLayout.LayoutParams(0, 0);
-            fbRadioSmallFrame.setLayoutParams(layout_params);
+            NFRadioSmallFrame.setLayoutParams(layout_params);
         }
 		addContacts = (Button) findViewById(R.id.addContacts);
 		musicButton = (Button) findViewById(R.id.changeMusic);

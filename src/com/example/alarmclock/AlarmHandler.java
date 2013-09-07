@@ -45,7 +45,7 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	private TextContactsAlertActivity texter;
 	private MusicAlertActivity player;
 	
-	private boolean facebookRadio;
+	private boolean rssNewsFeed;
 	private boolean textContacts;
 	private boolean shakeToWake;
 	
@@ -65,10 +65,7 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		
 		setContentView(R.layout.activity_alarm_handler);
-		//fbProfile = new FacebookAlertActivity(this, this);
-		
-		//Intent intent = new Intent(this, FacebookAlertActivity.class);
-		//startActivity(intent);
+
 		int selectedAlarmID = Integer.parseInt(getIntent().getExtras().getString(AlarmFactory.ALARM_ID));
 		prefsHandler=new PreferencesHandler(this);
 		prefs=prefsHandler.getSettings();
@@ -95,17 +92,17 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	    getAlarmSettings();
 	    setupScreen();
 	    
-	    //if (facebookRadio) fbPost.setText(fbProfile.getStory());
+	    if (rssNewsFeed) /*Start the newsfeed read out here*/;
 	}
 	
 	private void getAlarmSettings(){
-		facebookRadio = selectedAlarm.getFacebookOption();
+		rssNewsFeed = selectedAlarm.getRssNewFeedOption();
 		shakeToWake = selectedAlarm.getShakeToWakeOption();
 		textContacts = selectedAlarm.getTextContactsOption();
 	}
 	
 	private void setupScreen(){
-	    if (!facebookRadio) fbFrame.setVisibility(View.GONE); // if facebook radio = OFF (else do nothing)
+	    if (!rssNewsFeed) fbFrame.setVisibility(View.GONE); // if rssNewsFeed radio = OFF (else do nothing)
 	    if (shakeToWake){
 	    	offText.setText("STOP button disabled - shake to turn off"); // if shaketowake = ON (else do nothing)
 	    	offButton.setClickable(false);
@@ -127,7 +124,7 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 			addShakeToWakeScreen();
 		}
 		
-		if (!facebookRadio&&!playerAlreadyStarted) {
+		if (!rssNewsFeed&&!playerAlreadyStarted) {
 			player = new MusicAlertActivity(this, selectedAlarm);
 			player.start();
 			playerAlreadyStarted = true;
@@ -207,7 +204,7 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	}
 	
 	public void performStopActivity(final View v) {
-		if(!facebookRadio)
+		if(!rssNewsFeed)
 		{
 			if(player.isPlaying())player.stop();
 		}
