@@ -42,7 +42,13 @@ public class AlarmFactory {
         
         Log.d("AlarmClock", " Alarm set at "+cal.get(Calendar.HOUR_OF_DAY)+":"+cal.get(Calendar.MINUTE)+ " on The day "+cal.get(Calendar.DAY_OF_YEAR) +"first trigger time is __days from now"+(firstTriggerTimeInMillis-cal.getTimeInMillis())/1000/60/60/24);
         
-        am.setRepeating(AlarmManager.RTC_WAKEUP, firstTriggerTimeInMillis, AlarmManager.INTERVAL_DAY, sender);
+        if(alarm.isRepeatedDaily())
+    	{
+    		am.setRepeating(AlarmManager.RTC_WAKEUP, firstTriggerTimeInMillis, AlarmManager.INTERVAL_DAY, sender);
+    	}else{
+    		am.set(AlarmManager.RTC_WAKEUP, firstTriggerTimeInMillis, sender);
+    	}
+        
 	}
 	
 	public void cancelAlarm(Alarm alarm)

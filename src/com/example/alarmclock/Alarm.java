@@ -12,6 +12,7 @@ public class Alarm {
 	private boolean shakeToWakeOption;
 	private boolean musicOption;
 	private boolean isAlarmOn;
+	private boolean repeatedDaily;
 	private int ID;
 	private String name;
 	
@@ -32,6 +33,16 @@ public class Alarm {
 		this.textContactsOption=false;
 		this.musicOption=false;
 		this.shakeToWakeOption=false;
+	}
+	
+	public boolean isRepeatedDaily()
+	{
+		return repeatedDaily;
+	}
+	
+	public void setRepeatedDaily(boolean isRepeatedDaily)
+	{
+		 repeatedDaily = isRepeatedDaily;
 	}
 	
 	public void setName(String name)

@@ -23,6 +23,7 @@ public class PreferencesHandler {
 	public String ALARM_ID_KEY = "ALARM_ID";
 	public String ALARM_NAME_KEY = "ALARM_NAME";
 	public String SHAKETOWAKE_KEY = "SHAKETOWAKE";
+	public String IS_REPEATED_DAILY_KEY = "ISREPEATEDDAILY";
 	public String ALARM_ENABLED_KEY = "ALARM_ENABLED";
 	
 	private SharedPreferences settings ;
@@ -114,6 +115,17 @@ public class PreferencesHandler {
 		}
 	}
 	
+	private void setRepeatedDailyOption(boolean setting, int AlarmNumber)
+	{
+		if(setting)
+		{
+			set(IS_REPEATED_DAILY_KEY+AlarmNumber,"true");
+		}else
+		{
+			set(IS_REPEATED_DAILY_KEY+AlarmNumber,"false");
+		}
+	}
+	
 	private void setAlarmEnabled(boolean setting,int AlarmNumber)
 	{
 		if(setting)
@@ -165,6 +177,7 @@ public class PreferencesHandler {
 			this.setTextContactsOption(alarms.get(i).getTextContactsOption(), i);
 			this.setVideoNewsOption(alarms.get(i).getVideoNewsOption(), i);
 			this.setShakeToWakeOption(alarms.get(i).getShakeToWakeOption(), i);
+			this.setRepeatedDailyOption(alarms.get(i).isRepeatedDaily(), i);
 			this.setMusicList(alarms.get(i).getMusicList(), i);
 			this.setTextContactsList(alarms.get(i).getContactsList(), i);
 			this.setAlarmID(alarms.get(i).getID(),i);
@@ -183,42 +196,49 @@ public class PreferencesHandler {
 			{
 				Alarm newAlarm = new Alarm(0,0,0);
 				
-				if(get(this.NEWSFEED_KEY+i)=="true")
+				if(get(this.NEWSFEED_KEY+i).compareTo("true")==0)
 				{
 					newAlarm.setRssNewsFeedOption(true);
 				}else{
 					newAlarm.setRssNewsFeedOption(false);
 				}
 				
-				if(get(this.VIDEONEWS_KEY+i)=="true")
+				if(get(this.VIDEONEWS_KEY+i).compareTo("true")==0)
 				{
 					newAlarm.setVideoNewsOption(true);
 				}else{
 					newAlarm.setVideoNewsOption(false);
 				}
 				
-				if(get(this.TEXTCONTACTS_KEY+i)=="true")
+				if(get(this.TEXTCONTACTS_KEY+i).compareTo("true")==0)
 				{
 					newAlarm.setTextContactsOption(true);
 				}else{
 					newAlarm.setTextContactsOption(false);
 				}
 				
-				if(get(this.MUSIC_KEY+i)=="true")
+				if(get(this.MUSIC_KEY+i).compareTo("true")==0)
 				{
 					newAlarm.setMusicOption(true);
 				}else{
 					newAlarm.setMusicOption(false);
 				}
 				
-				if(get(this.SHAKETOWAKE_KEY+i)=="true")
+				if(get(this.SHAKETOWAKE_KEY+i).compareTo("true")==0)
 				{
 					newAlarm.setShakeToWakeOption(true);
 				}else{
 					newAlarm.setShakeToWakeOption(false);
 				}
 				
-				if(get(this.ALARM_ENABLED_KEY+i)=="true")
+				if(get(this.IS_REPEATED_DAILY_KEY+i).compareTo("true")==0)
+				{
+					newAlarm.setRepeatedDaily(true);
+				}else{
+					newAlarm.setRepeatedDaily(false);
+				}
+				
+				if(get(this.ALARM_ENABLED_KEY+i).compareTo("true")==0)
 				{
 					newAlarm.enableAlarm();
 				}else{

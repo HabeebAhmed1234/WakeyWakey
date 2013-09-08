@@ -338,7 +338,8 @@
 		                  android:id="@+id/justOnce"
 		                  android:layout_width="wrap_content"
 		                  android:layout_height="wrap_content"
-		                  android:text="Just Once" />
+		                  android:text="Just Once" 
+		                  android:checked="true" />
 		
 		              <RadioButton
 		                  android:id="@+id/daily"

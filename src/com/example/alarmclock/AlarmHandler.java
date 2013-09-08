@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,8 +39,6 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	public LinearLayout shakeScreen;
 	public CustomImageView battery;
 	public TextView nfpost;
-	public Button repeatOnce;
-	public Button repeatDaily;
 	
 	private PreferencesHandler prefsHandler;
 	private Preferences prefs;
@@ -95,6 +94,9 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	    snoozeText = (TextView) findViewById(R.id.snoozeText);
 	    nfpost = (TextView) findViewById(R.id.nfpost);
 	    
+        getAlarmSettings();
+        setupScreen();
+        
 	    if (rssNewsFeed) {
 	    	newsfeed = new MessageList();
 	    	speaker = new MyTextToSpeech(this);
@@ -121,6 +123,7 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	}
 	
 	private void setupScreen(){
+		Log.d("AlarmClock","NFRadio is "+Boolean.toString(rssNewsFeed));
 	    if (!rssNewsFeed) nfFrame.setVisibility(View.GONE); // if rssNewsFeed radio = OFF (else do nothing)
 	    if (shakeToWake){
 	    	offText.setText("STOP button disabled - shake to turn off"); // if shaketowake = ON (else do nothing)

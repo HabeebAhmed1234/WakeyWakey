@@ -25,6 +25,8 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -38,6 +40,10 @@ public class SettingsActivity extends Activity {
 	ToggleButton toggle_NFRadio;
 	ToggleButton toggle_ShakeToWake;
 	ToggleButton toggle_AlarmEnabled;
+	
+	public RadioGroup radioRepeatSetting;
+	public RadioButton radioJustOnce;
+	public RadioButton radioRepeat;
 	
 	RelativeLayout textContactsSmallFrame;
 	LinearLayout NFRadioSmallFrame;
@@ -158,6 +164,15 @@ public class SettingsActivity extends Activity {
 		{
 			alarm.setTextContactsOption(false);
 		}
+		
+		int checkedRadioButtonId = radioRepeatSetting.getCheckedRadioButtonId();
+		if(checkedRadioButtonId==R.id.justOnce)
+		{
+			alarm.setRepeatedDaily(false);
+		}else
+		{
+			alarm.setRepeatedDaily(true);
+		}
 	}
 	
 	private void initializeComponents(){
@@ -178,6 +193,20 @@ public class SettingsActivity extends Activity {
         	LinearLayout.LayoutParams layout_params = new LinearLayout.LayoutParams(0, 0);
             NFRadioSmallFrame.setLayoutParams(layout_params);
         }
+        
+        radioJustOnce = (RadioButton) findViewById(R.id.justOnce);
+        radioRepeat = (RadioButton) findViewById(R.id.daily);
+	    radioRepeatSetting = (RadioGroup) findViewById(R.id.radioRepeat);
+	    if(!alarm.isRepeatedDaily())
+    	{
+    		radioJustOnce.setChecked(true);
+    		radioRepeat.setChecked(false);
+    	}else
+    	{
+    		radioRepeat.setChecked(true);
+    		radioJustOnce.setChecked(false);
+    	}
+	    
 		addContacts = (Button) findViewById(R.id.addContacts);
 		musicButton = (Button) findViewById(R.id.changeMusic);
 		AlarmTime =  (TimePicker) findViewById(R.id.AlarmTime);
@@ -187,6 +216,7 @@ public class SettingsActivity extends Activity {
 		contactsTextView.setText(alarm.getContactsListAsString());
 		musicTextView = (TextView) findViewById(R.id.Tune);
 		musicTextView.setText(alarm.getMusicListAsString());
+		if(alarm.getMusicListAsString()==null||alarm.getMusicListAsString().compareTo("")==0)musicTextView.setText("Default");
 		alarmNameEditText = (EditText)findViewById(R.id.AlarmNameEditText);
 		alarmNameEditText.setText(alarm.getName());
 		// start out without showing the extra settings initially
