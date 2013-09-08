@@ -35,7 +35,7 @@ public class AlarmFactory {
         
         long firstTriggerTimeInMillis = cal.getTimeInMillis();
         
-        if(firstTriggerTimeInMillis<nowTime.getTimeInMillis())
+        if(firstTriggerTimeInMillis<(nowTime.getTimeInMillis())-60000)
         {
         	firstTriggerTimeInMillis+=AlarmManager.INTERVAL_DAY;
         }
