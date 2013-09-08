@@ -19,6 +19,7 @@ import android.view.View.OnLayoutChangeListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
@@ -37,6 +38,8 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	public LinearLayout shakeScreen;
 	public CustomImageView battery;
 	public TextView nfpost;
+	public Button repeatOnce;
+	public Button repeatDaily;
 	
 	private PreferencesHandler prefsHandler;
 	private Preferences prefs;
@@ -91,9 +94,6 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	    offText = (TextView) findViewById(R.id.stopText);
 	    snoozeText = (TextView) findViewById(R.id.snoozeText);
 	    nfpost = (TextView) findViewById(R.id.nfpost);
-	       
-	    getAlarmSettings();
-	    setupScreen();
 	    
 	    if (rssNewsFeed) {
 	    	newsfeed = new MessageList();
