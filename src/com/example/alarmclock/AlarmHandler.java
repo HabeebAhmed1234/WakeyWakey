@@ -36,17 +36,19 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	public TextView offText;
 	public LinearLayout shakeScreen;
 	public CustomImageView battery;
+	public TextView nfpost;
 	
 	private PreferencesHandler prefsHandler;
 	private Preferences prefs;
 	private Alarm selectedAlarm;
-	
+		
 	private MessageList newsfeed;
 	public ShakeToWakeActivity shaker;
 	private TextContactsAlertActivity texter;
 	private MusicAlertActivity player;
 	private MyTextToSpeech speaker;
 	
+	private String finalMessage;
 	private boolean rssNewsFeed;
 	private boolean textContacts;
 	private boolean shakeToWake;
@@ -88,6 +90,7 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	    snoozeButton = (LinearLayout) findViewById(R.id.snoozeTxt);
 	    offText = (TextView) findViewById(R.id.stopText);
 	    snoozeText = (TextView) findViewById(R.id.snoozeText);
+	    nfpost = (TextView) findViewById(R.id.nfpost);
 	       
 	    getAlarmSettings();
 	    setupScreen();
@@ -95,7 +98,19 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	    if (rssNewsFeed) {
 	    	newsfeed = new MessageList();
 	    	speaker = new MyTextToSpeech(this);
+	    	updateNewsFeed();	
 	    }
+	}
+	
+	private void updateNewsFeed(){
+    	// set text for radio
+		List<Message> messages = newsfeed.messages;
+		finalMessage = "";
+		for (int i=0; i<messages.size(); i++){
+			 finalMessage += Integer.toString(i+1) + ". " + messages.get(i).getTitle() + "\n" + messages.get(i).getDescription() + "\n\n";
+		}
+		
+		nfpost.setText(finalMessage);
 	}
 	
 	private void getAlarmSettings(){
@@ -233,8 +248,7 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	
 	public void performSnoozeActivity(final View v) {
 		if (texter != null) texter.textAllContacts();
-	
-		
+			
 		Calendar rightNow = Calendar.getInstance();
 		
 		int snoozeAlarmInMinutes = rightNow.get(Calendar.HOUR_OF_DAY)*60+rightNow.get(Calendar.MINUTE)+SNOOZE_TIME_IN_MINUTES;
