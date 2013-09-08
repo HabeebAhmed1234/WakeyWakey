@@ -96,10 +96,11 @@ public class SettingsActivity extends Activity {
 		saveButton.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
-			public void onClick(View v) {			
+			public void onClick(View v) {	
+				Toast.makeText(getApplicationContext(), "Saved Alarm", Toast.LENGTH_LONG).show();
 				populateAlarmWithFormData();
 				saveAlarm();
-				Toast.makeText(getApplicationContext(), "Saved Alarm", Toast.LENGTH_LONG).show();
+				startMainMenuActivity();
 			}
 		});
 	}

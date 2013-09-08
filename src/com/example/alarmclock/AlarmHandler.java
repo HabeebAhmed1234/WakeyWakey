@@ -159,6 +159,7 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	}
 	
 	public void startReadingNewsFeed(){
+		if(speaker==null)return;
 		List<Message> messages = newsfeed.messages;
 		for (int i=0; i<messages.size(); i++){
 			String finalText = messages.get(i).getTitle() + "\n" + messages.get(i).getDescription();
@@ -238,7 +239,7 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 			if(player.isPlaying())player.stop();
 		}
 		
-		speaker.stop();
+		if(!(speaker==null))speaker.stop();
 		
 		offText.setText("oh hi there");
 		
