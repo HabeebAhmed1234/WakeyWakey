@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -59,6 +60,8 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	
 	public static int SNOOZE_TIME_IN_MINUTES = 5;
 	
+	private PowerManager.WakeLock wl;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -67,6 +70,9 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 			        WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD|
 			        WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON|
 			        WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+		 
+		 getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+         
 		 
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		

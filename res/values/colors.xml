@@ -145,4 +145,9 @@
  <color name="snoozeColor">#1B356E</color>
  <color name="batteryBG">#31393C</color>
  <color name="batteryJuice">#BFF468</color>
+ <color name="mainScreenBackground">#707B97</color>
+ <color name="alarmBackground">#191F2F</color>
+ <color name="fontcolor">#41b2ec</color>
+ <color name="fontcolor2">#7c898e</color>
+ <color name="addcolor">#cfccf6</color>
 </resources>

@@ -1,413 +1,1265 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/tableLayout1"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:layout_marginTop="20sp" >
-    
-<TableRow
-        android:id="@+id/tableRow1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="5dip" >
-        
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainScrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/White" >
+
     <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/Alarm"
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
+        android:id="@+id/wholething"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/frame1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#B0C4DE"
-            android:padding="5sp"
-            android:layout_marginLeft="10sp"
-            android:layout_marginRight="10sp" >
-            
-			<TextView
-                android:id="@+id/time"
+            android:layout_marginBottom="1dp"
+            android:background="@color/alarmBackground"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:id="@+id/innerframe1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@color/alarmBackground"
+                android:padding="@dimen/activity_horizontal_margin" >
+
+                <RelativeLayout
+                    android:id="@+id/RelativeLayout02"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical" >
+
+                    <ImageView
+                        android:id="@+id/power1"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/buttonon" />
+
+                    <TextView
+                        android:id="@+id/time1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@+id/repeat1"
+                        android:layout_centerVertical="false"
+                        android:text="99:99 PM"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="@color/fontcolor"
+                        android:textSize="50sp" />
+
+                    <TextView
+                        android:id="@+id/label1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:text="Alarm 1"
+                        android:textColor="@color/fontcolor2"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/repeat1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="false"
+                        android:layout_below="@+id/label1"
+                        android:text="Repeat: Daily"
+                        android:textColor="@color/fontcolor2"
+                        android:textSize="@dimen/activity_medium_text" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/dock1"
                 android:layout_width="fill_parent"
-            	android:textSize="30sp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:text="1:00 AM" />
-			
-			<LinearLayout
-			    android:orientation="horizontal"
-			    android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-			    >
-	            <ImageView
-	                android:id="@+id/facebook"
-	                android:src="@drawable/facebook_icon"
-	                android:layout_width="30dp"
-	                android:layout_height="30dp"
-	                android:layout_margin="1sp"/>
-	
-	            <ImageView
-	                android:id="@+id/music"
-	                android:layout_width="30dp"
-	                android:layout_height="30dp"
-	                android:src="@drawable/text_contacts"
-	                android:layout_margin="1sp"/>
-	
-	            <ImageView
-	                android:id="@+id/text_contacts"
-	                android:layout_width="30dp"
-	                android:layout_height="30dp"
-	                android:src="@drawable/music_icon"
-	                android:layout_margin="1sp"/>
-			</LinearLayout>
-	</LinearLayout>
-	
-	<RelativeLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/Alarm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#B0C4DE"
-            android:padding="5sp"
-            android:layout_marginLeft="10sp"
-            android:layout_marginRight="10sp" >
+                android:paddingBottom="10dp"
+                android:paddingTop="5dp" >
 
-            <ImageView
-                android:id="@+id/facebook"
-                android:src="@drawable/facebook_icon"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignTop="@+id/music"
-                android:layout_toRightOf="@+id/music" 
-                android:layout_margin="1sp"/>
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
 
-            <ImageView
-                android:id="@+id/music"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/text_contacts"
-                android:layout_alignTop="@+id/text_contacts"
-                android:layout_toRightOf="@+id/text_contacts" 
-                android:layout_margin="1sp"/>
+                    <ImageView
+                        android:id="@+id/dockMusic1"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/musicon" />
+                </RelativeLayout>
 
-            <ImageView
-                android:id="@+id/text_contacts"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/music_icon"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@+id/time" 
-                android:layout_margin="1sp"/>
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
 
-            <TextView
-                android:id="@+id/time"
-                android:layout_width="fill_parent"
-            	android:textSize="30sp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:text="1:00 AM" />
-        </RelativeLayout>
-    </TableRow>
-    <TableRow
-        android:id="@+id/tableRow1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="5dip" >
+                    <ImageView
+                        android:id="@+id/dockNews1"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/newsfeedoff" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/dockText1"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/messagingon" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/dockShake1"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/shakeon" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/dockTrash1"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/trashon" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/dockGear1"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/settingson" />
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
         
-    <RelativeLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/Alarm"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/frame2"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#B0C4DE"
-            android:padding="5sp"
-            android:layout_marginLeft="10sp"
-            android:layout_marginRight="10sp" >
+            android:layout_marginBottom="1dp"
+            android:background="@color/alarmBackground"
+            android:orientation="vertical" >
 
-            <ImageView
-                android:id="@+id/facebook"
-                android:src="@drawable/facebook_icon"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignTop="@+id/music"
-                android:layout_toRightOf="@+id/music" 
-                android:layout_margin="1sp"/>
-
-            <ImageView
-                android:id="@+id/music"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/text_contacts"
-                android:layout_alignTop="@+id/text_contacts"
-                android:layout_toRightOf="@+id/text_contacts" 
-                android:layout_margin="1sp"/>
-
-            <ImageView
-                android:id="@+id/text_contacts"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/music_icon"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@+id/time" 
-                android:layout_margin="1sp"/>
-
-            <TextView
-                android:id="@+id/time"
-                android:layout_width="fill_parent"
-            	android:textSize="30sp"
+            <RelativeLayout
+                android:id="@+id/innerframe2"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:text="1:00 AM" />
-        </RelativeLayout>
-<RelativeLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/Alarm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#B0C4DE"
-            android:padding="5sp"
-            android:layout_marginLeft="10sp"
-            android:layout_marginRight="10sp" >
+                android:layout_gravity="center_vertical"
+                android:background="@color/alarmBackground"
+                android:padding="@dimen/activity_horizontal_margin" >
 
-            <ImageView
-                android:id="@+id/facebook"
-                android:src="@drawable/facebook_icon"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignTop="@+id/music"
-                android:layout_toRightOf="@+id/music" 
-                android:layout_margin="1sp"/>
+                <RelativeLayout
+                    android:id="@+id/RelativeLayout02"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical" >
 
-            <ImageView
-                android:id="@+id/music"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/text_contacts"
-                android:layout_alignTop="@+id/text_contacts"
-                android:layout_toRightOf="@+id/text_contacts" 
-                android:layout_margin="1sp"/>
+                    <ImageView
+                        android:id="@+id/power2"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/buttonon" />
 
-            <ImageView
-                android:id="@+id/text_contacts"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/music_icon"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@+id/time" 
-                android:layout_margin="1sp"/>
+                    <TextView
+                        android:id="@+id/time2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@+id/repeat2"
+                        android:layout_centerVertical="false"
+                        android:text="99:99 PM"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="@color/fontcolor"
+                        android:textSize="50sp" />
 
-            <TextView
-                android:id="@+id/time"
+                    <TextView
+                        android:id="@+id/label2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:text="Alarm 1"
+                        android:textColor="@color/fontcolor2"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/repeat2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="false"
+                        android:layout_below="@+id/label2"
+                        android:text="Repeat: Daily"
+                        android:textColor="@color/fontcolor2"
+                        android:textSize="@dimen/activity_medium_text" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/dock2"
                 android:layout_width="fill_parent"
-            	android:textSize="30sp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:text="1:00 AM" />
-        </RelativeLayout>
-    </TableRow><TableRow
-        android:id="@+id/tableRow1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="5dip" >
+                android:paddingBottom="10dp"
+                android:paddingTop="5dp" >
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/dockMusic2"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/musicon" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/dockNews2"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/newsfeedoff" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/dockText2"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/messagingon" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/dockShake2"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/shakeon" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/dockTrash2"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/trashon" />
+                </RelativeLayout>
+                
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/dockGear2"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/settingson" />
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
         
-    <RelativeLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/Alarm"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/frame3"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#B0C4DE"
-            android:padding="5sp"
-            android:layout_marginLeft="10sp"
-            android:layout_marginRight="10sp" >
+            android:layout_marginBottom="1dp"
+            android:background="@color/alarmBackground"
+            android:orientation="vertical" >
 
-            <ImageView
-                android:id="@+id/facebook"
-                android:src="@drawable/facebook_icon"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignTop="@+id/music"
-                android:layout_toRightOf="@+id/music" 
-                android:layout_margin="1sp"/>
-
-            <ImageView
-                android:id="@+id/music"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/text_contacts"
-                android:layout_alignTop="@+id/text_contacts"
-                android:layout_toRightOf="@+id/text_contacts" 
-                android:layout_margin="1sp"/>
-
-            <ImageView
-                android:id="@+id/text_contacts"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/music_icon"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@+id/time" 
-                android:layout_margin="1sp"/>
-
-            <TextView
-                android:id="@+id/time"
-                android:layout_width="fill_parent"
-            	android:textSize="30sp"
+            <RelativeLayout
+                android:id="@+id/innerframe3"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:text="1:00 AM" />
-        </RelativeLayout>
-<RelativeLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/Alarm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#B0C4DE"
-            android:padding="5sp"
-            android:layout_marginLeft="10sp"
-            android:layout_marginRight="10sp" >
+                android:layout_gravity="center_vertical"
+                android:background="@color/alarmBackground"
+                android:padding="@dimen/activity_horizontal_margin" >
 
-            <ImageView
-                android:id="@+id/facebook"
-                android:src="@drawable/facebook_icon"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignTop="@+id/music"
-                android:layout_toRightOf="@+id/music" 
-                android:layout_margin="1sp"/>
+                <RelativeLayout
+                    android:id="@+id/RelativeLayout02"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical" >
 
-            <ImageView
-                android:id="@+id/music"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/text_contacts"
-                android:layout_alignTop="@+id/text_contacts"
-                android:layout_toRightOf="@+id/text_contacts" 
-                android:layout_margin="1sp"/>
+                    <ImageView
+                        android:id="@+id/power3"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/buttonon" />
 
-            <ImageView
-                android:id="@+id/text_contacts"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/music_icon"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@+id/time" 
-                android:layout_margin="1sp"/>
+                    <TextView
+                        android:id="@+id/time3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@+id/repeat3"
+                        android:layout_centerVertical="false"
+                        android:text="99:99 PM"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="@color/fontcolor"
+                        android:textSize="50sp" />
 
-            <TextView
-                android:id="@+id/time"
+                    <TextView
+                        android:id="@+id/label3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:text="Alarm 1"
+                        android:textColor="@color/fontcolor2"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/repeat3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="false"
+                        android:layout_below="@+id/label3"
+                        android:text="Repeat: Daily"
+                        android:textColor="@color/fontcolor2"
+                        android:textSize="@dimen/activity_medium_text" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/dock3"
                 android:layout_width="fill_parent"
-            	android:textSize="30sp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:text="1:00 AM" />
-        </RelativeLayout>
-    </TableRow><TableRow
-        android:id="@+id/tableRow1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="5dip" >
+                android:paddingBottom="10dp"
+                android:paddingTop="5dp" >
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/dockMusic3"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/musicon" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/dockNews3"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/newsfeedoff" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/dockText3"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/messagingon" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/dockShake3"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/shakeon" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/dockTrash3"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/trashon" />
+                </RelativeLayout>
+                
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/dockGear3"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/settingson" />
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
         
-    <RelativeLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/Alarm"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/frame4"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#B0C4DE"
-            android:padding="5sp"
-            android:layout_marginLeft="10sp"
-            android:layout_marginRight="10sp" >
+            android:layout_marginBottom="1dp"
+            android:background="@color/alarmBackground"
+            android:orientation="vertical" >
 
-            <ImageView
-                android:id="@+id/facebook"
-                android:src="@drawable/facebook_icon"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignTop="@+id/music"
-                android:layout_toRightOf="@+id/music" 
-                android:layout_margin="1sp"/>
-
-            <ImageView
-                android:id="@+id/music"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/text_contacts"
-                android:layout_alignTop="@+id/text_contacts"
-                android:layout_toRightOf="@+id/text_contacts" 
-                android:layout_margin="1sp"/>
-
-            <ImageView
-                android:id="@+id/text_contacts"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/music_icon"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@+id/time" 
-                android:layout_margin="1sp"/>
-
-            <TextView
-                android:id="@+id/time"
-                android:layout_width="fill_parent"
-            	android:textSize="30sp"
+            <RelativeLayout
+                android:id="@+id/innerframe4"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:text="1:00 AM" />
-        </RelativeLayout>
-<RelativeLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/Alarm"
-            android:layout_width="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@color/alarmBackground"
+                android:padding="@dimen/activity_horizontal_margin" >
+
+                <RelativeLayout
+                    android:id="@+id/RelativeLayout02"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical" >
+
+                    <ImageView
+                        android:id="@+id/power4"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/buttonon" />
+
+                    <TextView
+                        android:id="@+id/time4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@+id/repeat4"
+                        android:layout_centerVertical="false"
+                        android:text="99:99 PM"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="@color/fontcolor"
+                        android:textSize="50sp" />
+
+                    <TextView
+                        android:id="@+id/label4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:text="Alarm 1"
+                        android:textColor="@color/fontcolor2"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/repeat4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="false"
+                        android:layout_below="@+id/label4"
+                        android:text="Repeat: Daily"
+                        android:textColor="@color/fontcolor2"
+                        android:textSize="@dimen/activity_medium_text" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/dock4"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:paddingTop="5dp" >
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/dockMusic4"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/musicon" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/dockNews4"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/newsfeedoff" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/dockText4"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/messagingon" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/dockShake4"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/shakeon" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/dockTrash4"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/trashon" />
+                </RelativeLayout>
+                
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/dockGear4"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/settingson" />
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+        
+        <LinearLayout
+            android:id="@+id/frame5"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#B0C4DE"
-            android:padding="5sp"
-            android:layout_marginLeft="10sp"
-            android:layout_marginRight="10sp" >
+            android:layout_marginBottom="1dp"
+            android:background="@color/alarmBackground"
+            android:orientation="vertical" >
 
-            <ImageView
-                android:id="@+id/facebook"
-                android:src="@drawable/facebook_icon"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignTop="@+id/music"
-                android:layout_toRightOf="@+id/music" 
-                android:layout_margin="1sp"/>
-
-            <ImageView
-                android:id="@+id/music"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/text_contacts"
-                android:layout_alignTop="@+id/text_contacts"
-                android:layout_toRightOf="@+id/text_contacts" 
-                android:layout_margin="1sp"/>
-
-            <ImageView
-                android:id="@+id/text_contacts"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/music_icon"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@+id/time" 
-                android:layout_margin="1sp"/>
-
-            <TextView
-                android:id="@+id/time"
-                android:layout_width="fill_parent"
-            	android:textSize="30sp"
+            <RelativeLayout
+                android:id="@+id/innerframe5"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:text="1:00 AM" />
-        </RelativeLayout>
-    </TableRow>
+                android:layout_gravity="center_vertical"
+                android:background="@color/alarmBackground"
+                android:padding="@dimen/activity_horizontal_margin" >
 
-</TableLayout>
+                <RelativeLayout
+                    android:id="@+id/RelativeLayout02"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical" >
+
+                    <ImageView
+                        android:id="@+id/power5"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/buttonon" />
+
+                    <TextView
+                        android:id="@+id/time5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@+id/repeat5"
+                        android:layout_centerVertical="false"
+                        android:text="99:99 PM"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="@color/fontcolor"
+                        android:textSize="50sp" />
+
+                    <TextView
+                        android:id="@+id/label5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:text="Alarm 1"
+                        android:textColor="@color/fontcolor2"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/repeat5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="false"
+                        android:layout_below="@+id/label5"
+                        android:text="Repeat: Daily"
+                        android:textColor="@color/fontcolor2"
+                        android:textSize="@dimen/activity_medium_text" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/dock5"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:paddingTop="5dp" >
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/dockMusic5"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/musicon" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/dockNews5"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/newsfeedoff" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/dockText5"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/messagingon" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/dockShake5"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/shakeon" />
+                </RelativeLayout>
+                
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/dockTrash5"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/trashon" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/dockGear5"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/settingson" />
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+        
+        <LinearLayout
+            android:id="@+id/frame6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="1dp"
+            android:background="@color/alarmBackground"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:id="@+id/innerframe6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@color/alarmBackground"
+                android:padding="@dimen/activity_horizontal_margin" >
+
+                <RelativeLayout
+                    android:id="@+id/RelativeLayout02"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical" >
+
+                    <ImageView
+                        android:id="@+id/power6"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/buttonon" />
+
+                    <TextView
+                        android:id="@+id/time6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@+id/repeat6"
+                        android:layout_centerVertical="false"
+                        android:text="99:99 PM"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="@color/fontcolor"
+                        android:textSize="50sp" />
+
+                    <TextView
+                        android:id="@+id/label6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:text="Alarm 1"
+                        android:textColor="@color/fontcolor2"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/repeat6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="false"
+                        android:layout_below="@+id/label6"
+                        android:text="Repeat: Daily"
+                        android:textColor="@color/fontcolor2"
+                        android:textSize="@dimen/activity_medium_text" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/dock6"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:paddingTop="5dp" >
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/dockMusic6"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/musicon" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/dockNews6"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/newsfeedoff" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/dockText6"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/messagingon" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/dockShake6"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/shakeon" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/dockTrash6"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/trashon" />
+                </RelativeLayout>
+                
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/dockGear6"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/settingson" />
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+        
+        <LinearLayout
+            android:id="@+id/frame7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="1dp"
+            android:background="@color/alarmBackground"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:id="@+id/innerframe7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@color/alarmBackground"
+                android:padding="@dimen/activity_horizontal_margin" >
+
+                <RelativeLayout
+                    android:id="@+id/RelativeLayout02"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical" >
+
+                    <ImageView
+                        android:id="@+id/power7"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/buttonon" />
+
+                    <TextView
+                        android:id="@+id/time7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@+id/repeat7"
+                        android:layout_centerVertical="false"
+                        android:text="99:99 PM"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="@color/fontcolor"
+                        android:textSize="50sp" />
+
+                    <TextView
+                        android:id="@+id/label7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:text="Alarm 1"
+                        android:textColor="@color/fontcolor2"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/repeat7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="false"
+                        android:layout_below="@+id/label7"
+                        android:text="Repeat: Daily"
+                        android:textColor="@color/fontcolor2"
+                        android:textSize="@dimen/activity_medium_text" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/dock7"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:paddingTop="5dp" >
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/dockMusic7"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/musicon" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/dockNews7"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/newsfeedoff" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/dockText7"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/messagingon" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/dockShake7"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/shakeon" />
+                </RelativeLayout>
+                
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/dockTrash7"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/trashon" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/dockGear7"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/settingson" />
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/frame8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="1dp"
+            android:background="@color/alarmBackground"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:id="@+id/innerframe8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@color/alarmBackground"
+                android:padding="@dimen/activity_horizontal_margin" >
+
+                <RelativeLayout
+                    android:id="@+id/RelativeLayout01"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical" >
+
+                    <ImageView
+                        android:id="@+id/power8"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/buttonon" />
+
+                    <TextView
+                        android:id="@+id/time8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@+id/repeat8"
+                        android:layout_centerVertical="false"
+                        android:text="99:99 PM"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="@color/fontcolor"
+                        android:textSize="50sp" />
+
+                    <TextView
+                        android:id="@+id/label8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:text="Alarm 1"
+                        android:textColor="@color/fontcolor2"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/repeat8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="false"
+                        android:layout_below="@+id/label8"
+                        android:text="Repeat: Daily"
+                        android:textColor="@color/fontcolor2"
+                        android:textSize="@dimen/activity_medium_text" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/dock8"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:paddingTop="5dp" >
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/dockMusic8"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/musicon" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/dockNews8"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/newsfeedoff" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/dockText8"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/messagingon" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/dockShake8"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/shakeon" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/dockTrash8"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/trashon" />
+                </RelativeLayout>
+                
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/dockGear8"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/settingson" />
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/LinearLayout02"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/alarmBackground"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@color/alarmBackground"
+                android:padding="@dimen/activity_horizontal_margin" >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical" >
+
+                    <TextView
+                        android:id="@+id/textView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:text="+ Add Alarm"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="@color/addcolor"
+                        android:textSize="25sp" />
+
+                </RelativeLayout>
+            </RelativeLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
