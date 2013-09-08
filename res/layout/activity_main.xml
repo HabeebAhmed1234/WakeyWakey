@@ -1243,6 +1243,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
+                    android:id="@+id/addButton"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical" >
 

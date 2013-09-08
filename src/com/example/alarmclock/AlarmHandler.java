@@ -258,7 +258,7 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	
 	public void performSnoozeActivity(final View v) {
 		if (texter != null) texter.textAllContacts();
-			
+		if(shakeToWake)return;
 		Calendar rightNow = Calendar.getInstance();
 		
 		int snoozeAlarmInMinutes = rightNow.get(Calendar.HOUR_OF_DAY)*60+rightNow.get(Calendar.MINUTE)+SNOOZE_TIME_IN_MINUTES;

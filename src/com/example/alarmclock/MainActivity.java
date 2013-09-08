@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.Locale;
 
 import android.app.AlarmManager;
@@ -76,39 +77,43 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 	public ImageView dockGear[] = new ImageView[9];
 	public LinearLayout frames[] = new LinearLayout[9];
 	
+	public RelativeLayout addButton;
+	
 	public boolean powersState[] = new boolean[9];
 	public boolean dockMusicState[] = new boolean[9];
 	public boolean dockNewsState[] = new boolean[9];
 	public boolean dockTextState[] = new boolean[9];
 	public boolean dockShakeState[] = new boolean[9];
-
+	
+	public HashMap<Integer,Integer> AlarmPositionToID = new HashMap<Integer,Integer>();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-
 		this.setContentView(R.layout.activity_main);
-
-		initializeFormComponentsWrapper();
 		
 		alarmFactory = new AlarmFactory(this);
-		
 		PreferencesHandler prefsHandler = new PreferencesHandler(this);
 		Preferences prefs = prefsHandler.getSettings();
-		
-		alarms = new ArrayList();
-		
+		this.alarms = new ArrayList<Alarm>();
 		this.alarms=prefs.getAlarms();
 		
 		// change fonts for time
 		mainView = (ScrollView) findViewById(R.id.mainScrollView);
 		overrideFonts(this, mainView);
+		mainView = (ScrollView) findViewById(R.id.mainScrollView);
+		
+		try {
+			initializeFormComponentsWrapper();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		addOnClickListeners();
 		
-		mainView = (ScrollView) findViewById(R.id.mainScrollView);
 	}
 
 	private void overrideFonts(final Context context, final View v) {
@@ -138,7 +143,7 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 		// TODO Auto-generated method stub
 		Log.d("debugger",v.getId()+" was clicked");
 		
-// OPENS/CLOSES DOCK
+		// OPENS/CLOSES DOCK
 		if (whichInnerframe(v) != -1){
 			int i = whichInnerframe(v);
 			if (docks[i].getVisibility() == View.GONE) docks[i].setVisibility(View.VISIBLE);
@@ -151,12 +156,12 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 			if (powersState[i]){
 				powersState[i] = false;
 				powers[i].setImageResource(R.drawable.buttonoff);
-				//TODO: change alarm i's preferences
 			} else {
 				powersState[i] = true;
 				powers[i].setImageResource(R.drawable.buttonon);
-				//TODO: change alarm i's preferences
 			}
+			this.toggleAlarm(this.getAlarmByID(getAlarmIdFromPosition(i)), false);
+			
 		} else if (whichDockMusic(v) != -1){
 			int i = whichDockMusic(v);
 			if (dockMusicState[i]){
@@ -165,12 +170,20 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 				dockNewsState[i] = true;
 				dockNews[i].setImageResource(R.drawable.newsfeedon);
 				//TODO: change alarm i's preferences
+				Alarm tempAlrm = getAlarmByID(getAlarmIdFromPosition(i));
+				tempAlrm.setMusicOption(false);
+				tempAlrm.setRssNewsFeedOption(true);
+				saveAlarmDockSettings(tempAlrm);
 			} else {
 				dockMusicState[i] = true;
 				dockMusic[i].setImageResource(R.drawable.musicon);
 				dockNewsState[i] = false;
 				dockNews[i].setImageResource(R.drawable.newsfeedoff);
 				//TODO: change alarm i's preferences
+				Alarm tempAlrm = getAlarmByID(getAlarmIdFromPosition(i));
+				tempAlrm.setMusicOption(true);
+				tempAlrm.setRssNewsFeedOption(false);
+				saveAlarmDockSettings(tempAlrm);
 			}
 		} else if (whichDockNews(v) != -1){
 			int i = whichDockNews(v);
@@ -180,12 +193,20 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 				dockMusicState[i] = true;
 				dockMusic[i].setImageResource(R.drawable.musicon);
 				//TODO: change alarm i's preferences
+				Alarm tempAlrm = getAlarmByID(getAlarmIdFromPosition(i));
+				tempAlrm.setMusicOption(true);
+				tempAlrm.setRssNewsFeedOption(false);
+				saveAlarmDockSettings(tempAlrm);
 			} else {
 				dockNewsState[i] = true;
 				dockNews[i].setImageResource(R.drawable.newsfeedon);
 				dockMusicState[i] = false;
 				dockMusic[i].setImageResource(R.drawable.musicoff);
 				//TODO: change alarm i's preferences
+				Alarm tempAlrm = getAlarmByID(getAlarmIdFromPosition(i));
+				tempAlrm.setMusicOption(false);
+				tempAlrm.setRssNewsFeedOption(true);
+				saveAlarmDockSettings(tempAlrm);
 			}
 		} else if (whichDockText(v) != -1){
 			int i = whichDockText(v);
@@ -193,10 +214,16 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 				dockTextState[i] = false;
 				dockText[i].setImageResource(R.drawable.messagingoff);
 				//TODO: change alarm i's preferences
+				Alarm tempAlrm = getAlarmByID(getAlarmIdFromPosition(i));
+				tempAlrm.setTextContactsOption(false);
+				saveAlarmDockSettings(tempAlrm);
 			} else {
 				dockTextState[i] = true;
 				dockText[i].setImageResource(R.drawable.messagingon);
 				//TODO: change alarm i's preferences
+				Alarm tempAlrm = getAlarmByID(getAlarmIdFromPosition(i));
+				tempAlrm.setTextContactsOption(true);
+				saveAlarmDockSettings(tempAlrm);
 			}
 		} else if (whichDockShake(v) != -1){
 			int i = whichDockShake(v);
@@ -204,26 +231,29 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 				dockShakeState[i] = false;
 				dockShake[i].setImageResource(R.drawable.shakeoff);
 				//TODO: change alarm i's preferences
+				Alarm tempAlrm = getAlarmByID(getAlarmIdFromPosition(i));
+				tempAlrm.setShakeToWakeOption(false);
+				saveAlarmDockSettings(tempAlrm);
 			} else {
 				dockShakeState[i] = true;
 				dockShake[i].setImageResource(R.drawable.shakeon);
 				//TODO: change alarm i's preferences
+				Alarm tempAlrm = getAlarmByID(getAlarmIdFromPosition(i));
+				tempAlrm.setShakeToWakeOption(true);
+				saveAlarmDockSettings(tempAlrm);
 			}
 		} else if (whichDockTrash(v) != -1){
 			int i = whichDockTrash(v);
-			// TODO: DELETE ALARM i
+			Log.d("AlarmClock","docktrash number "+i+" was clicked for alarm id "+getAlarmIdFromPosition(i));
+			deleteAlarm(getAlarmByID(getAlarmIdFromPosition(i)));
+			frames[i].setVisibility(View.GONE);
 		} else if (whichDockGear(v) != -1){
 			int i = whichDockGear(v);
-			// TODO: GO TO SETTINGS FOR ALARM i
+			this.startSettingsActivity(getAlarmByID(getAlarmIdFromPosition(i)));
 		}
-
-
-
-
-		/*int ID = v.getId();
 		
-		//check if alarm adder was clicked Alarm adder id is -100
-		if(ID == ALARM_ADDER_ID)
+		//add alarm buton
+		if(v.getId() == R.id.addButton)
 		{
 			Time now = new Time();
 			now.setToNow();
@@ -236,41 +266,6 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 			
 			startSettingsActivity(newAlarm);
 		}
-		
-		if(!(matchToAlarmIds(ID))) return;
-		
-		Alarm clickedAlarm = getAlarmByID(ID);
-		
-		clickedAlarm = this.toggleAlarm(clickedAlarm, false);
-		
-		float startAlpha = 1f;
-		float endAlpha = 0.5f;
-		
-		if(clickedAlarm.enabled())
-		{
-			startAlpha = 0.5f;
-			endAlpha = 1f;
-		}
-		else{
-			startAlpha = 1f;
-			endAlpha = 0.5f;
-		}
-		
-		AlphaAnimation alpha = new AlphaAnimation(startAlpha, endAlpha);
-		alpha.setDuration(500); 
-		alpha.setFillAfter(true); 
-		v.startAnimation(alpha);*/
-	}
-	
-	public boolean onLongClick(View v) {
-		if(!(matchToAlarmIds(v.getId()))) return false;
-		
-		Log.d("debugger",v.getId()+" was long clicked");
-		
-		this.longClickedAlarmId = v.getId();
-		this.openOptionsMenu();
-		
-		return false;
 	}
 	
 	void startSettingsActivity(Alarm alarm)
@@ -311,96 +306,6 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 		return null;
 	}
 	
-	private void createAlarmsViews() throws ParseException
-	{
-		TableLayout mainTable = new TableLayout(this);
-		LayoutParams mainTableParams = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
-		mainTableParams.setMargins(0, 20, 0, 0);
-		mainTable.setLayoutParams(mainTableParams);
-		
-		//add in the alarm adder tile
-		Alarm alarmAdder = new Alarm(0,0,this.ALARM_ADDER_ID);
-		alarms.add(alarmAdder);
-		
-		for(int i = 0; i<alarms.size();i+=2)
-		{
-			Alarm currentAlarm = alarms.get(i);
-			
-			TableRow tableRow = new TableRow(this);
-			LayoutParams tableRowParams = new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-			tableRow.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));  
-			tableRow.setPadding(5, 5, 5, 5);
-			
-			tableRow.addView(createAlarmView(alarms.get(i)));
-			
-			if((i+1)<alarms.size()) tableRow.addView(createAlarmView(alarms.get(i+1)));
-			
-			mainTable.addView(tableRow);
-		}
-		
-		alarms.remove(alarms.size()-1);
-		
-		this.setContentView(mainTable);
-	}
-	
-	private LinearLayout createAlarmView(Alarm alarm) throws ParseException
-	{
-		LinearLayout linearLayout = new LinearLayout(this);
-		linearLayout.setBackgroundColor(this.getResources().getColor(R.color.Blue));
-		
-		if(!(alarm.getID()==this.ALARM_ADDER_ID))
-		{
-			float startAlpha = 1f;
-			float endAlpha = 0.5f;
-			
-			if(alarm.enabled())
-			{
-				startAlpha = 0.5f;
-				endAlpha = 1f;
-			}
-			else{
-				startAlpha = 1f;
-				endAlpha = 0.5f;
-			}
-			
-			AlphaAnimation alpha = new AlphaAnimation(startAlpha, endAlpha);
-			alpha.setDuration(500); 
-			alpha.setFillAfter(true); 
-			linearLayout.startAnimation(alpha);
-		}
-		
-		linearLayout.setPadding(5, 5, 5, 5);
-		LayoutParams linearLayoutParams = new LayoutParams((getScreenWidth() - 40)/2,LayoutParams.WRAP_CONTENT);
-		linearLayoutParams.weight=1;
-		linearLayoutParams.setMargins(10, 0, 10, 0);
-		linearLayout.setOrientation(LinearLayout.VERTICAL);
-		linearLayout.setLayoutParams(linearLayoutParams);
-		
-		if(!(alarm.getID()==this.ALARM_ADDER_ID))
-		{
-			linearLayout.addView(getNameView(alarm));
-			linearLayout.addView(getTimeView(alarm));
-			linearLayout.addView(getSettingImages(alarm));
-		}
-		
-		if((alarm.getID()==this.ALARM_ADDER_ID))
-		{
-			ImageView plusSign = new ImageView(this);
-			plusSign.setImageDrawable(this.getResources().getDrawable(R.drawable.plus));
-			linearLayout.setGravity(Gravity.CENTER_HORIZONTAL);
-			linearLayout.setGravity(Gravity.CENTER_VERTICAL);
-			linearLayout.addView(plusSign);
-		}
-		
-		linearLayout.setId(alarm.getID());
-		linearLayout.setClickable(true);
-		linearLayout.setOnClickListener(this);
-		
-		linearLayout.setOnLongClickListener(this);
-		
-		return linearLayout;
-	}
-	
 	@SuppressLint("NewApi") private int getScreenWidth()
 	{
 		int width = 0;
@@ -426,73 +331,6 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 		}
 		
 		return width;
-	}
-	
-	private TextView getTimeView(Alarm alarm) throws ParseException
-	{ 
-		TextView timeView = new TextView(this);
-		LayoutParams timeLayoutParams = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT);
-		timeView.setTextSize(TypedValue.COMPLEX_UNIT_SP,30);
-		Log.d("AlarmClock","Time text view of time "+alarm.getHour()+":"+alarm.getMinute());
-		timeView.setText(militaryToTwelveHour(alarm.getHour(),alarm.getMinute()));
-		
-		return timeView;
-	}
-	
-	private TextView getNameView(Alarm alarm)
-	{
-		TextView timeView = new TextView(this);
-		LayoutParams timeLayoutParams = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT);
-		timeView.setTextSize(TypedValue.COMPLEX_UNIT_SP,15);
-		timeView.setText(alarm.getName());
-		
-		return timeView;
-	}
-	
-	private LinearLayout getSettingImages(Alarm alarm)
-	{
-		LinearLayout settingsLinearLayout = new LinearLayout(this);
-		settingsLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
-		LayoutParams settingsLayoutParams = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT); 
-		
-		ImageView rssNewsFeedImageView = new ImageView(this);
-		rssNewsFeedImageView.setId(1);
-		rssNewsFeedImageView.setBackgroundResource(R.drawable.newsfeed_icon);
-		LayoutParams rssNewsFeedLayoutParams = new LayoutParams(30,30);
-		rssNewsFeedLayoutParams.setMargins(1, 1, 1, 1);
-		rssNewsFeedImageView.setLayoutParams(rssNewsFeedLayoutParams);
-		if(!alarm.getRssNewFeedOption())rssNewsFeedImageView.getBackground().setAlpha(50);
-		
-		ImageView musicImageView = new ImageView(this);
-		musicImageView.setId(2);
-		musicImageView.setBackgroundResource(R.drawable.music_icon);
-		LayoutParams musicLayoutParams = new LayoutParams(30,30);
-		musicLayoutParams.setMargins(1, 1, 1, 1);
-		musicImageView.setLayoutParams(musicLayoutParams);
-		if(!alarm.getMusicOption())musicImageView.getBackground().setAlpha(50);
-		
-		ImageView textContactsImageView = new ImageView(this);
-		textContactsImageView.setId(3);
-		textContactsImageView.setBackgroundResource(R.drawable.text_contacts);
-		LayoutParams textContactsLayoutParams = new LayoutParams(30,30);
-		textContactsLayoutParams.setMargins(1, 1, 1, 1);
-		textContactsImageView.setLayoutParams(textContactsLayoutParams);
-		if(!alarm.getTextContactsOption())textContactsImageView.getBackground().setAlpha(50);
-		
-		ImageView shakeToWakeImageView = new ImageView(this);
-		shakeToWakeImageView.setId(4);
-		shakeToWakeImageView.setBackgroundResource(R.drawable.shake_to_wake_icon);
-		LayoutParams shakeToWakeImageViewParams = new LayoutParams(30,30);
-		shakeToWakeImageViewParams.setMargins(1, 1, 1, 1);
-		shakeToWakeImageView.setLayoutParams(shakeToWakeImageViewParams);
-		if(!alarm.getShakeToWakeOption())shakeToWakeImageView.getBackground().setAlpha(50);
-			
-		settingsLinearLayout.addView(rssNewsFeedImageView);
-		settingsLinearLayout.addView(musicImageView);
-		settingsLinearLayout.addView(textContactsImageView);
-		settingsLinearLayout.addView(shakeToWakeImageView);
-		
-		return settingsLinearLayout;
 	}
 	
 	String militaryToTwelveHour(int hour, int minute) throws ParseException
@@ -577,12 +415,7 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 	
 	private void redrawScreen()
 	{
-		try {
-			createAlarmsViews();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 	}
 	
 	private void removeAlarmFromList(Alarm alarm)
@@ -614,15 +447,10 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 		}
 	}
 
-public void initializeFormComponentsWrapper(){
+public void initializeFormComponentsWrapper() throws ParseException{
 		initializeFormComponents();
-		
-		initializeToTrue(dockMusicState);
-		
-		initializeToFalse(powersState);
-		initializeToFalse(dockNewsState);
-		initializeToFalse(dockTextState);
-		initializeToFalse(dockShakeState);
+		populateFramesWithAlarms();
+		addButton = (RelativeLayout)findViewById(R.id.addButton);
 	}
 	
 	public void initializeFormComponents(){
@@ -756,6 +584,88 @@ public void initializeFormComponentsWrapper(){
 		frames[7] = (LinearLayout) findViewById(R.id.frame7);
 		frames[8] = (LinearLayout) findViewById(R.id.frame8);
 	}
+	
+	public void populateFramesWithAlarms() throws ParseException
+	{
+		int ammountOfAlarms = alarms.size();
+		
+		for(int i =1 ;i<9;i++)
+		{
+			if(i<=ammountOfAlarms)
+			{
+				Alarm tempAlarm = alarms.get(i-1);
+				
+				times[i].setText(militaryToTwelveHour(tempAlarm.getHour(),tempAlarm.getMinute()));
+				labels[i].setText(tempAlarm.getName());
+				
+				if(tempAlarm.isRepeatedDaily())
+				{
+					repeats[i].setText("Repeat: Daily");
+				}else
+				{
+					repeats[i].setText("Repeat: Single");
+				}
+				
+				if(tempAlarm.enabled())
+				{
+					powersState[i] = true;
+					powers[i].setImageResource(R.drawable.buttonon);
+				}else
+				{
+					powersState[i] = false;
+					powers[i].setImageResource(R.drawable.buttonoff);
+				}
+				
+				if(tempAlarm.getRssNewFeedOption())
+				{
+					dockMusicState[i] = false;
+					dockMusic[i].setImageResource(R.drawable.musicoff);
+					
+					dockNewsState[i] = true;
+					dockNews[i].setImageResource(R.drawable.newsfeedon);
+				}else
+				{
+					dockMusicState[i] = true;
+					dockMusic[i].setImageResource(R.drawable.musicon);
+					
+					dockNewsState[i] = false;
+					dockNews[i].setImageResource(R.drawable.newsfeedoff);
+				}
+				
+				if(tempAlarm.getTextContactsOption())
+				{
+					dockTextState[i] = true;
+					dockText[i].setImageResource(R.drawable.messagingon);
+				}else
+				{
+					dockTextState[i] = false;
+					dockText[i].setImageResource(R.drawable.messagingoff);
+				}
+				
+				if(tempAlarm.getShakeToWakeOption())
+				{
+					dockShakeState[i] = true;
+					dockShake[i].setImageResource(R.drawable.shakeon);
+				}else
+				{
+					dockShakeState[i] = false;
+					dockShake[i].setImageResource(R.drawable.shakeoff);
+				}
+				
+				docks[i].setVisibility(View.GONE);
+				
+				AlarmPositionToID.put(i, tempAlarm.getID());
+			}else
+			{
+				frames[i].setVisibility(View.GONE);
+			}
+		}
+	}
+	
+	private int getAlarmIdFromPosition(int position)
+	{
+		return AlarmPositionToID.get(position);
+	}
 
 	public void addOnClickListeners(){
 		for (int i=1; i<=8; i++){
@@ -768,6 +678,7 @@ public void initializeFormComponentsWrapper(){
 			dockGear[i].setOnClickListener(this);
 			innerframes[i].setOnClickListener(this);
 		}
+		addButton.setOnClickListener(this);
 	}
 	
 	public int whichPower(View v){
@@ -836,5 +747,25 @@ public void initializeFormComponentsWrapper(){
 		for (int i=0; i<arr.length; i++){
 			arr[i] = false;
 		}
+	}
+
+	@Override
+	public boolean onLongClick(View v) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	private void saveAlarmDockSettings(Alarm alarm)
+	{
+		for(int i = 0 ; i< alarms.size();i++)
+		{
+			if(alarms.get(i).getID() == alarm.getID())
+			{
+				Log.d("AlarmClock","Alarm of id: "+alarms.get(i).getID()+" saved for time "+alarm.getHour()+":"+alarm.getMinute());
+				alarms.set(i, alarm);	
+			}
+		}
+		PreferencesHandler prefsHandler = new PreferencesHandler(this);
+		prefsHandler.setAlarms(alarms);
 	}
 }
