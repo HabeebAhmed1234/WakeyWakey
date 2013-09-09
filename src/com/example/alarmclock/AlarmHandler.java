@@ -211,7 +211,7 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 		
 		battery = new CustomImageView(this, shaker);
 		battery.setImageResource(R.drawable.battery_shell);
-		battery.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, screen.getHeight()/3));
+		battery.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, screen.getHeight()/3));
 		battery.setScaleType(ScaleType.CENTER_INSIDE);
 		shakeScreen.addView(battery);
 		
@@ -258,7 +258,6 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	
 	public void performSnoozeActivity(final View v) {
 		if (texter != null) texter.textAllContacts();
-		if(shakeToWake)return;
 		Calendar rightNow = Calendar.getInstance();
 		
 		int snoozeAlarmInMinutes = rightNow.get(Calendar.HOUR_OF_DAY)*60+rightNow.get(Calendar.MINUTE)+SNOOZE_TIME_IN_MINUTES;
