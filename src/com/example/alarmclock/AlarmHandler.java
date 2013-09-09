@@ -43,6 +43,7 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	
 	private PreferencesHandler prefsHandler;
 	private Preferences prefs;
+	private ArrayList<Alarm>alarms;
 	private Alarm selectedAlarm;
 		
 	private MessageList newsfeed;
@@ -60,7 +61,7 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	
 	public static int SNOOZE_TIME_IN_MINUTES = 5;
 	
-	private PowerManager.WakeLock wl;
+	private boolean disableAlarmFlag = false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -77,18 +78,58 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		
 		setContentView(R.layout.activity_alarm_handler);
-
-		int selectedAlarmID = Integer.parseInt(getIntent().getExtras().getString(AlarmFactory.ALARM_ID));
+		
 		prefsHandler=new PreferencesHandler(this);
 		prefs=prefsHandler.getSettings();
-		ArrayList <Alarm> allAlarms = prefs.getAlarms();
-		for(int i =0 ;i<allAlarms.size();i++)
+		alarms = prefs.getAlarms();
+		
+		int selectedAlarmID = 0;
+		if(!(getIntent().getExtras()==null))
 		{
-			if(allAlarms.get(i).getID()==selectedAlarmID)
+				String isAlarmRepeating = getIntent().getExtras().getString(AlarmFactory.IS_REPEATED);
+				boolean alarmRepeating = false;
+				if(isAlarmRepeating!=null)alarmRepeating=Boolean.parseBoolean(isAlarmRepeating);
+				if(!alarmRepeating)
+				{
+					disableAlarmFlag = true;
+				}
+				selectedAlarmID = Integer.parseInt(getIntent().getExtras().getString(AlarmFactory.ALARM_ID));
+		}
+		
+		for(int i =0 ;i<alarms.size();i++)
+		{
+			if(alarms.get(i).getID()==selectedAlarmID)
 			{
-				selectedAlarm = allAlarms.get(i);
+				selectedAlarm = alarms.get(i);
 			}
 		}
+	}
+	
+	@Override
+	protected void onDestroy()
+	{
+		super.onDestroy();
+		if(this.disableAlarmFlag)
+		{
+			selectedAlarm.disableAlarm();
+			saveAlarm(selectedAlarm);
+		}
+	}
+	
+	private void saveAlarm(Alarm alarm)
+	{
+		AlarmFactory alarmFactory = new AlarmFactory (this);
+		
+		for(int i = 0 ; i< alarms.size();i++)
+		{
+			if(alarms.get(i).getID() == alarm.getID())
+			{
+				Log.d("AlarmClock","Alarm of id: "+alarms.get(i).getID()+" saved for time "+alarm.getHour()+":"+alarm.getMinute());
+				alarms.set(i, alarm);	
+				if(alarm.enabled())alarmFactory.refreshAlarm(alarm);
+			}
+		}
+		prefsHandler.setAlarms(alarms);
 	}
 
 	private void initializeFormComponents(){

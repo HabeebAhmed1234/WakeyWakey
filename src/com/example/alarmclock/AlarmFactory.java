@@ -11,6 +11,7 @@ import android.util.Log;
 public class AlarmFactory {
 	private Context context;
 	public static final String ALARM_ID = "ALARM_ID";
+	public static final String IS_REPEATED = "ISREPEATED";
 	private AlarmManager am;
 	
 	AlarmFactory(Context context)
@@ -31,6 +32,10 @@ public class AlarmFactory {
         
         Intent intent = new Intent(context, AlarmReceiver.class);
         intent.putExtra(ALARM_ID, Integer.toString(alarm.getID()));
+        if(alarm.isRepeatedDaily())
+        {
+        	intent.putExtra(IS_REPEATED, "true");
+        }
         PendingIntent sender = PendingIntent.getBroadcast(context, alarm.getID(), intent, 0);
         
         long firstTriggerTimeInMillis = cal.getTimeInMillis();
