@@ -47,6 +47,7 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.Toast;
 import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -255,17 +256,23 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 		//add alarm buton
 		if(v.getId() == R.id.addButton)
 		{
-			Time now = new Time();
-			now.setToNow();
-			
-			Alarm newAlarm = new Alarm(now.hour, now.minute, getNewID());
-			newAlarm.enableAlarm();
-			alarms.add(newAlarm);
-			
-			PreferencesHandler prefsHandler = new PreferencesHandler(this);
-			prefsHandler.setAlarms(alarms);
-			
-			startSettingsActivity(newAlarm);
+			if(alarms.size()<8)
+			{
+				Time now = new Time();
+				now.setToNow();
+				
+				Alarm newAlarm = new Alarm(now.hour, now.minute, getNewID());
+				newAlarm.enableAlarm();
+				alarms.add(newAlarm);
+				
+				PreferencesHandler prefsHandler = new PreferencesHandler(this);
+				prefsHandler.setAlarms(alarms);
+				
+				startSettingsActivity(newAlarm);
+			}else
+			{
+				Toast.makeText(getApplicationContext(), "Maximum of 8 alarms!", Toast.LENGTH_SHORT).show();
+			}
 		}
 	}
 	
