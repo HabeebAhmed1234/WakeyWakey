@@ -259,6 +259,7 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 			now.setToNow();
 			
 			Alarm newAlarm = new Alarm(now.hour, now.minute, getNewID());
+			newAlarm.enableAlarm();
 			alarms.add(newAlarm);
 			
 			PreferencesHandler prefsHandler = new PreferencesHandler(this);
