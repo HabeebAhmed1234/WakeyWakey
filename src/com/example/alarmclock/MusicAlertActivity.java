@@ -41,7 +41,6 @@ public class MusicAlertActivity {
 				player = MediaPlayer.create(context,R.raw.default_alarm);
 				player.setLooping(true);
                 player.start();
-				Toast.makeText(this.context, "Please set a ringtone!", Toast.LENGTH_LONG).show();
 			}
 	}
 		

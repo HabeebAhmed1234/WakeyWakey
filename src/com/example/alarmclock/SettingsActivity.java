@@ -103,7 +103,7 @@ public class SettingsActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {	
-				Toast.makeText(getApplicationContext(), "Saved Alarm", Toast.LENGTH_LONG).show();
+				Toast.makeText(getApplicationContext(), "Saved Alarm", Toast.LENGTH_SHORT).show();
 				populateAlarmWithFormData();
 				saveAlarm();
 				startMainMenuActivity();
@@ -117,7 +117,7 @@ public class SettingsActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				startMainMenuActivity();
-				Toast.makeText(getApplicationContext(), "Canceled Alarm", Toast.LENGTH_LONG).show();
+				Toast.makeText(getApplicationContext(), "Canceled Alarm", Toast.LENGTH_SHORT).show();
 			}
 		});
 	}
@@ -379,7 +379,7 @@ public class SettingsActivity extends Activity {
 	        
 	        populateAlarmWithFormData();
 			saveAlarm();
-			Toast.makeText(getApplicationContext(), "Saved Alarm", Toast.LENGTH_LONG).show();
+			Toast.makeText(getApplicationContext(), "Saved Alarm", Toast.LENGTH_SHORT).show();
 			
 	        this.startMainMenuActivity();
 	    }

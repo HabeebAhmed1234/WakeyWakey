@@ -11,7 +11,6 @@ public class AlarmReceiver extends BroadcastReceiver implements TextToSpeech.OnI
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		Toast.makeText(context,  "Alarm has gone off", Toast.LENGTH_LONG).show();
 		
 		String alarmID = intent.getExtras().getString(AlarmFactory.ALARM_ID);
 		

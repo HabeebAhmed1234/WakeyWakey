@@ -165,6 +165,8 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 		else texter = null;
 		
 		if (rssNewsFeed) startReadingNewsFeed();
+		
+		Toast.makeText(this,  "Alarm has gone off", Toast.LENGTH_SHORT).show();
 	}
 	
 	public void startReadingNewsFeed(){
