@@ -46,7 +46,6 @@ public class MyTextToSpeech implements OnInitListener {
 		Log.d("AlarmClock","Turning off tts");
 		talker.speak("Alarm Off", TextToSpeech.QUEUE_FLUSH, null);
 		talker.stop();
-		talker.shutdown();
 	}
 
     public void onInit(int status) {
@@ -61,5 +60,11 @@ public class MyTextToSpeech implements OnInitListener {
         	}
         	pendingSayings.clear();
         }
+    }
+    
+    public void shutDown()
+    {
+    	Log.d("AlarmClock","Shutting down TTS");
+    	talker.shutdown();
     }
 }

@@ -63,6 +63,8 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	
 	private boolean disableAlarmFlag = false;
 	
+	private boolean alreadyExiting = false;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -114,6 +116,11 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 			selectedAlarm.disableAlarm();
 			saveAlarm(selectedAlarm);
 		}
+		
+		if(this.speaker!=null)
+		{
+			speaker.shutDown();
+		}
 	}
 	
 	private void saveAlarm(Alarm alarm)
@@ -144,7 +151,7 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
         getAlarmSettings();
         setupScreen();
         
-	    if (rssNewsFeed) {
+	    if (rssNewsFeed &&!alreadyExiting) {
 	    	newsfeed = new MessageList();
 	    	speaker = new MyTextToSpeech(this);
 	    	updateNewsFeed();	
@@ -286,6 +293,7 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	}
 	
 	public void performStopActivity(final View v) {
+		alreadyExiting = true;
 		if(!rssNewsFeed)
 		{
 			if(player.isPlaying())player.stop();
@@ -300,6 +308,7 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	}
 	
 	public void performSnoozeActivity(final View v) {
+		alreadyExiting = true;
 		if (texter != null) texter.textAllContacts();
 		Calendar rightNow = Calendar.getInstance();
 		
