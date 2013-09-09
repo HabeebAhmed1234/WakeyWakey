@@ -116,6 +116,7 @@ public class SettingsActivity extends Activity {
 		cancelButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				deleteAlarm();
 				startMainMenuActivity();
 				Toast.makeText(getApplicationContext(), "Canceled Alarm", Toast.LENGTH_SHORT).show();
 			}
@@ -376,14 +377,24 @@ public class SettingsActivity extends Activity {
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 	    if ((keyCode == KeyEvent.KEYCODE_BACK)) {
 	        Log.d(this.getClass().getName(), "back button pressed");
-	        
-	        populateAlarmWithFormData();
-			saveAlarm();
-			Toast.makeText(getApplicationContext(), "Saved Alarm", Toast.LENGTH_SHORT).show();
-			
-	        this.startMainMenuActivity();
+	        Toast.makeText(getApplicationContext(), "Canceled Alarm", Toast.LENGTH_SHORT).show();
+	        deleteAlarm();
+	        startMainMenuActivity();
 	    }
 	    return super.onKeyDown(keyCode, event);
+	}
+	
+	private void deleteAlarm()
+	{
+		for(int i = 0 ; i< alarms.size();i++)
+		{
+			if(alarms.get(i).getID() == alarm.getID())
+			{
+				alarmFactory.cancelAlarm(alarms.get(i));
+				alarms.remove(i);	
+			}
+		}
+		prefsHandler.setAlarms(alarms);
 	}
 	
 }
