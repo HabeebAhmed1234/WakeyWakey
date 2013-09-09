@@ -65,6 +65,8 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	
 	private boolean alreadyExiting = false;
 	
+	private boolean creating = true;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -190,31 +192,35 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	@Override
 	public void onWindowFocusChanged(boolean hasFocus) {
 		super.onWindowFocusChanged(hasFocus);
-		initializeFormComponents();
-		resizeButtons();
-		
-		shaker = null;
-		
-		if (shakeToWake){
-			shaker = new ShakeToWakeActivity(this, this);
-			addShakeToWakeScreen();
+		if(creating)
+		{
+			initializeFormComponents();
+			resizeButtons();
+			
+			shaker = null;
+			
+			if (shakeToWake){
+				shaker = new ShakeToWakeActivity(this, this);
+				addShakeToWakeScreen();
+			}
+			
+			if (!rssNewsFeed&&!playerAlreadyStarted) {
+				player = new MusicAlertActivity(this, selectedAlarm);
+				player.start();
+				playerAlreadyStarted = true;
+			}
+			else {
+				player = null;
+			}
+			
+			if(textContacts) texter = new TextContactsAlertActivity(prefsHandler, prefs, selectedAlarm);
+			else texter = null;
+			
+			if (rssNewsFeed) startReadingNewsFeed();
+			
+			Toast.makeText(this,  "Alarm has gone off", Toast.LENGTH_SHORT).show();
 		}
-		
-		if (!rssNewsFeed&&!playerAlreadyStarted) {
-			player = new MusicAlertActivity(this, selectedAlarm);
-			player.start();
-			playerAlreadyStarted = true;
-		}
-		else {
-			player = null;
-		}
-		
-		if(textContacts) texter = new TextContactsAlertActivity(prefsHandler, prefs, selectedAlarm);
-		else texter = null;
-		
-		if (rssNewsFeed) startReadingNewsFeed();
-		
-		Toast.makeText(this,  "Alarm has gone off", Toast.LENGTH_SHORT).show();
+		creating = false;
 	}
 	
 	public void startReadingNewsFeed(){
