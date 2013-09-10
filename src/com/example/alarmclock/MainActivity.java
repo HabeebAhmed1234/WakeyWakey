@@ -11,6 +11,7 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
@@ -798,5 +799,18 @@ public void initializeFormComponentsWrapper() throws ParseException{
 		}
 		PreferencesHandler prefsHandler = new PreferencesHandler(this);
 		prefsHandler.setAlarms(alarms);
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+	    if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+	       GlobalStaticVariables.TURN_OFF_APP = true;
+	       finish();
+	    }
+	    if ((keyCode == KeyEvent.KEYCODE_HOME)) {
+	    	GlobalStaticVariables.TURN_OFF_APP = true;
+	        finish();
+	    }
+	    return super.onKeyDown(keyCode, event);
 	}
 }

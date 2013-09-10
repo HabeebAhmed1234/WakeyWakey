@@ -368,6 +368,10 @@ public class SettingsActivity extends Activity {
 	        if(isNewAlarm)deleteAlarm();
 	        startMainMenuActivity();
 	    }
+	    if ((keyCode == KeyEvent.KEYCODE_HOME)) {
+	    	GlobalStaticVariables.TURN_OFF_APP = true;
+	        finish();
+	    }
 	    return super.onKeyDown(keyCode, event);
 	}
 	
