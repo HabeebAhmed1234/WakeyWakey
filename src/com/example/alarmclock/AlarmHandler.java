@@ -88,13 +88,6 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 		int selectedAlarmID = 0;
 		if(!(getIntent().getExtras()==null))
 		{
-				String isAlarmRepeating = getIntent().getExtras().getString(AlarmFactory.IS_REPEATED);
-				boolean alarmRepeating = false;
-				if(isAlarmRepeating!=null)alarmRepeating=Boolean.parseBoolean(isAlarmRepeating);
-				if(!alarmRepeating)
-				{
-					disableAlarmFlag = true;
-				}
 				selectedAlarmID = Integer.parseInt(getIntent().getExtras().getString(AlarmFactory.ALARM_ID));
 		}
 		
@@ -105,6 +98,11 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 				selectedAlarm = alarms.get(i);
 			}
 		}
+		
+		if(!selectedAlarm.isRepeatedDaily())
+		{
+			disableAlarmFlag = true;
+		}
 	}
 	
 	@Override
@@ -114,6 +112,9 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 		if(this.disableAlarmFlag)
 		{
 			selectedAlarm.disableAlarm();
+			saveAlarm(selectedAlarm);
+		}else{
+			selectedAlarm.enableAlarm();
 			saveAlarm(selectedAlarm);
 		}
 		
@@ -332,5 +333,19 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	    	performStopActivity(null);
 	    }
 	    return super.onKeyDown(keyCode, event);
+	}
+	
+	private void deleteAlarm(Alarm alarm)
+	{
+		for(int i = 0 ; i< alarms.size();i++)
+		{
+			if(alarms.get(i).getID() == alarm.getID())
+			{
+				if(!AlarmFactory.isInit)AlarmFactory.init();
+				AlarmFactory.cancelAlarm(alarms.get(i));
+				alarms.remove(i);	
+			}
+		}
+		prefsHandler.setAlarms(alarms);
 	}
 }
