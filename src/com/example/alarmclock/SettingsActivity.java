@@ -64,7 +64,6 @@ public class SettingsActivity extends Activity {
 	private ArrayList<Alarm> alarms = new ArrayList<Alarm>();
 	private Alarm alarm;
 	
-	private AlarmFactory alarmFactory;
 	// set up responses to the toggle buttons
 	public void setupToggleButtons(){
 		toggle_textContacts.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -132,12 +131,6 @@ public class SettingsActivity extends Activity {
 	
 	private void populateAlarmWithFormData()
 	{
-		Log.d("AlarmClock","alarm Values");
-		Log.d("AlarmClock","NF radio "+toggle_NFRadio.isChecked());
-		Log.d("AlarmClock","music "+!toggle_NFRadio.isChecked());
-		Log.d("AlarmClock","Time "+AlarmTime.getCurrentHour()+":"+AlarmTime.getCurrentMinute());
-		Log.d("AlarmClock","Name "+alarmNameEditText.getText().toString());
-		
 		alarm.setRssNewsFeedOption(toggle_NFRadio.isChecked());
 		alarm.setMusicOption(!toggle_NFRadio.isChecked());
 		alarm.setTime(AlarmTime.getCurrentHour(),AlarmTime.getCurrentMinute());
@@ -270,8 +263,6 @@ public class SettingsActivity extends Activity {
 		//get the extra information from the invoking intent
 		int selectedAlarmID = Integer.parseInt(getIntent().getExtras().getString(AlarmFactory.ALARM_ID));
 		
-		alarmFactory = new AlarmFactory(this);
-		
 		// populate alarm arraylist
 		prefsHandler =  new PreferencesHandler(this);
 		alarms = prefsHandler.getSettings().getAlarms();
@@ -308,10 +299,8 @@ public class SettingsActivity extends Activity {
 	
 	private void handleActivityResult(int requestCode)
 	{
-		Log.d("AlarmClock","activity result");
 		  if(requestCode == 0)
 		  {
-			  Log.d("AlarmClock","setting selectedContacts field contacts ammount selcted was " + GlobalStaticVariables.selectedContacts.size());
 			  if(GlobalStaticVariables.selectedContacts.size()>0)
 				{
 					String contactsToText = GlobalStaticVariables.selectedContacts.get(0).getName();
@@ -319,13 +308,11 @@ public class SettingsActivity extends Activity {
 					{
 						contactsToText+=","+GlobalStaticVariables.selectedContacts.get(i).getName();
 					}
-					Log.d("AlarmClock","contacts were set");
 					contactsTextView.setText(contactsToText);
 				}
 		  }
 		  if(requestCode == 1)
 		  {
-			  Log.d("AlarmClock","setting selected music field music ammount selected was "+ GlobalStaticVariables.selectedMusic.size());
 			  if(GlobalStaticVariables.selectedMusic.size()>0)
 				{
 					String musicList = GlobalStaticVariables.selectedMusic.get(0).getName();
@@ -333,7 +320,6 @@ public class SettingsActivity extends Activity {
 					{
 						musicList+=GlobalStaticVariables.selectedMusic.get(i).getName();
 					}
-					Log.d("AlarmClock","music was set");
 					musicTextView.setText(musicList);
 				}
 		  }
@@ -346,9 +332,7 @@ public class SettingsActivity extends Activity {
 		{
 			if(alarms.get(i).getID() == alarm.getID())
 			{
-				Log.d("AlarmClock","Alarm of id: "+alarms.get(i).getID()+" saved for time "+alarm.getHour()+":"+alarm.getMinute());
-				alarms.set(i, alarm);	
-				if(alarm.enabled())alarmFactory.refreshAlarm(alarm);
+				alarms.set(i, alarm);
 			}
 		}
 		prefsHandler.setAlarms(alarms);
@@ -357,7 +341,7 @@ public class SettingsActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.settings, menu);
+		//getMenuInflater().inflate(R.menu.settings, menu);
 		
 		return true;
 	}
@@ -376,7 +360,6 @@ public class SettingsActivity extends Activity {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 	    if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-	        Log.d(this.getClass().getName(), "back button pressed");
 	        Toast.makeText(getApplicationContext(), "Canceled Alarm", Toast.LENGTH_SHORT).show();
 	        deleteAlarm();
 	        startMainMenuActivity();
@@ -390,7 +373,8 @@ public class SettingsActivity extends Activity {
 		{
 			if(alarms.get(i).getID() == alarm.getID())
 			{
-				alarmFactory.cancelAlarm(alarms.get(i));
+				if(!AlarmFactory.isInit)AlarmFactory.init();
+				AlarmFactory.cancelAlarm(alarms.get(i));
 				alarms.remove(i);	
 			}
 		}

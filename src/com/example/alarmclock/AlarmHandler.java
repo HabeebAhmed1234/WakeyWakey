@@ -125,15 +125,20 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	
 	private void saveAlarm(Alarm alarm)
 	{
-		AlarmFactory alarmFactory = new AlarmFactory (this);
-		
 		for(int i = 0 ; i< alarms.size();i++)
 		{
 			if(alarms.get(i).getID() == alarm.getID())
 			{
-				Log.d("AlarmClock","Alarm of id: "+alarms.get(i).getID()+" saved for time "+alarm.getHour()+":"+alarm.getMinute());
 				alarms.set(i, alarm);	
-				if(alarm.enabled())alarmFactory.refreshAlarm(alarm);
+				if(alarm.enabled())
+				{
+					if(!AlarmFactory.isInit)AlarmFactory.init();
+					AlarmFactory.refreshAlarm(alarm);
+				}else
+				{
+					if(!AlarmFactory.isInit)AlarmFactory.init();
+					AlarmFactory.cancelAlarm(alarm);
+				}
 			}
 		}
 		prefsHandler.setAlarms(alarms);
@@ -171,14 +176,12 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	
 	private void getAlarmSettings(){
 		rssNewsFeed = selectedAlarm.getRssNewFeedOption();
-		Log.d("AlarmClock", Boolean.toString(rssNewsFeed));
 		shakeToWake = selectedAlarm.getShakeToWakeOption();
 		textContacts = selectedAlarm.getTextContactsOption();
 	}
 	
 	private void setupScreen(){
-		Log.d("AlarmClock","NFRadio is "+Boolean.toString(rssNewsFeed));
-	    if (!rssNewsFeed) nfFrame.setVisibility(View.GONE); // if rssNewsFeed radio = OFF (else do nothing)
+		if (!rssNewsFeed) nfFrame.setVisibility(View.GONE); // if rssNewsFeed radio = OFF (else do nothing)
 	    if (shakeToWake){
 	    	offText.setText("STOP button disabled - shake to turn off"); // if shaketowake = ON (else do nothing)
 	    	offButton.setClickable(false);
@@ -232,14 +235,10 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	
 	private void resizeButtons(){
 		int spacing = (int) (getResources().getDimension(R.dimen.activity_vertical_margin)*3); 
-		Log.d("DEBUG_TAG", Integer.toString(spacing));
-		Log.d("DEBUG_TAG", Integer.toString(screen.getHeight()));
-		
 		int nfFrameHeight = nfFrame.getHeight();
 		if (nfFrame.getVisibility() == View.GONE) nfFrameHeight = 0;
 		
 		int newHeight = (screen.getHeight() - nfFrameHeight - spacing) / 2;
-		Log.d("DEBUG_TAG", Integer.toString(newHeight));
 		LayoutParams offButtonParams = offButton.getLayoutParams();
 		LayoutParams snoozeButtonParams = snoozeButton.getLayoutParams();
 		
@@ -318,15 +317,12 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 		
 		int snoozeAlarmInMinutes = rightNow.get(Calendar.HOUR_OF_DAY)*60+rightNow.get(Calendar.MINUTE)+SNOOZE_TIME_IN_MINUTES;
 
-		Log.d("AlarmClock","Snooze time minutes is : "+ snoozeAlarmInMinutes);
 		int snoozeHour = (snoozeAlarmInMinutes - snoozeAlarmInMinutes%60)/60 ;
 		int snoozeMinute = snoozeAlarmInMinutes%60;
 		Alarm snoozeAlarm = selectedAlarm;
 		snoozeAlarm.setTime(snoozeHour, snoozeMinute);
-		AlarmFactory AF = new AlarmFactory(this);
-		AF.setAlarm(snoozeAlarm);
-		Log.d("AlarmClock","Snooze time is : "+ snoozeAlarm.getHour()+":"+snoozeAlarm.getMinute());
-		finish();
+		if(!AlarmFactory.isInit)AlarmFactory.init();
+		AlarmFactory.setAlarm(snoozeAlarm);
 		performStopActivity(null);
 		// do other stuff for snooze later...
 		// like setting a new alarm all over again, for 5 mins from now with all the same settings as current alarm...
@@ -335,11 +331,9 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 	    if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-	        Log.d(this.getClass().getName(), "back button pressed");
-	        performStopActivity(null);
+	       performStopActivity(null);
 	    }
 	    if ((keyCode == KeyEvent.KEYCODE_HOME)) {
-	        Log.d(this.getClass().getName(), "home button pressed");
 	        performStopActivity(null);
 	    }
 	    return super.onKeyDown(keyCode, event);

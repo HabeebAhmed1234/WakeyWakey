@@ -26,7 +26,6 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Locale;
 
-import android.app.AlarmManager;
 import android.app.Dialog;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
@@ -60,8 +59,7 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 	private ArrayList<Alarm> alarms;
 	public static final int ALARM_ADDER_ID = -100;
 	private int longClickedAlarmId;
-	private AlarmFactory alarmFactory;
-
+	
 	private ScrollView mainView;
 	
 	public TextView labels[] = new TextView[9];
@@ -87,7 +85,9 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 	public boolean dockShakeState[] = new boolean[9];
 	
 	public HashMap<Integer,Integer> AlarmPositionToID = new HashMap<Integer,Integer>();
-
+	
+	public static Context CONTEXT = null;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -95,11 +95,15 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		this.setContentView(R.layout.activity_main);
 		
-		alarmFactory = new AlarmFactory(this);
+		MainActivity.CONTEXT = this;
+		
 		PreferencesHandler prefsHandler = new PreferencesHandler(this);
 		Preferences prefs = prefsHandler.getSettings();
 		this.alarms = new ArrayList<Alarm>();
 		this.alarms=prefs.getAlarms();
+		
+		if(!AlarmFactory.isInit)AlarmFactory.init();
+		AlarmFactory.confirmAlarms(alarms);
 		
 		// change fonts for time
 		mainView = (ScrollView) findViewById(R.id.mainScrollView);
@@ -135,7 +139,7 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
+		//getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
 	
@@ -245,7 +249,6 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 			}
 		} else if (whichDockTrash(v) != -1){
 			int i = whichDockTrash(v);
-			Log.d("AlarmClock","docktrash number "+i+" was clicked for alarm id "+getAlarmIdFromPosition(i));
 			deleteAlarm(getAlarmByID(getAlarmIdFromPosition(i)));
 			frames[i].setVisibility(View.GONE);
 		} else if (whichDockGear(v) != -1){
@@ -280,7 +283,6 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 	void startSettingsActivity(Alarm alarm)
 	{
 		Intent i = new Intent(this, SettingsActivity.class);
-		Log.d ("AlarmClock","created new alarm of id "+alarm.getID());
 		i.putExtra(AlarmFactory.ALARM_ID, Integer.toString(alarm.getID()));
 		this.startActivity(i);
 		finish();
@@ -386,11 +388,15 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 				{
 					if(alarms.get(i).enabled())
 					{
-						alarmFactory.cancelAlarm(alarms.get(i));
+						Log.d("AlarmClock","MainActivity: canceling alarm");
+						if(!AlarmFactory.isInit)AlarmFactory.init();
+						AlarmFactory.cancelAlarm(alarms.get(i));
 						alarms.get(i).disableAlarm();
 					}else
 					{
-						alarmFactory.setAlarm(alarms.get(i));
+						Log.d("AlarmClock","MainActivity: enabling alarm");
+						if(!AlarmFactory.isInit)AlarmFactory.init();
+						AlarmFactory.setAlarm(alarms.get(i));
 						alarms.get(i).enableAlarm();
 					}
 					
@@ -402,7 +408,9 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 			}
 		}else
 		{
-			alarmFactory.cancelAlarm(alarm);
+			Log.d("AlarmClock","MainActivity: canceling alarm");
+			if(!AlarmFactory.isInit)AlarmFactory.init();
+			AlarmFactory.cancelAlarm(alarm);
 
 			removeAlarmFromList(alarm);
 			
@@ -770,7 +778,6 @@ public void initializeFormComponentsWrapper() throws ParseException{
 		{
 			if(alarms.get(i).getID() == alarm.getID())
 			{
-				Log.d("AlarmClock","Alarm of id: "+alarms.get(i).getID()+" saved for time "+alarm.getHour()+":"+alarm.getMinute());
 				alarms.set(i, alarm);	
 			}
 		}
