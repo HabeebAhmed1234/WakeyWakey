@@ -257,7 +257,7 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 		}
 		
 		//add alarm buton
-		if(v.getId() == R.id.addButton)
+		if(v.getId() == R.id.addButon)
 		{
 			v.setBackgroundColor(Color.BLUE);
 			if(alarms.size()<8)
@@ -467,7 +467,7 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 public void initializeFormComponentsWrapper() throws ParseException{
 		initializeFormComponents();
 		populateFramesWithAlarms();
-		addButton = (RelativeLayout)findViewById(R.id.addButton);
+		addButton = (RelativeLayout)findViewById(R.id.addButon);
 	}
 	
 	public void initializeFormComponents(){

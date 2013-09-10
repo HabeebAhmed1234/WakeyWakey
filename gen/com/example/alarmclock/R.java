@@ -221,7 +221,7 @@ public final class R {
         public static final int TuneText=0x7f0a0086;
         public static final int accountIcon=0x7f0a0000;
         public static final int action_settings=0x7f0a009f;
-        public static final int addButton=0x7f0a007a;
+        public static final int addButon=0x7f0a007a;
         public static final int addContacts=0x7f0a0090;
         public static final int cancelButton=0x7f0a0093;
         public static final int changeMusic=0x7f0a0088;
