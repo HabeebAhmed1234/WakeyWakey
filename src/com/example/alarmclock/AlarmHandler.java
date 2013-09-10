@@ -297,8 +297,6 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 		
 		if(!(speaker==null))speaker.stop();
 		
-		offText.setText("oh hi there");
-		
 		GlobalStaticVariables.TURN_OFF_APP = true;
 		finish();
 	}

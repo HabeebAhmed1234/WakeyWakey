@@ -269,7 +269,8 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 		//add alarm buton
 		if(v.getId() == R.id.addButon)
 		{
-			v.setBackgroundColor(Color.BLUE);
+			v.setBackgroundColor(getResources().getColor(R.color.fontcolor));
+
 			if(alarms.size()<8)
 			{
 				Time now = new Time();

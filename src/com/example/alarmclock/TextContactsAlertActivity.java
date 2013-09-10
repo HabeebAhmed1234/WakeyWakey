@@ -38,7 +38,7 @@ public class TextContactsAlertActivity {
 	void sendSMS(String number)
 	{
 		// make sure the fields are not empty
-		String msg="I need you to wake me up! Call me now! ";
+		String msg="I need you to wake me up! Call me now!\n-sent by Wakey Wakey";
 	    Log.d("msg","Sending to " + number);
 		if (number.length()>0 && msg.length()>0)                
 		{
