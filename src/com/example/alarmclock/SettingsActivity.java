@@ -372,6 +372,10 @@ public class SettingsActivity extends Activity {
 	    	GlobalStaticVariables.TURN_OFF_APP = true;
 	        finish();
 	    }
+	    if ((keyCode == KeyEvent.KEYCODE_APP_SWITCH)) {
+	    	GlobalStaticVariables.TURN_OFF_APP = true;
+	        finish();
+	    }
 	    return super.onKeyDown(keyCode, event);
 	}
 	

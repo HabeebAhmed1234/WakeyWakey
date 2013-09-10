@@ -327,6 +327,9 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	    if ((keyCode == KeyEvent.KEYCODE_HOME)) {
 	        performStopActivity(null);
 	    }
+	    if ((keyCode == KeyEvent.KEYCODE_APP_SWITCH)) {
+	    	performStopActivity(null);
+	    }
 	    return super.onKeyDown(keyCode, event);
 	}
 }
