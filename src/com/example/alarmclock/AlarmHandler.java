@@ -138,6 +138,7 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 	private void initializeFormComponents(){
 		nfFrame = (RelativeLayout) findViewById(R.id.NFFrame);
 		screen = (LinearLayout) findViewById(R.id.screen);
+		screen.setVisibility(View.VISIBLE);
 		offButton = (LinearLayout) findViewById(R.id.off);
 	    snoozeButton = (LinearLayout) findViewById(R.id.snoozeTxt);
 	    offText = (TextView) findViewById(R.id.stopText);
