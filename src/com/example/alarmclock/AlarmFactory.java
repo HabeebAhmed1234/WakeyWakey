@@ -39,7 +39,7 @@ public class AlarmFactory {
         	intent.putExtra(IS_REPEATED, "true");
         }
         intent.setData(Uri.parse("myalarms://" + alarm.getID()));
-        PendingIntent sender = PendingIntent.getBroadcast(MainActivity.CONTEXT, alarm.getID(), intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent sender = PendingIntent.getBroadcast(MainActivity.CONTEXT, alarm.getID(), intent, 0);
 
         long firstTriggerTimeInMillis = cal.getTimeInMillis();
         

@@ -58,6 +58,7 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 	
 	private ArrayList<Alarm> alarms;
 	public static final int ALARM_ADDER_ID = -100;
+	public static final String IS_NEW_ALARM = "NEWALARM";
 	private int longClickedAlarmId;
 	
 	private ScrollView mainView;
@@ -153,6 +154,14 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 			int i = whichInnerframe(v);
 			if (docks[i].getVisibility() == View.GONE) docks[i].setVisibility(View.VISIBLE);
 			else docks[i].setVisibility(View.GONE);
+			
+			for(int x = 1 ;x<docks.length;x++)
+			{
+				if(!(x==i))
+				{
+					docks[x].setVisibility(View.GONE);
+				}
+			}
 		}
 		
 		// TOGGLES DOCK SETTINGS
@@ -253,7 +262,7 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 			frames[i].setVisibility(View.GONE);
 		} else if (whichDockGear(v) != -1){
 			int i = whichDockGear(v);
-			this.startSettingsActivity(getAlarmByID(getAlarmIdFromPosition(i)));
+			this.startSettingsActivity(getAlarmByID(getAlarmIdFromPosition(i)),false);
 		}
 		
 		//add alarm buton
@@ -272,7 +281,7 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 				PreferencesHandler prefsHandler = new PreferencesHandler(this);
 				prefsHandler.setAlarms(alarms);
 				
-				startSettingsActivity(newAlarm);
+				startSettingsActivity(newAlarm,true);
 			}else
 			{
 				Toast.makeText(getApplicationContext(), "Maximum of 8 alarms!", Toast.LENGTH_SHORT).show();
@@ -280,10 +289,16 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 		}
 	}
 	
-	void startSettingsActivity(Alarm alarm)
+	void startSettingsActivity(Alarm alarm,boolean isNewAlarm)
 	{
 		Intent i = new Intent(this, SettingsActivity.class);
 		i.putExtra(AlarmFactory.ALARM_ID, Integer.toString(alarm.getID()));
+		if(isNewAlarm)
+		{
+			i.putExtra(IS_NEW_ALARM, "true");
+		}else{
+			i.putExtra(IS_NEW_ALARM, "false");
+		}
 		this.startActivity(i);
 		finish();
 	}

@@ -64,6 +64,8 @@ public class SettingsActivity extends Activity {
 	private ArrayList<Alarm> alarms = new ArrayList<Alarm>();
 	private Alarm alarm;
 	
+	public boolean isNewAlarm = false;
+	
 	// set up responses to the toggle buttons
 	public void setupToggleButtons(){
 		toggle_textContacts.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -115,7 +117,7 @@ public class SettingsActivity extends Activity {
 		cancelButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				deleteAlarm();
+				if(isNewAlarm)deleteAlarm();
 				startMainMenuActivity();
 				Toast.makeText(getApplicationContext(), "Canceled Alarm", Toast.LENGTH_SHORT).show();
 			}
@@ -260,8 +262,10 @@ public class SettingsActivity extends Activity {
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		
 		setContentView(R.layout.activity_settings);
+		
 		//get the extra information from the invoking intent
 		int selectedAlarmID = Integer.parseInt(getIntent().getExtras().getString(AlarmFactory.ALARM_ID));
+		this.isNewAlarm = Boolean.parseBoolean(getIntent().getExtras().getString(MainActivity.IS_NEW_ALARM));
 		
 		// populate alarm arraylist
 		prefsHandler =  new PreferencesHandler(this);
@@ -361,7 +365,7 @@ public class SettingsActivity extends Activity {
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 	    if ((keyCode == KeyEvent.KEYCODE_BACK)) {
 	        Toast.makeText(getApplicationContext(), "Canceled Alarm", Toast.LENGTH_SHORT).show();
-	        deleteAlarm();
+	        if(isNewAlarm)deleteAlarm();
 	        startMainMenuActivity();
 	    }
 	    return super.onKeyDown(keyCode, event);

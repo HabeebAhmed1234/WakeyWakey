@@ -130,15 +130,6 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 			if(alarms.get(i).getID() == alarm.getID())
 			{
 				alarms.set(i, alarm);	
-				if(alarm.enabled())
-				{
-					if(!AlarmFactory.isInit)AlarmFactory.init();
-					AlarmFactory.refreshAlarm(alarm);
-				}else
-				{
-					if(!AlarmFactory.isInit)AlarmFactory.init();
-					AlarmFactory.cancelAlarm(alarm);
-				}
 			}
 		}
 		prefsHandler.setAlarms(alarms);
