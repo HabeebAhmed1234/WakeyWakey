@@ -181,6 +181,17 @@ public class SettingsActivity extends Activity {
 		toggle_AlarmEnabled = (ToggleButton) findViewById(R.id.AlarmEnabled); 
 		toggle_AlarmEnabled.setChecked(alarm.enabled());
 		textContactsSmallFrame = (RelativeLayout) findViewById(R.id.textContactsSmallFrameBottom);
+		
+        if (toggle_textContacts.isChecked()) {
+            // The toggle is enabled
+        	LinearLayout.LayoutParams layout_desc = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            textContactsSmallFrame.setLayoutParams(layout_desc);
+        } else {
+        	// resize the frame to just show the top button
+        	LinearLayout.LayoutParams layout_desc = new LinearLayout.LayoutParams(0, 0);
+            textContactsSmallFrame.setLayoutParams(layout_desc);
+        }
+        
 		NFRadioSmallFrame = (LinearLayout) findViewById(R.id.NFRadioSmallFrame);
         if (!alarm.getRssNewFeedOption()) {
             LinearLayout.LayoutParams layout_params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -215,9 +226,6 @@ public class SettingsActivity extends Activity {
 		if(alarm.getMusicListAsString()==null||alarm.getMusicListAsString().compareTo("")==0)musicTextView.setText("Default");
 		alarmNameEditText = (EditText)findViewById(R.id.AlarmNameEditText);
 		alarmNameEditText.setText(alarm.getName());
-		// start out without showing the extra settings initially
-    	LinearLayout.LayoutParams layout_desc = new LinearLayout.LayoutParams(0, 0);
-        textContactsSmallFrame.setLayoutParams(layout_desc);
         
 	}
 	
@@ -369,11 +377,11 @@ public class SettingsActivity extends Activity {
 	        startMainMenuActivity();
 	    }
 	    if ((keyCode == KeyEvent.KEYCODE_HOME)) {
-	    	GlobalStaticVariables.TURN_OFF_APP = true;
+	    	GlobalStaticVariables.TURN_OFF_APP = false;
 	        finish();
 	    }
 	    if ((keyCode == KeyEvent.KEYCODE_APP_SWITCH)) {
-	    	GlobalStaticVariables.TURN_OFF_APP = true;
+	    	GlobalStaticVariables.TURN_OFF_APP = false;
 	        finish();
 	    }
 	    return super.onKeyDown(keyCode, event);

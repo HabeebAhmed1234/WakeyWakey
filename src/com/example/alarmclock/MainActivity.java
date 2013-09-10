@@ -476,6 +476,7 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 		if(GlobalStaticVariables.TURN_OFF_APP) 
 		{
 			GlobalStaticVariables.TURN_OFF_APP=false;
+			Log.d("AlarmClock","Turn off app since global variable is true");
 			finish();
 		}
 	}
@@ -804,15 +805,15 @@ public void initializeFormComponentsWrapper() throws ParseException{
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 	    if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-	       GlobalStaticVariables.TURN_OFF_APP = true;
+	       GlobalStaticVariables.TURN_OFF_APP = false;
 	       finish();
 	    }
 	    if ((keyCode == KeyEvent.KEYCODE_HOME)) {
-	    	GlobalStaticVariables.TURN_OFF_APP = true;
+	    	GlobalStaticVariables.TURN_OFF_APP = false;
 	        finish();
 	    }
 	    if ((keyCode == KeyEvent.KEYCODE_APP_SWITCH)) {
-	    	GlobalStaticVariables.TURN_OFF_APP = true;
+	    	GlobalStaticVariables.TURN_OFF_APP = false;
 	        finish();
 	    }
 	    return super.onKeyDown(keyCode, event);
