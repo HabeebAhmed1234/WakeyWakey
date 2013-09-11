@@ -256,9 +256,9 @@ public class AlarmHandler extends Activity implements AlarmHandlerInterface {
 		shakeScreen.addView(instructions);
 		
 		battery = new CustomImageView(this, shaker);
+		battery.setLayoutParams(new LinearLayout.LayoutParams((int) (screen.getHeight()*0.1525189), screen.getHeight()/3));
 		battery.setImageResource(R.drawable.battery_shell);
-		battery.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, screen.getHeight()/3));
-		battery.setScaleType(ScaleType.CENTER_INSIDE);
+		battery.setScaleType(ScaleType.FIT_XY);
 		shakeScreen.addView(battery);
 		
 		// hide shakeToWakeScreen at first (until a vibration has been detected)

@@ -5,7 +5,9 @@ import com.example.alarmclock.PercentageUpdater;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
 import android.widget.ImageView;
 
 public class CustomImageView extends ImageView {
@@ -28,11 +30,13 @@ public class CustomImageView extends ImageView {
 	    paint.setColor(getResources().getColor(R.color.batteryJuice));
 	    paint.setStrokeWidth(0);
 	    int midX = canvas.getWidth()/2;
-	    float width = (float) (canvas.getWidth()*0.075);
+	    float width = (float) (canvas.getWidth()/2*0.7);
 	    float base = (float) (canvas.getHeight()*0.92);
 	    float fullHeight = (float) (canvas.getHeight()*0.1 - base);
 	    float percentage = alhi.getPercentage();
+
 	    // left, top, right, bottom
+	    paint.setColor(getResources().getColor(R.color.batteryJuice));
 	    canvas.drawRect(midX - width, (float) (base+percentage*fullHeight), midX + width, base, paint);
 	}
 	
