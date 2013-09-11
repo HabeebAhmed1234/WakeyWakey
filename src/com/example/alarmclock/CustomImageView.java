@@ -35,9 +35,6 @@ public class CustomImageView extends ImageView {
 	    float fullHeight = (float) (canvas.getHeight()*0.1 - base);
 	    float percentage = alhi.getPercentage();
 
-	    paint.setColor(getResources().getColor(R.color.Black));
-	    canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(), paint);
-	    
 	    // left, top, right, bottom
 	    paint.setColor(getResources().getColor(R.color.batteryJuice));
 	    canvas.drawRect(midX - width, (float) (base+percentage*fullHeight), midX + width, base, paint);
