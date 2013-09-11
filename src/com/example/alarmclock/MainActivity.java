@@ -103,6 +103,18 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 		
 		PreferencesHandler prefsHandler = new PreferencesHandler(this);
 		Preferences prefs = prefsHandler.getSettings();
+		
+		if(prefs.getIsFirstBoot())
+		{ 
+			//hashim this is the first boot try not to exit this activity to show the tutorial. if you do then 
+			//write prefsHandler.setIsFirstBoot(false); when the tutorial is finished.
+			Log.d("bootup","first boot");
+			
+			//set first boot to false
+			prefsHandler.setIsFirstBoot(false);
+		}else{
+			Log.d("bootup","not first boot");
+		}
 		this.alarms = new ArrayList<Alarm>();
 		this.alarms=prefs.getAlarms();
 		

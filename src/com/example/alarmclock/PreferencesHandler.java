@@ -26,6 +26,11 @@ public class PreferencesHandler {
 	public String IS_REPEATED_DAILY_KEY = "ISREPEATEDDAILY";
 	public String ALARM_ENABLED_KEY = "ALARM_ENABLED";
 	
+	public String IS_FIRST_BOOT_KEY = "ISFIRSTBOOT";
+	public String IS_FIRST_TEXT_CONTACTS_KEY = "ISFIRSTTEXTCONTACTS";
+	public String IS_FIRST_NEWS_FEED_KEY = "ISFIRSTNEWSFEED";
+	public String IS_FIRST_SHAKE_TO_WAKE_KEY = "ISFIRSTSHAKETOWAKE";
+	
 	private SharedPreferences settings ;
 	
 	PreferencesHandler(Context con)
@@ -134,6 +139,27 @@ public class PreferencesHandler {
 		}else
 		{
 			set(ALARM_ENABLED_KEY+AlarmNumber,"false");
+		}
+	}
+	
+	public void setIsFirstBoot(boolean setting)
+	{
+		if(setting)
+		{
+			set(IS_FIRST_BOOT_KEY,"true");
+		}else
+		{
+			set(IS_FIRST_BOOT_KEY,"false");
+		}
+	}
+	
+	private boolean getIsFirstBoot()
+	{
+		if(get(IS_FIRST_BOOT_KEY).compareTo("false")==0)
+		{
+			return false;
+		}else{
+			return true;
 		}
 	}
 	
@@ -309,6 +335,8 @@ public class PreferencesHandler {
 		}
 		
 		Preferences prefs=new Preferences(alarms);
+		prefs.setIsFirstBoot(getIsFirstBoot());
+
 		//Log.d("debuggings","get musics ammount " + Integer.toString(prefs.getMusicList().size()));
 		return prefs;
 	}
