@@ -94,6 +94,8 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+		GlobalStaticVariables.TURN_OFF_APP = false;
+		
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		this.setContentView(R.layout.activity_main);
 		
