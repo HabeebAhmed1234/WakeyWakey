@@ -43,7 +43,7 @@ public class ShakeToWakeActivity implements IntValueStoreListener, PercentageUpd
 	        	  alhi.hideShakeToWakeScreen();
 	        	  alhi.stopAlarm();
 	          }
-	          if (!(percentageBarfill >= 1)) percentageBarfill+=0.05;
+	          if (!(percentageBarfill >= 1)) percentageBarfill+=0.02;
 	          stagnantCount.setValue(0);
 	          alhi.showShakeToWakeScreen();
 	         }
