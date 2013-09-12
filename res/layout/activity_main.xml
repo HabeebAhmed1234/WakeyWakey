@@ -12,6 +12,209 @@
         android:orientation="vertical" >
 
         <LinearLayout
+            android:id="@+id/introtutorial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="1dp"
+            android:background="@color/alarmBackground"
+            android:orientation="vertical"
+            android:visibility="gone" >
+
+            <RelativeLayout
+                android:id="@+id/RelativeLayout03"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@color/alarmBackground"
+                android:padding="@dimen/activity_horizontal_margin" >
+
+                <RelativeLayout
+                    android:id="@+id/RelativeLayout04"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical" >
+
+                    <TextView
+                        android:id="@+id/tv1"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="false"
+                        android:layout_alignParentTop="false"
+                        android:gravity="center"
+                        android:text="Welcome to Wakey Wakey!"
+                        android:textColor="@color/White"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/tv2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@+id/tv1"
+                        android:text="\nLet&apos;s get started. Wakey Wakey has 3 cool features that you can enable for each alarm:"
+                        android:textColor="@color/White"
+                        android:textSize="@dimen/main_med_text" />
+
+                    <LinearLayout
+                        android:id="@+id/infotextcontacts"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="false"
+                        android:layout_below="@+id/infoworldnews"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="5dp" >
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1" >
+
+                            <ImageView
+                                android:id="@+id/ImageView08"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:layout_centerInParent="true"
+                                android:src="@drawable/messagingon" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="4" >
+
+                            <TextView
+                                android:id="@+id/info1title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Text Contacts"
+                                android:textColor="@color/fontcolor"
+                                android:textSize="@dimen/main_med_text" />
+
+                            <TextView
+                                android:id="@+id/info1desc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentTop="false"
+                                android:layout_below="@+id/info1title"
+                                android:text="If you snooze your alarm, Wakey Wakey will text your selected contacts."
+                                android:textColor="@color/WhiteSmoke"
+                                android:textSize="@dimen/main_med_text" />
+
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/infoworldnews"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="5dp"
+                        android:layout_below="@+id/tv2" >
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1" >
+
+                            <ImageView
+                                android:id="@+id/ImageView03"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:layout_centerInParent="true"
+                                android:src="@drawable/newsfeedon" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="4" >
+
+                            <TextView
+                                android:id="@+id/TextView02"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="World News Radio"
+                                android:textColor="@color/fontcolor"
+                                android:textSize="@dimen/main_med_text" />
+
+                            <TextView
+                                android:id="@+id/TextView01"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentTop="false"
+                                android:layout_below="@+id/TextView02"
+                                android:text="Listen to what is making world headlines today through our radio!"
+                                android:textColor="@color/WhiteSmoke"
+                                android:textSize="@dimen/main_med_text" />
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/infoshaketowake"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="false"
+                        android:layout_alignParentTop="false"
+                        android:layout_below="@+id/infotextcontacts"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="5dp" >
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1" >
+
+                            <ImageView
+                                android:id="@+id/ImageView04"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:layout_centerInParent="true"
+                                android:src="@drawable/shakeon" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="4" >
+
+                            <TextView
+                                android:id="@+id/TextView04"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Shake To Wake"
+                                android:textColor="@color/fontcolor"
+                                android:textSize="@dimen/main_med_text" />
+
+                            <TextView
+                                android:id="@+id/TextView03"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentTop="false"
+                                android:layout_below="@+id/TextView04"
+                                android:text="Rather than hitting an off button, shake your phone to turn off the alarm."
+                                android:textColor="@color/WhiteSmoke"
+                                android:textSize="@dimen/main_med_text" />
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/infoshaketowake"
+                        android:text="This screen is the alarm hub, which displays all of your alarms. Here, you can click on any alarm to quickly view and edit its settings.\n\nMake your first alarm by hitting the button below."
+                        android:textColor="@color/White"
+                        android:textSize="@dimen/main_med_text" />
+
+                </RelativeLayout>
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/frame1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

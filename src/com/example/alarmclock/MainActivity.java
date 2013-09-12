@@ -109,11 +109,15 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 			//hashim this is the first boot try not to exit this activity to show the tutorial. if you do then 
 			//write prefsHandler.setIsFirstBoot(false); when the tutorial is finished.
 			Log.d("bootup","first boot");
+			LinearLayout bootup = (LinearLayout) findViewById(R.id.introtutorial);
+			bootup.setVisibility(View.VISIBLE);
 			
 			//set first boot to false
 			prefsHandler.setIsFirstBoot(false);
 		}else{
 			Log.d("bootup","not first boot");
+			LinearLayout bootup = (LinearLayout) findViewById(R.id.introtutorial);
+			bootup.setVisibility(View.GONE);
 		}
 		this.alarms = new ArrayList<Alarm>();
 		this.alarms=prefs.getAlarms();

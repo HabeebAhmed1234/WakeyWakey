@@ -8,6 +8,7 @@ import android.sax.Element;
 import android.sax.EndElementListener;
 import android.sax.EndTextElementListener;
 import android.sax.RootElement;
+import android.util.Log;
 import android.util.Xml;
 
 public class AndroidSaxFeedParser extends BaseFeedParser {
@@ -55,8 +56,21 @@ public class AndroidSaxFeedParser extends BaseFeedParser {
 		try {
 			Xml.parse(this.getInputStream(), Xml.Encoding.UTF_8, root.getContentHandler());
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			Message testMessage = new Message();
+			Log.d("rss", "here");
+			testMessage.setTitle("Unable to load World News Radio!");
+			testMessage.setDate("Wed, 11 Sep 2013 22:51:00 -0400.");
+			testMessage.setLink("http://www.npr.org/blogs/thetwo-way/2013/09/11/221551883/challenging-obama-putin-appeals-directly-to-americans-on-syria?ft=1&f=1004");
+			testMessage.setDescription("Please check your internet connection.");
+			messages.add(testMessage.copy());
+			
+			return messages;
 		}
+		
+		for (int i=0; i<messages.size(); i++){
+			Log.d("rss", messages.get(i).getTitle() + "\n" + messages.get(i).getLink()+ "\n"  + messages.get(i).getDate()+ "\n"  + messages.get(i).getDescription());
+		}
+		
 		return messages;
 	}
 }
