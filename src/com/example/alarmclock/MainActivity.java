@@ -149,7 +149,7 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 		
 		addOnClickListeners();
 		
-		if(prefs.getNumberOfAlarmsSet()%5==0)
+		if(prefs.getNumberOfAlarmsSet()%5==0&&prefs.getNumberOfAlarmsSet()>0)
 		{
 			showRatingDialog();
 		}
