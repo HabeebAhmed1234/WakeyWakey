@@ -14,6 +14,8 @@ public class Preferences {
 	private boolean isFirstTextContacts = true;
 	private boolean isFirstMusic = true;
 	
+	private int numberOfAlarmsSet = 0;
+	
 	Preferences(ArrayList<Alarm> alarms)
 	{
 		this.alarms=alarms;
@@ -72,5 +74,15 @@ public class Preferences {
 	public boolean getIsFirstMusic()
 	{
 		return isFirstMusic;
+	}
+	
+	public void setNumberOfAlarmsSet(int ammount)
+	{
+		this.numberOfAlarmsSet = ammount;
+	}
+	
+	public int getNumberOfAlarmsSet()
+	{
+		return this.numberOfAlarmsSet;
 	}
 }

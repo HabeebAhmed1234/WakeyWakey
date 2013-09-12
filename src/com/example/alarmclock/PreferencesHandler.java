@@ -32,6 +32,8 @@ public class PreferencesHandler {
 	public String IS_FIRST_SHAKE_TO_WAKE_KEY = "ISFIRSTSHAKETOWAKE";
 	public String IS_FIRST_MUSIC_KEY = "ISFIRSTMUSIC";
 	
+	public String NUMBER_OF_ALARMS_SET = "ALARMS_SET";
+	
 	private SharedPreferences settings ;
 	
 	PreferencesHandler(Context con)
@@ -215,6 +217,27 @@ public class PreferencesHandler {
 		{
 			set(IS_FIRST_MUSIC_KEY,"false");
 		}
+	}
+	
+	public void incrementNumberOfAlarmsSet(int increment)
+	{
+		int curval = 0;
+		
+		if(get(this.NUMBER_OF_ALARMS_SET).compareTo("NULL")!=0)
+		{
+			curval = Integer.parseInt(get(this.NUMBER_OF_ALARMS_SET));
+		}
+		
+		set(this.NUMBER_OF_ALARMS_SET,Integer.toString(curval+increment));
+	}
+	
+	private int getNumberOfAlarmsSet()
+	{
+		if(get(this.NUMBER_OF_ALARMS_SET).compareTo("NULL")!=0)
+		{
+			return Integer.parseInt(get(this.NUMBER_OF_ALARMS_SET));
+		}
+		return 0;
 	}
 	
 	private boolean getIsFirstMusic()
@@ -425,6 +448,8 @@ public class PreferencesHandler {
 		prefs.setIsFirstShakeToWake(this.getIsFirstShakeToWake());
 		prefs.setIsFirstTextContacts(this.getIsFirsTextContacts());
 		prefs.setIsFirstMusic(this.getIsFirstMusic());
+		
+		prefs.setNumberOfAlarmsSet(getNumberOfAlarmsSet());
 		
 		return prefs;
 	}
