@@ -434,18 +434,18 @@ public class SettingsActivity extends Activity {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
  
 			// set title
-			alertDialogBuilder.setTitle("Info!");
+			alertDialogBuilder.setTitle("You've just enabled Text Contacts!");
  
 			// set dialog message
 			alertDialogBuilder
-				.setMessage("You've Just Selected the text contacts option! \n\nIf you ever press the snooze button a list of contacts will be alerted to wake you up!\nTo set the contacts list press the 'Add More Contacts' button!")
+				.setMessage("Snoozing your alarm will text a list of contacts to wake you up.")
 				.setCancelable(false)
-				.setPositiveButton("Cancel",new DialogInterface.OnClickListener() {
+				.setPositiveButton("Dismiss",new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog,int id) {
 						dialog.cancel();
 					}
 				  })
-				.setNegativeButton("Don't Show",new DialogInterface.OnClickListener() {
+				.setNegativeButton("Don't Show Again",new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog,int id) {
 						prefsHandler.setIsFirsTextContacts(false);
 						dialog.cancel();
@@ -460,18 +460,18 @@ public class SettingsActivity extends Activity {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
  
 			// set title
-			alertDialogBuilder.setTitle("Info!");
+			alertDialogBuilder.setTitle("You've just enabled Shake To Wake!");
  
 			// set dialog message
 			alertDialogBuilder
-				.setMessage("You've Just Selected the Shake To Wake option! \n\nWhen the alarm goes off you will have to shake your phone to turn it off!")
+				.setMessage("When the alarm goes off, you will have to shake your phone to turn it off!")
 				.setCancelable(false)
-				.setPositiveButton("Cancel",new DialogInterface.OnClickListener() {
+				.setPositiveButton("Dismiss",new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog,int id) {
 						dialog.cancel();
 					}
 				  })
-				.setNegativeButton("Don't Show",new DialogInterface.OnClickListener() {
+				.setNegativeButton("Don't Show Again",new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog,int id) {
 						prefsHandler.setIsFirstShakeToWake(false);
 						dialog.cancel();
@@ -486,18 +486,18 @@ public class SettingsActivity extends Activity {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
  
 			// set title
-			alertDialogBuilder.setTitle("Info!");
+			alertDialogBuilder.setTitle("You've just enabled World News Radio!");
  
 			// set dialog message
 			alertDialogBuilder
-				.setMessage("You've Just Selected the News Radio option! \n\nWhen the alarm goes off the day's global news headlines will be presented to you.")
+				.setMessage("When the alarm goes off, World News Radio will start playing (requires internet connection).\n\nThis also disables the Music Player.")
 				.setCancelable(false)
-				.setPositiveButton("Cancel",new DialogInterface.OnClickListener() {
+				.setPositiveButton("Dismiss",new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog,int id) {
 						dialog.cancel();
 					}
 				  })
-				.setNegativeButton("Don't Show",new DialogInterface.OnClickListener() {
+				.setNegativeButton("Don't Show Again",new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog,int id) {
 						prefsHandler.setIsFirstNewsFeed(false);
 						dialog.cancel();
@@ -512,18 +512,18 @@ public class SettingsActivity extends Activity {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
  
 			// set title
-			alertDialogBuilder.setTitle("Info!");
+			alertDialogBuilder.setTitle("You've just enabled Music Player!");
  
 			// set dialog message
 			alertDialogBuilder
-				.setMessage("Disabling the News Radio option enables the Music option! \n\nSelect your favourite music by pressing 'Change' button!")
+				.setMessage("Disabling World News Radio enables the Music Player.")
 				.setCancelable(false)
-				.setPositiveButton("Cancel",new DialogInterface.OnClickListener() {
+				.setPositiveButton("Dismiss",new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog,int id) {
 						dialog.cancel();
 					}
 				  })
-				.setNegativeButton("Don't Show",new DialogInterface.OnClickListener() {
+				.setNegativeButton("Don't Show Again",new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog,int id) {
 						prefsHandler.setIsFirstMusic(false);
 						dialog.cancel();

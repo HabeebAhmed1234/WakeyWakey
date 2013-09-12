@@ -158,7 +158,7 @@
                   android:layout_width="166dp"
                   android:layout_height="wrap_content"
                   android:layout_centerVertical="true"
-                  android:text="News Feed Radio"
+                  android:text="World News Radio"
                   android:textAppearance="?android:attr/textAppearanceLarge"
                   android:textSize="@dimen/activity_medium_text" />
 

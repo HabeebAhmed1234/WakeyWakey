@@ -7,5 +7,6 @@
     <dimen name="activity_inbetween_spacing">5dp</dimen>
     <dimen name="activity_frame_margin">10dp</dimen>
     <dimen name="activity_small_text">8dp</dimen>
+    <dimen name="main_med_text">13sp</dimen>
 
 </resources>
