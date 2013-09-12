@@ -12,6 +12,7 @@ public class Preferences {
 	private boolean isFirstNewsFeed = true;
 	private boolean isFirstShakeToWake = true;
 	private boolean isFirstTextContacts = true;
+	private boolean isFirstMusic = true;
 	
 	Preferences(ArrayList<Alarm> alarms)
 	{
@@ -61,5 +62,15 @@ public class Preferences {
 	public boolean getIsFirstTextContacts()
 	{
 		return isFirstTextContacts;
+	}
+	
+	public void setIsFirstMusic(boolean setting)
+	{
+		this.isFirstMusic = setting;
+	}
+	
+	public boolean getIsFirstMusic()
+	{
+		return isFirstMusic;
 	}
 }

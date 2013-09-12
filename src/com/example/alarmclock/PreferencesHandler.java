@@ -30,6 +30,7 @@ public class PreferencesHandler {
 	public String IS_FIRST_TEXT_CONTACTS_KEY = "ISFIRSTTEXTCONTACTS";
 	public String IS_FIRST_NEWS_FEED_KEY = "ISFIRSTNEWSFEED";
 	public String IS_FIRST_SHAKE_TO_WAKE_KEY = "ISFIRSTSHAKETOWAKE";
+	public String IS_FIRST_MUSIC_KEY = "ISFIRSTMUSIC";
 	
 	private SharedPreferences settings ;
 	
@@ -198,6 +199,27 @@ public class PreferencesHandler {
 	private boolean getIsFirstShakeToWake()
 	{
 		if(get(IS_FIRST_SHAKE_TO_WAKE_KEY).compareTo("false")==0)
+		{
+			return false;
+		}else{
+			return true;
+		}
+	}
+	
+	public void setIsFirstMusic(boolean setting)
+	{
+		if(setting)
+		{
+			set(this.IS_FIRST_MUSIC_KEY,"true");
+		}else
+		{
+			set(IS_FIRST_MUSIC_KEY,"false");
+		}
+	}
+	
+	private boolean getIsFirstMusic()
+	{
+		if(get(IS_FIRST_MUSIC_KEY).compareTo("false")==0)
 		{
 			return false;
 		}else{
@@ -402,8 +424,8 @@ public class PreferencesHandler {
 		prefs.setIsFirstNewsFeed(this.getIsFirstNewsFeed());
 		prefs.setIsFirstShakeToWake(this.getIsFirstShakeToWake());
 		prefs.setIsFirstTextContacts(this.getIsFirsTextContacts());
-
-		//Log.d("debuggings","get musics ammount " + Integer.toString(prefs.getMusicList().size()));
+		prefs.setIsFirstMusic(this.getIsFirstMusic());
+		
 		return prefs;
 	}
 }

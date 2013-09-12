@@ -73,17 +73,17 @@ public class SettingsActivity extends Activity {
 		    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 		        if (isChecked) {
 		            // The toggle is enabled
+			        if(prefsHandler.getSettings().getIsFirstTextContacts())
+			        {
+			        	showTextContactsTutorialDialog();
+			        }
+			        
 		        	LinearLayout.LayoutParams layout_desc = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 		            textContactsSmallFrame.setLayoutParams(layout_desc);
 		        } else {
 		        	// resize the frame to just show the top button
 		        	LinearLayout.LayoutParams layout_desc = new LinearLayout.LayoutParams(0, 0);
 		            textContactsSmallFrame.setLayoutParams(layout_desc);
-		        }
-		        
-		        if(prefsHandler.getSettings().getIsFirstTextContacts())
-		        {
-		        	showTextContactsTutorialDialog();
 		        }
 		    }
 		});
@@ -92,25 +92,29 @@ public class SettingsActivity extends Activity {
 		    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 		        if (!isChecked) {
 		            // The toggle is disabled
+			        if(prefsHandler.getSettings().getIsFirstMusic())
+			        {
+			        	showMusicTutorialDialog();
+			        }
 		        	// resize the frame to just show the top button
 		        	LinearLayout.LayoutParams layout_desc = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 		            NFRadioSmallFrame.setLayoutParams(layout_desc);
 		        } else {
 		        	// the toggle is enabled
+			        if(prefsHandler.getSettings().getIsFirstNewsFeed())
+			        {
+			        	showNewsTutorialDialog();
+			        }
+			        
 		        	LinearLayout.LayoutParams layout_desc = new LinearLayout.LayoutParams(0, 0);
 		            NFRadioSmallFrame.setLayoutParams(layout_desc);
-		        }
-		        
-		        if(prefsHandler.getSettings().getIsFirstNewsFeed())
-		        {
-		        	showNewsTutorialDialog();
 		        }
 		    }
 		});
 		
 		toggle_ShakeToWake.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 		    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-		    	if(prefsHandler.getSettings().getIsFirstShakeToWake())
+		    	if(isChecked&&prefsHandler.getSettings().getIsFirstShakeToWake())
 		        {
 		    		showShakeTutorialDialog();
 		        }
@@ -483,7 +487,7 @@ public class SettingsActivity extends Activity {
  
 			// set dialog message
 			alertDialogBuilder
-				.setMessage("You've Just Selected the News Radio option! \n\nWhen the alarm goes off the day's global news headlines will be presented to you.\nDisabling this option will enable the Music option\nSelect your favourite music by pressing 'Change' button!")
+				.setMessage("You've Just Selected the News Radio option! \n\nWhen the alarm goes off the day's global news headlines will be presented to you.")
 				.setCancelable(false)
 				.setPositiveButton("Cancel",new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog,int id) {
@@ -493,6 +497,32 @@ public class SettingsActivity extends Activity {
 				.setNegativeButton("Don't Show",new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog,int id) {
 						prefsHandler.setIsFirstNewsFeed(false);
+						dialog.cancel();
+					}
+				});
+				AlertDialog alertDialog = alertDialogBuilder.create();
+				alertDialog.show();
+	}
+	
+	private void showMusicTutorialDialog()
+	{
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+ 
+			// set title
+			alertDialogBuilder.setTitle("Info!");
+ 
+			// set dialog message
+			alertDialogBuilder
+				.setMessage("Disabling the News Radio option enables the Music option! \n\nSelect your favourite music by pressing 'Change' button!")
+				.setCancelable(false)
+				.setPositiveButton("Cancel",new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog,int id) {
+						dialog.cancel();
+					}
+				  })
+				.setNegativeButton("Don't Show",new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog,int id) {
+						prefsHandler.setIsFirstMusic(false);
 						dialog.cancel();
 					}
 				});
