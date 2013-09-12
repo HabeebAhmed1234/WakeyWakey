@@ -245,8 +245,10 @@ public class SettingsActivity extends Activity {
 		AlarmTime.setCurrentMinute(alarm.getMinute());
 		contactsTextView = (TextView) findViewById(R.id.contactsTextView);
 		contactsTextView.setText(alarm.getContactsListAsString());
+		Log.d("Strings",alarm.getContactsListAsString());
 		musicTextView = (TextView) findViewById(R.id.Tune);
 		musicTextView.setText(alarm.getMusicListAsString());
+		Log.d("Strings",alarm.getMusicListAsString());
 		if(alarm.getMusicListAsString()==null||alarm.getMusicListAsString().compareTo("")==0)musicTextView.setText("Default");
 		alarmNameEditText = (EditText)findViewById(R.id.AlarmNameEditText);
 		alarmNameEditText.setText(alarm.getName());
@@ -343,7 +345,7 @@ public class SettingsActivity extends Activity {
 					String contactsToText = GlobalStaticVariables.selectedContacts.get(0).getName();
 					for(int i = 1; i<GlobalStaticVariables.selectedContacts.size();i++)
 					{
-						contactsToText+=","+GlobalStaticVariables.selectedContacts.get(i).getName();
+						contactsToText+=", "+GlobalStaticVariables.selectedContacts.get(i).getName();
 					}
 					contactsTextView.setText(contactsToText);
 				}
@@ -355,7 +357,7 @@ public class SettingsActivity extends Activity {
 					String musicList = GlobalStaticVariables.selectedMusic.get(0).getName();
 					for(int i = 1; i<GlobalStaticVariables.selectedMusic.size();i++)
 					{
-						musicList+=GlobalStaticVariables.selectedMusic.get(i).getName();
+						musicList+=", "+GlobalStaticVariables.selectedMusic.get(i).getName();
 					}
 					musicTextView.setText(musicList);
 				}

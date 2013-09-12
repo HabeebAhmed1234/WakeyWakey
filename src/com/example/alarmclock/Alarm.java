@@ -197,7 +197,8 @@ public class Alarm {
 		
 		for(int i = 1 ; i < musicList.size() ; i++)
 		{
-			musicListString+=", "+musicList.get(i).getName();
+			musicListString.concat(", ");
+			musicListString.concat(musicList.get(i).getName());
 		}
 		
 		return musicListString;
@@ -211,7 +212,8 @@ public class Alarm {
 		
 		for(int i = 1 ; i < textContactsList.size() ; i++)
 		{
-			contactListString+=", "+textContactsList.get(i).getName();
+			contactListString.concat(", ");
+			contactListString.concat(textContactsList.get(i).getName());
 		}
 		
 		return contactListString;
