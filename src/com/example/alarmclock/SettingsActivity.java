@@ -129,7 +129,7 @@ public class SettingsActivity extends Activity {
 			@Override
 			public void onClick(View v) {	
 				Toast.makeText(getApplicationContext(), "Saved Alarm", Toast.LENGTH_SHORT).show();
-				prefsHandler.incrementNumberOfAlarmsSet(1);
+				if(prefsHandler.getSettings().getNumberOfAlarmsSet()>=0)prefsHandler.incrementNumberOfAlarmsSet(1);
 				populateAlarmWithFormData();
 				saveAlarm();
 				startMainMenuActivity();

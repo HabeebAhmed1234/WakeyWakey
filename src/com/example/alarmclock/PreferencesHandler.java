@@ -231,6 +231,11 @@ public class PreferencesHandler {
 		set(this.NUMBER_OF_ALARMS_SET,Integer.toString(curval+increment));
 	}
 	
+	public void disableIncrementNumberOfAlarmsSet()
+	{
+		set(this.NUMBER_OF_ALARMS_SET,Integer.toString(-1));
+	}
+	
 	private int getNumberOfAlarmsSet()
 	{
 		if(get(this.NUMBER_OF_ALARMS_SET).compareTo("NULL")!=0)

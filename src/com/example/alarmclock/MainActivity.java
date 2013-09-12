@@ -28,11 +28,13 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Locale;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -92,6 +94,12 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 	
 	public static Context CONTEXT = null;
 	
+	PreferencesHandler prefsHandler;
+	Preferences prefs;
+	
+	//id must be in this format
+	public static final String APP_ID = "com.cubeactive.qnotelistfree";
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -103,8 +111,8 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 		
 		MainActivity.CONTEXT = this;
 		
-		PreferencesHandler prefsHandler = new PreferencesHandler(this);
-		Preferences prefs = prefsHandler.getSettings();
+		prefsHandler = new PreferencesHandler(this);
+		prefs = prefsHandler.getSettings();
 		
 		if(prefs.getIsFirstBoot())
 		{ 
@@ -143,7 +151,7 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 		
 		if(prefs.getNumberOfAlarmsSet()%5==0)
 		{
-			
+			showRatingDialog();
 		}
 		
 	}
@@ -161,13 +169,13 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 	}
 	 
 	//On click event for rate this app button
-	public void openRatingsSetter(View v) {
+	public void openRatingsSetter() {
 	    Intent intent = new Intent(Intent.ACTION_VIEW);
 	    //Try Google play
-	    intent.setData(Uri.parse("market://details?id=[Id]"));
+	    intent.setData(Uri.parse("market://details?id="+APP_ID));
 	    if (startAnyActivity(intent) == false) {
 	        //Market (Google play) app seems not installed, let's try to open a webbrowser
-	        intent.setData(Uri.parse("https://play.google.com/store/apps/details?[Id]"));
+	        intent.setData(Uri.parse("https://play.google.com/store/apps/details?"+APP_ID));
 	        if (startAnyActivity(intent) == false) {
 	            //Well if this also fails, we have run out of options, inform the user.
 	            Toast.makeText(this, "Could not open Android market, please install the market app.", Toast.LENGTH_SHORT).show();
@@ -872,5 +880,33 @@ public void initializeFormComponentsWrapper() throws ParseException{
 	        finish();
 	    }
 	    return super.onKeyDown(keyCode, event);
+	}
+	
+	private void showRatingDialog()
+	{
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+ 
+			// set title
+			alertDialogBuilder.setTitle("Rate!");
+ 
+			// set dialog message
+			alertDialogBuilder
+				.setMessage("Would you like to rate this App?")
+				.setCancelable(false)
+				.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog,int id) {
+						prefsHandler.incrementNumberOfAlarmsSet(5);
+						openRatingsSetter();
+						dialog.cancel();
+					}
+				  })
+				.setNegativeButton("Don't Show Again",new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog,int id) {
+						prefsHandler.disableIncrementNumberOfAlarmsSet();
+						dialog.cancel();
+					}
+				});
+				AlertDialog alertDialog = alertDialogBuilder.create();
+				alertDialog.show();
 	}
 }
