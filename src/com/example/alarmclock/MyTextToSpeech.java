@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.speech.tts.TextToSpeech;
@@ -18,12 +19,26 @@ public class MyTextToSpeech implements OnInitListener {
     
     ArrayList<String> pendingSayings = new ArrayList<String>();
     
+    boolean isfirstsaying = true;
+    MediaPlayer player;
+    Context context;
+    
     MyTextToSpeech(Context con)
     {
+    	context = con;
     	talker=new TextToSpeech(con, this);
     }
     
 	public void say(String text2say){
+		if(isfirstsaying)
+		{
+
+			player = MediaPlayer.create(context,R.raw.platinum);
+			player.setLooping(true);
+            player.start();
+            
+			isfirstsaying = false;
+		}
 		if(initialized)
 		{
 			try{
@@ -46,6 +61,11 @@ public class MyTextToSpeech implements OnInitListener {
 		Log.d("AlarmClock","Turning off tts");
 		talker.speak("Alarm Off", TextToSpeech.QUEUE_FLUSH, null);
 		talker.stop();
+		
+		if(player.isPlaying())
+		{
+			player.stop();
+		}
 	}
 
     public void onInit(int status) {
