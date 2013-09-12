@@ -483,7 +483,7 @@ public class SettingsActivity extends Activity {
  
 			// set dialog message
 			alertDialogBuilder
-				.setMessage("You've Just Selected the New Radio option! \n\nWhen the alarm goes off the day's global new headlines will be presented to you.\nDisabling this option will enable the Music option\nSelect your favourite music by pressing 'Change' button!")
+				.setMessage("You've Just Selected the News Radio option! \n\nWhen the alarm goes off the day's global news headlines will be presented to you.\nDisabling this option will enable the Music option\nSelect your favourite music by pressing 'Change' button!")
 				.setCancelable(false)
 				.setPositiveButton("Cancel",new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog,int id) {
