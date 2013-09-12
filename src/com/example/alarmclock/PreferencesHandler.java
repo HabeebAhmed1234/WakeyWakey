@@ -163,6 +163,69 @@ public class PreferencesHandler {
 		}
 	}
 	
+	public void setIsFirsTextContacts(boolean setting)
+	{
+		if(setting)
+		{
+			set(IS_FIRST_TEXT_CONTACTS_KEY,"true");
+		}else
+		{
+			set(IS_FIRST_TEXT_CONTACTS_KEY,"false");
+		}
+	}
+	
+	private boolean getIsFirsTextContacts()
+	{
+		if(get(IS_FIRST_TEXT_CONTACTS_KEY).compareTo("false")==0)
+		{
+			return false;
+		}else{
+			return true;
+		}
+	}
+	
+	public void setIsFirstShakeToWake(boolean setting)
+	{
+		if(setting)
+		{
+			set(this.IS_FIRST_SHAKE_TO_WAKE_KEY,"true");
+		}else
+		{
+			set(IS_FIRST_SHAKE_TO_WAKE_KEY,"false");
+		}
+	}
+	
+	private boolean getIsFirstShakeToWake()
+	{
+		if(get(IS_FIRST_SHAKE_TO_WAKE_KEY).compareTo("false")==0)
+		{
+			return false;
+		}else{
+			return true;
+		}
+	}
+	
+	public void setIsFirstNewsFeed(boolean setting)
+	{
+		if(setting)
+		{
+			set(this.IS_FIRST_NEWS_FEED_KEY,"true");
+		}else
+		{
+			set(IS_FIRST_NEWS_FEED_KEY,"false");
+		}
+	}
+	
+	private boolean getIsFirstNewsFeed()
+	{
+		if(get(IS_FIRST_NEWS_FEED_KEY).compareTo("false")==0)
+		{
+			return false;
+		}else{
+			return true;
+		}
+	}
+	
 	private void setMusicList(ArrayList<Music> selectedMusic,int AlarmNumber) {
 		//shows the number of contacts in total
 		this.set(MUSICS_AMMOUNT_KEY+AlarmNumber,Integer.toString(selectedMusic.size()));
@@ -336,6 +399,9 @@ public class PreferencesHandler {
 		
 		Preferences prefs=new Preferences(alarms);
 		prefs.setIsFirstBoot(getIsFirstBoot());
+		prefs.setIsFirstNewsFeed(this.getIsFirstNewsFeed());
+		prefs.setIsFirstShakeToWake(this.getIsFirstShakeToWake());
+		prefs.setIsFirstTextContacts(this.getIsFirsTextContacts());
 
 		//Log.d("debuggings","get musics ammount " + Integer.toString(prefs.getMusicList().size()));
 		return prefs;

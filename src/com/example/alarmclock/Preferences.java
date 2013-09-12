@@ -9,6 +9,9 @@ public class Preferences {
 	private ArrayList<Alarm>   alarms   = new ArrayList<Alarm>();
 	
 	private boolean isFirstBoot = true;
+	private boolean isFirstNewsFeed = true;
+	private boolean isFirstShakeToWake = true;
+	private boolean isFirstTextContacts = true;
 	
 	Preferences(ArrayList<Alarm> alarms)
 	{
@@ -28,5 +31,35 @@ public class Preferences {
 	public boolean getIsFirstBoot()
 	{
 		return isFirstBoot;
+	}
+	
+	public void setIsFirstNewsFeed(boolean setting)
+	{
+		this.isFirstNewsFeed = setting;
+	}
+	
+	public boolean getIsFirstNewsFeed()
+	{
+		return this.isFirstNewsFeed;
+	}
+	
+	public void setIsFirstShakeToWake(boolean setting)
+	{
+		this.isFirstShakeToWake = setting;
+	}
+	
+	public boolean getIsFirstShakeToWake()
+	{
+		return isFirstShakeToWake;
+	}
+	
+	public void setIsFirstTextContacts(boolean setting)
+	{
+		this.isFirstTextContacts = setting;
+	}
+	
+	public boolean getIsFirstTextContacts()
+	{
+		return isFirstTextContacts;
 	}
 }

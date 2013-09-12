@@ -59,6 +59,7 @@ public class SettingsActivity extends Activity {
 	TimePicker AlarmTime;
 	static final int CONTACT_PICKER_RESULT = 1001;
 	private PreferencesHandler prefsHandler;
+	private Preferences prefs;
 	boolean saveButtonWasClicked = false;
 	
 	private ArrayList<Alarm> alarms = new ArrayList<Alarm>();
@@ -79,6 +80,11 @@ public class SettingsActivity extends Activity {
 		        	LinearLayout.LayoutParams layout_desc = new LinearLayout.LayoutParams(0, 0);
 		            textContactsSmallFrame.setLayoutParams(layout_desc);
 		        }
+		        
+		        if(prefsHandler.getSettings().getIsFirstTextContacts())
+		        {
+		        	showTextContactsTutorialDialog();
+		        }
 		    }
 		});
 		
@@ -93,6 +99,20 @@ public class SettingsActivity extends Activity {
 		        	// the toggle is enabled
 		        	LinearLayout.LayoutParams layout_desc = new LinearLayout.LayoutParams(0, 0);
 		            NFRadioSmallFrame.setLayoutParams(layout_desc);
+		        }
+		        
+		        if(prefsHandler.getSettings().getIsFirstNewsFeed())
+		        {
+		        	showNewsTutorialDialog();
+		        }
+		    }
+		});
+		
+		toggle_ShakeToWake.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+		    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+		    	if(prefsHandler.getSettings().getIsFirstShakeToWake())
+		        {
+		    		showShakeTutorialDialog();
 		        }
 		    }
 		});
@@ -277,7 +297,8 @@ public class SettingsActivity extends Activity {
 		
 		// populate alarm arraylist
 		prefsHandler =  new PreferencesHandler(this);
-		alarms = prefsHandler.getSettings().getAlarms();
+		prefs = prefsHandler.getSettings();
+		alarms = prefs.getAlarms();
 		
 		for(int i = 0 ; i <alarms.size() ; i++)
 		{
@@ -399,6 +420,84 @@ public class SettingsActivity extends Activity {
 			}
 		}
 		prefsHandler.setAlarms(alarms);
+	}
+	
+	private void showTextContactsTutorialDialog()
+	{
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+ 
+			// set title
+			alertDialogBuilder.setTitle("Info!");
+ 
+			// set dialog message
+			alertDialogBuilder
+				.setMessage("You've Just Selected the text contacts option! \n\nIf you ever press the snooze button a list of contacts will be alerted to wake you up!\nTo set the contacts list press the 'Add More Contacts' button!")
+				.setCancelable(false)
+				.setPositiveButton("Cancel",new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog,int id) {
+						dialog.cancel();
+					}
+				  })
+				.setNegativeButton("Don't Show",new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog,int id) {
+						prefsHandler.setIsFirsTextContacts(false);
+						dialog.cancel();
+					}
+				});
+				AlertDialog alertDialog = alertDialogBuilder.create();
+				alertDialog.show();
+	}
+	
+	private void showShakeTutorialDialog()
+	{
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+ 
+			// set title
+			alertDialogBuilder.setTitle("Info!");
+ 
+			// set dialog message
+			alertDialogBuilder
+				.setMessage("You've Just Selected the Shake To Wake option! \n\nWhen the alarm goes off you will have to shake your phone to turn it off!")
+				.setCancelable(false)
+				.setPositiveButton("Cancel",new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog,int id) {
+						dialog.cancel();
+					}
+				  })
+				.setNegativeButton("Don't Show",new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog,int id) {
+						prefsHandler.setIsFirstShakeToWake(false);
+						dialog.cancel();
+					}
+				});
+				AlertDialog alertDialog = alertDialogBuilder.create();
+				alertDialog.show();
+	}
+	
+	private void showNewsTutorialDialog()
+	{
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+ 
+			// set title
+			alertDialogBuilder.setTitle("Info!");
+ 
+			// set dialog message
+			alertDialogBuilder
+				.setMessage("You've Just Selected the New Radio option! \n\nWhen the alarm goes off the day's global new headlines will be presented to you.\nDisabling this option will enable the Music option\nSelect your favourite music by pressing 'Change' button!")
+				.setCancelable(false)
+				.setPositiveButton("Cancel",new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog,int id) {
+						dialog.cancel();
+					}
+				  })
+				.setNegativeButton("Don't Show",new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog,int id) {
+						prefsHandler.setIsFirstNewsFeed(false);
+						dialog.cancel();
+					}
+				});
+				AlertDialog alertDialog = alertDialogBuilder.create();
+				alertDialog.show();
 	}
 	
 }
