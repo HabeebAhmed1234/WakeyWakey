@@ -895,7 +895,7 @@ public void initializeFormComponentsWrapper() throws ParseException{
 				.setCancelable(false)
 				.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog,int id) {
-						prefsHandler.incrementNumberOfAlarmsSet(5);
+						prefsHandler.disableIncrementNumberOfAlarmsSet();
 						openRatingsSetter();
 						dialog.cancel();
 					}
