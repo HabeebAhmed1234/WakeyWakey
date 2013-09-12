@@ -32,7 +32,7 @@ public class CustomImageView extends ImageView {
 	    int midX = canvas.getWidth()/2;
 	    float width = (float) (canvas.getWidth()/2*0.7);
 	    float base = (float) (canvas.getHeight()*0.92);
-	    float fullHeight = (float) (canvas.getHeight()*0.1 - base);
+	    float fullHeight = (float) (canvas.getHeight()*0.125 - base);
 	    float percentage = alhi.getPercentage();
 
 	    // left, top, right, bottom

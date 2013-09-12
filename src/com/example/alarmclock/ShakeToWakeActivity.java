@@ -37,7 +37,7 @@ public class ShakeToWakeActivity implements IntValueStoreListener, PercentageUpd
 	      float delta = mAccelCurrent - mAccelLast;
 	      mAccel = mAccel * 0.9f + delta; // perform low-cut filter
 	      
-	      	 if (mAccel >= 5) {
+	      	 if (mAccel >= 20) {
 	          Log.d("accel", "accel");
 	          if (percentageBarfill >= 1){
 	        	  alhi.hideShakeToWakeScreen();

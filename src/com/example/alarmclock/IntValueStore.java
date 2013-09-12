@@ -46,7 +46,7 @@ public class IntValueStore {
     public void setValue(int newValue) {
         mValue = newValue;
     	Log.d("accel", "changed value 1");
-        if (mListener != null && mValue > 7) {
+        if (mListener != null && mValue > 100) {
         	Log.d("accel", "changed value 2");
             mListener.onValueChanged(mValue);
         }
