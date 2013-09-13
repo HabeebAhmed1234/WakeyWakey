@@ -3,6 +3,7 @@ package com.example.alarmclock;
 import java.io.IOException;
 import java.util.ArrayList;
 import android.content.Context;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.util.Log;
@@ -19,6 +20,9 @@ public class MusicAlertActivity {
 	
 	ArrayList <Music> musicList;
 	
+	private AudioManager audioVolume;
+	private int savedVolume = 0;
+	
 	MusicAlertActivity (Context context, Alarm alarm)
 	{
 		this.context=context;
@@ -26,10 +30,15 @@ public class MusicAlertActivity {
 		prefsHandler = new PreferencesHandler(context);
 		prefs = prefsHandler.getSettings();
 		musicList = alarm.getMusicList();
+		
+		audioVolume = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 	}
 	
 	public void start()
 	{
+			savedVolume = audioVolume.getStreamVolume(AudioManager.STREAM_MUSIC);
+			audioVolume.adjustStreamVolume(AudioManager.STREAM_MUSIC, audioVolume.getStreamMaxVolume(AudioManager.STREAM_MUSIC), AudioManager.FLAG_SHOW_UI);
+		
 			player = new MediaPlayer();
 			player.setLooping(true);
 			
@@ -68,6 +77,7 @@ public class MusicAlertActivity {
 		{
 			player.stop();
 		}
+		audioVolume.adjustStreamVolume(AudioManager.STREAM_MUSIC, this.savedVolume, AudioManager.FLAG_SHOW_UI);
 	}
 	
 	public boolean isPlaying()
