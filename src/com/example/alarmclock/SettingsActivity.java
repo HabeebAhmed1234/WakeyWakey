@@ -261,6 +261,7 @@ public class SettingsActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
+				GlobalStaticVariables.selectedContacts = alarm.getContactsList();
 				startContactManager();
 			}
 		});

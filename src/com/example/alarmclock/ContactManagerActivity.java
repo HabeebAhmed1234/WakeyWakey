@@ -28,7 +28,7 @@ public final class ContactManagerActivity extends Activity
     // Data and List Adapter
     ContactsListAdapter contactsListAdapter;
     ArrayList<Contact> contacts = new ArrayList<Contact>();
-    ArrayList<Contact> selectedContacts = new ArrayList <Contact>();
+    ArrayList<Contact> selectedContacts = GlobalStaticVariables.selectedContacts;
     
     @Override
     public void onDestroy ()
@@ -133,7 +133,6 @@ public final class ContactManagerActivity extends Activity
     			if(filtered.get(i).equals(selectedContacts.get(x)))
     			{
     				filtered.get(i).select();
-    				//Log.d("debuggings",filtered.get(i).getName() + " is Selected");
     			}
     			
     		}

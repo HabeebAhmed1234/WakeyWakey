@@ -37,7 +37,7 @@ public class MusicAlertActivity {
 	public void start()
 	{
 			savedVolume = audioVolume.getStreamVolume(AudioManager.STREAM_MUSIC);
-			audioVolume.adjustStreamVolume(AudioManager.STREAM_MUSIC, audioVolume.getStreamMaxVolume(AudioManager.STREAM_MUSIC), AudioManager.FLAG_SHOW_UI);
+			audioVolume.setStreamVolume(AudioManager.STREAM_MUSIC, audioVolume.getStreamMaxVolume(AudioManager.STREAM_MUSIC), AudioManager.FLAG_SHOW_UI);
 		
 			player = new MediaPlayer();
 			player.setLooping(true);
@@ -77,7 +77,7 @@ public class MusicAlertActivity {
 		{
 			player.stop();
 		}
-		audioVolume.adjustStreamVolume(AudioManager.STREAM_MUSIC, this.savedVolume, AudioManager.FLAG_SHOW_UI);
+		audioVolume.setStreamVolume(AudioManager.STREAM_MUSIC, this.savedVolume, AudioManager.FLAG_SHOW_UI);
 	}
 	
 	public boolean isPlaying()
