@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Context;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -31,8 +32,7 @@ public class MyTextToSpeech implements OnInitListener {
     
 	public void say(String text2say){
 		if(isfirstsaying)
-		{
-
+		{	
 			player = MediaPlayer.create(context,R.raw.platinum);
 			player.setLooping(true);
             player.start();

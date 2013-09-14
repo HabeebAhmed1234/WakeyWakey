@@ -98,7 +98,7 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 	Preferences prefs;
 	
 	//id must be in this format
-	public static final String APP_ID = "com.cubeactive.qnotelistfree";
+	public static final String APP_ID = "com.wakeywakey.alarmclock";
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
