@@ -12,6 +12,7 @@ import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,27 +26,20 @@ public final class ContactManagerActivity extends Activity
 
     public static final String TAG = "ContactManager";
     
+	Button saveButton;
+	Button clearButton;
+	
     // Data and List Adapter
     ContactsListAdapter contactsListAdapter;
     ArrayList<Contact> contacts = new ArrayList<Contact>();
-    ArrayList<Contact> selectedContacts = GlobalStaticVariables.selectedContacts;
+    ArrayList<Contact> selectedContacts;
     
-    @Override
-    public void onDestroy ()
-    {
-    	super.onDestroy();
-    	ArrayList<Contact> selectedContacts = new ArrayList<Contact>();
-    	
-    	for(int i=0;i<contacts.size();i++)
-    	{
-    		if(contacts.get(i).isSelected())
-    		{
-    			selectedContacts.add(contacts.get(i));
-    			Log.d("AlarmClock","contact was selected");
-    		}
-    	}
-    	GlobalStaticVariables.selectedContacts = selectedContacts;
-    }
+    PreferencesHandler prefsHandler;
+    Preferences prefs;
+    
+    ArrayList<Alarm> alarms;
+    Alarm selectedAlarm;
+    
     
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -54,6 +48,25 @@ public final class ContactManagerActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.contact_manager);
         
+        prefsHandler = new PreferencesHandler(this);
+        prefs= prefsHandler.getSettings();
+        alarms = prefs.getAlarms();
+        
+        		
+        if(getIntent().getExtras()!=null)
+        {
+        	int selectedId = Integer.parseInt(getIntent().getExtras().getString(AlarmFactory.ALARM_ID));
+        	selectedAlarm = prefsHandler.getSettings().getAlarmById(selectedId);
+        	if(selectedAlarm.getContactsList()!=null)
+        	{
+        		selectedContacts = selectedAlarm.getContactsList();
+        	}else{
+        		selectedContacts = new ArrayList<Contact>();
+        	}
+        }else{
+        	selectedContacts = new ArrayList<Contact>();
+        }
+        		
         ListView lvContactsContent = (ListView) findViewById(R.id.contactList);
 		
         contacts=getContacts();
@@ -75,6 +88,9 @@ public final class ContactManagerActivity extends Activity
 		      }
 
 		    });
+		
+		setupSaveButton();
+		setupClearButton();
     }
     
     private ArrayList <Contact> getContacts()
@@ -139,4 +155,59 @@ public final class ContactManagerActivity extends Activity
     	}
     	return filtered;
     }
+    
+    private void setupSaveButton(){
+		saveButton = (Button) findViewById(R.id.ContactsSaveButton);
+		saveButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {	
+				ArrayList<Contact> selectedContacts = new ArrayList<Contact>();
+		    	
+		    	for(int i=0;i<contacts.size();i++)
+		    	{
+		    		if(contacts.get(i).isSelected())
+		    		{
+		    			selectedContacts.add(contacts.get(i));
+		    			Log.d("AlarmClock","contact was selected");
+		    		}
+		    	}
+				
+		    	selectedAlarm.setTextContactsList(selectedContacts);
+		    	
+				saveAlarm(selectedAlarm);
+				Toast.makeText(getApplicationContext(), "Saved Contacts", Toast.LENGTH_SHORT).show();
+				finish();
+			}
+		});
+	}
+	
+	private void setupClearButton(){
+		clearButton = (Button) findViewById(R.id.ContactsClearButton);
+		clearButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				for(int i = 0 ; i <contacts.size();i++)
+				{
+					contacts.get(i).unselect();
+				}
+				
+	            contactsListAdapter.notifyDataSetChanged();
+	            
+				Toast.makeText(getApplicationContext(), "Cleared Contacts", Toast.LENGTH_SHORT).show();
+			}
+		});
+	}
+	
+	private void saveAlarm(Alarm alarm)
+	{
+		for(int i = 0 ; i< alarms.size();i++)
+		{
+			if(alarms.get(i).getID() == alarm.getID())
+			{
+				alarms.set(i, alarm);
+			}
+		}
+		prefsHandler.setAlarms(alarms);
+	}
 }

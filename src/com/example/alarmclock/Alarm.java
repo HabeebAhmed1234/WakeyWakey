@@ -191,14 +191,14 @@ public class Alarm {
 	
 	String getMusicListAsString()
 	{
-		if(!(musicList.size()>0))return "";
+		if(!(musicList.size()>0))return "default";
 		
 		String musicListString = musicList.get(0).getName();
 		
 		for(int i = 1 ; i < musicList.size() ; i++)
 		{
-			musicListString.concat(", ");
-			musicListString.concat(musicList.get(i).getName());
+			musicListString+=", ";
+			musicListString+=musicList.get(i).getName();
 		}
 		
 		return musicListString;
@@ -212,8 +212,8 @@ public class Alarm {
 		
 		for(int i = 1 ; i < textContactsList.size() ; i++)
 		{
-			contactListString.concat(", ");
-			contactListString.concat(textContactsList.get(i).getName());
+			contactListString+=", ";
+			contactListString+=textContactsList.get(i).getName();
 		}
 		
 		return contactListString;

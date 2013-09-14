@@ -19,11 +19,25 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
+    		
+        <Button
+	  	 android:id="@+id/ContactsClearButton"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_weight="1" 
+	    android:text="Clear Selections"/>
+        
     <ListView
         android:id="@+id/contactList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1" >
+        android:layout_weight="10" >
     </ListView>
-
+        
+            	<Button
+        android:id="@+id/ContactsSaveButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Save" />
 </LinearLayout>

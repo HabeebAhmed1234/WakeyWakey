@@ -26,6 +26,15 @@ public class Preferences {
 		return this.alarms;
 	}
 	
+	Alarm getAlarmById(int id)
+	{
+		for(int i = 0 ; i < alarms.size() ; i++)
+		{
+			if(alarms.get(i).getID() == id) return alarms.get(i);
+		}
+		return null;
+	}
+	
 	public void setIsFirstBoot(boolean setting)
 	{
 		this.isFirstBoot = setting;

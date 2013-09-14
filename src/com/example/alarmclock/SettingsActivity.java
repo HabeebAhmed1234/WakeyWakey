@@ -261,7 +261,13 @@ public class SettingsActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				GlobalStaticVariables.selectedContacts = alarm.getContactsList();
+				GlobalStaticVariables.selectedContacts.clear();
+				Log.d("AlarmClock","ammount of contacts being set to global "+alarm.getContactsList().size());
+				for(int i = 0 ; i <alarm.getContactsList().size();i++)
+				{
+					GlobalStaticVariables.selectedContacts.add(alarm.getContactsList().get(i)) ;
+				}
+				Log.d("AlarmClock","ammount of contacts set to global "+GlobalStaticVariables.selectedContacts.size());
 				startContactManager();
 			}
 		});
@@ -271,6 +277,7 @@ public class SettingsActivity extends Activity {
 	{
 		GlobalStaticVariables.resetContacts();
 		Intent i = new Intent(this, ContactManagerActivity.class);
+		i.putExtra(AlarmFactory.ALARM_ID, Integer.toString(this.alarm.getID()));
 		startActivityForResult(i,0);
 	}
 	
@@ -288,6 +295,7 @@ public class SettingsActivity extends Activity {
 	{
 		GlobalStaticVariables.resetMusic();
 		Intent i = new Intent(this, MusicManagerActivity.class);
+		i.putExtra(AlarmFactory.ALARM_ID, Integer.toString(this.alarm.getID()));
 		startActivityForResult(i,1);
 	}
 	
@@ -342,27 +350,13 @@ public class SettingsActivity extends Activity {
 	{
 		  if(requestCode == 0)
 		  {
-			  if(GlobalStaticVariables.selectedContacts.size()>0)
-				{
-					String contactsToText = GlobalStaticVariables.selectedContacts.get(0).getName();
-					for(int i = 1; i<GlobalStaticVariables.selectedContacts.size();i++)
-					{
-						contactsToText+=", "+GlobalStaticVariables.selectedContacts.get(i).getName();
-					}
-					contactsTextView.setText(contactsToText);
-				}
+				String contactsToText = prefsHandler.getSettings().getAlarmById(alarm.getID()).getContactsListAsString();
+				contactsTextView.setText(contactsToText);
 		  }
 		  if(requestCode == 1)
 		  {
-			  if(GlobalStaticVariables.selectedMusic.size()>0)
-				{
-					String musicList = GlobalStaticVariables.selectedMusic.get(0).getName();
-					for(int i = 1; i<GlobalStaticVariables.selectedMusic.size();i++)
-					{
-						musicList+=", "+GlobalStaticVariables.selectedMusic.get(i).getName();
-					}
-					musicTextView.setText(musicList);
-				}
+				String musicList = prefsHandler.getSettings().getAlarmById(alarm.getID()).getMusicListAsString();
+				musicTextView.setText(musicList);
 		  }
 	}
 	

@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,10 +20,20 @@ import android.widget.Toast;
 public class MusicManagerActivity extends Activity {
 
 	public static final String TAG = "MusicManagerActivity";
+	
+	Button saveButton;
+	Button clearButton;
+	
     // Data and List Adapter
     MusicListAdapter musicListAdapter;
     ArrayList<Music> music = new ArrayList<Music>();
     ArrayList<Music> selectedMusic = new ArrayList <Music>();
+    
+    PreferencesHandler prefsHandler;
+    Preferences prefs;
+    
+    ArrayList<Alarm> alarms;
+    Alarm selectedAlarm;
     
     @Override
     public void onDestroy ()
@@ -37,7 +48,6 @@ public class MusicManagerActivity extends Activity {
     			selectedMusic.add(music.get(i));
     		}
     	}
-    	GlobalStaticVariables.selectedMusic = selectedMusic;
     }
     
     @Override
@@ -48,6 +58,25 @@ public class MusicManagerActivity extends Activity {
         setContentView(R.layout.activity_music_manager);        
         
         ListView lvMusicssContent = (ListView) findViewById(R.id.musicList);
+        
+        prefsHandler = new PreferencesHandler(this);
+        prefs= prefsHandler.getSettings();
+        alarms = prefs.getAlarms();
+        
+        		
+        if(getIntent().getExtras()!=null)
+        {
+        	int selectedId = Integer.parseInt(getIntent().getExtras().getString(AlarmFactory.ALARM_ID));
+        	selectedAlarm = prefsHandler.getSettings().getAlarmById(selectedId);
+        	if(selectedAlarm.getMusicList()!=null)
+        	{
+        		selectedMusic = selectedAlarm.getMusicList();
+        	}else{
+        		selectedMusic = new ArrayList<Music>();
+        	}
+        }else{
+        	selectedMusic = new ArrayList<Music>();
+        }
 		
         music=getMusic();
         
@@ -61,11 +90,21 @@ public class MusicManagerActivity extends Activity {
 		    	    String name=(String) ((TextView) view.findViewById(R.id.tvLAYOUTMUSICName)).getText();
 		            Music selectedMusic = (Music)parent.getAdapter().getItem(position);
 		            selectedMusic.toggleSelected();
+		            for(int i = 0;i < parent.getAdapter().getCount();i++)
+		            {
+		            	if(i!=position)
+		            	{
+		            		((Music)parent.getAdapter().getItem(i)).unselect();
+		            	}
+		            }
 		            musicListAdapter.notifyDataSetChanged();
 		            view.refreshDrawableState();
 		      }
 
 		    });
+        
+		setupSaveButton();
+		setupClearButton();
     }
     
     private ArrayList <Music> getMusic()
@@ -128,6 +167,61 @@ public class MusicManagerActivity extends Activity {
     	}
     	return filtered;
     }
+    
+    private void setupSaveButton(){
+		saveButton = (Button) findViewById(R.id.MusicSaveButton);
+		saveButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {	
+				ArrayList<Music> selectedMusic = new ArrayList<Music>();
+		    	
+		    	for(int i=0;i<music.size();i++)
+		    	{
+		    		if(music.get(i).isSelected())
+		    		{
+		    			selectedMusic.add(music.get(i));
+		    			Log.d("AlarmClock","Music was selected");
+		    		}
+		    	}
+				
+		    	selectedAlarm.setMusicList(selectedMusic);
+		    	
+				saveAlarm(selectedAlarm);
+				Toast.makeText(getApplicationContext(), "Saved Music", Toast.LENGTH_SHORT).show();
+				finish();
+			}
+		});
+	}
+	
+	private void setupClearButton(){
+		clearButton = (Button) findViewById(R.id.MusicClearButton);
+		clearButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				for(int i = 0 ; i <music.size();i++)
+				{
+					music.get(i).unselect();
+				}
+				
+				musicListAdapter.notifyDataSetChanged();
+	            
+				Toast.makeText(getApplicationContext(), "Cleared Music", Toast.LENGTH_SHORT).show();
+			}
+		});
+	}
+	
+	private void saveAlarm(Alarm alarm)
+	{
+		for(int i = 0 ; i< alarms.size();i++)
+		{
+			if(alarms.get(i).getID() == alarm.getID())
+			{
+				alarms.set(i, alarm);
+			}
+		}
+		prefsHandler.setAlarms(alarms);
+	}
 }
 
 
