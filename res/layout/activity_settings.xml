@@ -1,4 +1,4 @@
-	<ScrollView
+		<ScrollView
 	  xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:tools="http://schemas.android.com/tools"
 	  android:layout_width="fill_parent"
@@ -275,17 +275,25 @@
                   android:text="Contacts:"
                   android:textAppearance="?android:attr/textAppearanceMedium"
                   android:textSize="@dimen/activity_medium_text" />
-
-              <TextView
-                  android:id="@+id/contactsTextView"
-                  android:layout_width="wrap_content"
-                  android:layout_height="40dp"
-                  android:layout_below="@+id/contactText"
-                  android:layout_marginLeft="26dp"
-                  android:text="None"
-                  android:textAppearance="?android:attr/textAppearanceMedium"
-                  android:textColor="@color/SlateGray"
-                  android:textSize="@dimen/activity_medium_text" />
+				
+              <ScrollView
+                  android:id="@+id/contactsScrollView"
+                  android:layout_width="match_parent"
+                  android:layout_height="60dp"
+                  android:layout_below="@+id/contactText" >
+	              
+		              <TextView
+		                  android:id="@+id/contactsTextView"
+		                  android:layout_width="wrap_content"
+		                  android:layout_height="wrap_content"
+		                  android:layout_below="@+id/contactText"
+		                  android:layout_marginLeft="26dp"
+		                  android:text="None"
+		                  android:textAppearance="?android:attr/textAppearanceMedium"
+		                  android:textColor="@color/SlateGray"
+		                  android:textSize="@dimen/activity_medium_text" />
+              
+              </ScrollView>
 
               <Button
                   android:id="@+id/addContacts"
@@ -293,7 +301,7 @@
                   android:layout_height="wrap_content"
                   android:layout_alignParentBottom="true"
                   android:layout_alignParentLeft="false"
-                  android:layout_below="@+id/contactsTextView"
+                  android:layout_below="@+id/contactsScrollView"
                   android:layout_centerHorizontal="true"
                   android:text="Add More Contacts"
                   android:textSize="@dimen/activity_medium_text" />
